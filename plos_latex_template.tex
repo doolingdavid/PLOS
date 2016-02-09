@@ -475,6 +475,51 @@ The SEER variable \codewhite{CS TUMOR SIZE} records the tumor size in millimeter
 
 
 
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\caption{\label{tab:lungfilter} Filters applied to the Lung Cancer data.}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lr}
+\toprule
+ Column &  Filter \\
+\midrule
+\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
+\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
+\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
+\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
+\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
+\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ ""} \\
+\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
+\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
+\codewhite{PRIMARY SITE} & \codewhite{ $=$ "LUNG \& BRONCHUS"} \\
+\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
+
+The following categorical features were one-hot encoded for each of the three datasets:
+%as described in 
+%section~(\ref{subsec:dataprep}):
+
+\begin{itemize}[noitemsep]
+\item \codewhite{SEX},
+\item  \codewhite{MARITAL STATUS AT DX},
+\item \codewhite{RACE/ETHNICITY},
+\item \codewhite{SPANISH/HISPANIC ORIGIN},
+\item \codewhite{GRADE},
+\item \codewhite{PRIMARY SITE},
+\item \codewhite{LATERALITY},
+\item \codewhite{SEER HISTORIC STAGE A},
+\item \codewhite{HISTOLOGY RECODE--BROAD GROUPINGS},
+\item \codewhite{MONTH OF DIAGNOSIS},
+\item  \codewhite{VITAL STATUS RECODE},
+\end{itemize}
+and the \codewhite{STATE-COUNTY RECODE} variable was dropped and replaced with the \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng} variables for all three datasets as illustrated in Table~(\ref{tab:nmhead}).
+
+
 
 \subsection*{Etiam eget sapien nibh.}
 
