@@ -1333,7 +1333,146 @@ def pmf(h, X)
 
 \end{verbatim}
 
+\subsection*{Breast Random Forest Model Hyperparameters}
+\label{subsec:breastrf}
 
+\begin{verbatim}
+f = RandomForestClassifier(n_estimators=20,min_samples_split=3,
+                             max_depth = 15,
+                            max_features = .8,
+                             n_jobs=5,verbose=2,random_state=33)
+\end{verbatim}
+
+
+
+
+\subsection*{Colon Random Forest Model Hyperparameters}
+\label{subsec:colonrf}
+
+
+\begin{verbatim}
+rf = RandomForestClassifier(n_estimators=25,min_samples_split=3,
+                             max_depth = 10,
+                            max_features = .5,
+                             n_jobs=5,verbose=2,random_state=3)
+\end{verbatim}
+
+
+
+\subsection*{Lung Random Forest Model Hyperparameters}
+\label{subsec:lungrf}
+
+
+
+\begin{verbatim}
+rf = RandomForestClassifier(n_estimators=25,min_samples_split=3,
+                             max_depth = 11,
+                            max_features = .8,
+                             n_jobs=5,verbose=2,random_state=3)
+\end{verbatim}
+
+
+
+
+\subsection*{Breast Neural Network Model Architecture}
+\label{subsec:breastnn}
+
+The archictecture of the Keras multilayer perceptron neural network model 
+trained on the breast cancer data is given explicitly below:
+
+\begin{verbatim}
+modelbreast = Sequential()
+modelbreast.add(Dense(114, input_shape=(66,) ,init='normal'))
+modelbreast.add(Activation('relu'))
+modelbreast.add(Dropout(0.05))
+modelbreast.add(Dense(50, init='normal'))
+modelbreast.add(Activation('relu'))
+modelbreast.add(Dropout(0.05))
+
+modelbreast.add(Dense(36, init='normal'))
+modelbreast.add(Activation('relu'))
+modelbreast.add(Dropout(0.05))
+
+modelbreast.add(Dense(2, init='normal'))
+modelbreast.add(Activation('softmax'))
+
+rms = RMSprop(lr=0.001)
+
+modelbreast.compile(loss='binary_crossentropy', 
+             optimizer=rms, class_mode="binary")
+
+\end{verbatim}
+
+and trained with a batch size of 1500 for 200 epochs.
+
+\subsection*{Colon Cancer Neural Network Model Architecture}
+\label{subsec:colonnn}
+
+The archictecture of the Keras multilayer perceptron neural network model 
+trained on the colon cancer data is given explicitly below:
+
+\begin{verbatim}
+
+
+modelcolon = Sequential()
+modelcolon.add(Dense(114, input_shape=(102,) ,init='normal'))
+modelcolon.add(Activation('relu'))
+modelcolon.add(Dropout(0.05))
+modelcolon.add(Dense(50, init='normal'))
+modelcolon.add(Activation('relu'))
+modelcolon.add(Dropout(0.05))
+
+
+modelcolon.add(Dense(35, init='normal'))
+modelcolon.add(Activation('relu'))
+modelcolon.add(Dropout(0.05))
+
+modelcolon.add(Dense(2, init='normal'))
+modelcolon.add(Activation('softmax'))
+
+rms = RMSprop(lr=0.001)
+
+modelcolon.compile(loss='binary_crossentropy',
+          optimizer=rms, class_mode="binary")
+
+\end{verbatim}
+
+and trained with a batch size of 1500 for 200 epochs.
+
+
+\subsection*{Lung Cancer Neural Network Model Architecture}
+\label{subsec:lungnn}
+
+
+The archictecture of the Keras multilayer perceptron neural network model 
+trained on the lung cancer data is given explicitly below:
+
+\begin{verbatim}
+
+modellung = Sequential()
+modellung.add(Dense(114, input_shape=(114,) ,init='normal'))
+modellung.add(Activation('relu'))
+modellung.add(Dropout(0.1))
+modellung.add(Dense(80, init='normal'))
+modellung.add(Activation('relu'))
+modellung.add(Dropout(0.1))
+modellung.add(Dense(40, init='normal'))
+modellung.add(Activation('relu'))
+modellung.add(Dropout(0.1))
+
+
+modellung.add(Dense(2, init='normal'))
+modellung.add(Activation('softmax'))
+
+
+rms = RMSprop(lr=0.001)
+
+modellung.compile(loss='binary_crossentropy',
+              optimizer=rms, class_mode="binary")
+
+\end{verbatim}
+
+and trained with a batch size of 2000 for 50 epochs.
 
 % Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
 \subsection*{S1 Video}
