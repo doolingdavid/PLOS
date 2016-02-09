@@ -428,6 +428,51 @@ For example, Table~(\ref{tab:nmhead}) shows how five entries of \codewhite{STATE
 \end{adjustwidth}
 \end{table}
 
+It is a simple exercise to construct the full lookup table from the SEER \\  \codewhite{STATE-COUNTY RECODE} variable to the corresponding three values \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}. We use the publically available dafafile from the United States Census Bureau~\cite{census} to map the state FIPS and county FIPS codes to query strings like those in the \codewhite{address} field in Table~(\ref{tab:nmhead}). 
+It is then possible to programmatically query the Google Maps Geocoding API for the latitude and longitude~\cite{geocode}, and the Google Maps Elevation API for the corresponding elevation~\cite{elevation}.
+An added benefit of this shift from the single categorical variable \codewhite{STATE-COUNTY RECODE} to the three continuous numerical variables \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation} is that input into the web applications described later are not restricted to the states and counties coverered in the SEER registries; in fact, the input to the models can be any address you would enter into Google Maps and calls to the Google Maps Geocoding API and the Google Maps Elevation API provide the conversion from the address string to the input variables \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation}. The full lookup table analogous to Table~(\ref{tab:nmhead}) is available from a GitHub repository containing supplemental information for this study~\cite{supp}. 
+
+
+This study focused on three different cancer types, namely colorectal cancer, lung cancer, and breast cancer. 
+In the SEER data, there are instances of subjects with multiple rows; whenever a subject, or patient, is diagnosed with a new tumor, an additional record is added. In this study, we restrict attention to the data corresponding to the first record of each subject; i.e., we wish to make models that predict survival prognosis based on the data available right after diagnosis. The full set of conditions defining the subsets of the SEER data used in this study follows below.
+
+
+
+ The four COLRECT.txt files were imported into a pandas DataFrame object.
+This data was then filtered according to the conditions in Table~(\ref{tab:colonfilter}).
+The RESPIR.txt and BREAST.txt files were imported into separate dataframes in similar fashion and filtered according
+to the conditions in Table~(\ref{tab:lungfilter}) and Table~(\ref{tab:breastfilter}), respectively.
+The SEER variable \codewhite{CS TUMOR SIZE} records the tumor size in millimeters if known. But if not known, \codewhite{CS TUMOR SIZE} is given as '999', to indicate that the tumor size is "Unknown; size not stated; not stated in pateint record.'' In this study, we discard those records, as indicated in Tables~(\ref{tab:breastfilter},~\ref{tab:colonfilter},~\ref{tab:lungfilter}).
+
+
+
+
+
+
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\caption{\label{tab:colonfilter} Filters applied to the Colon Cancer data.}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lr}
+\toprule
+ Column &  Filter \\
+\midrule
+\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
+\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
+\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
+\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
+\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
+\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ ""} \\
+\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
+\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
+\codewhite{PRIMARY SITE} & \codewhite{ $=$ "LARGE INTESTINE, (EXCL. APPENDIX)"} \\
+\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
 
 
 
