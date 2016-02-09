@@ -54,31 +54,45 @@
 \citation{cam}
 \citation{Kaplan1958457}
 \newlabel{subsec:survprimer}{{}{8}{Traditional Survival Analysis}{section*.11}{}}
+\citation{kuhn}
 \@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces  Example data to illustate traditional Survival Analsyis.\relax }}{9}{table.caption.12}}
 \newlabel{tab:censoredexample}{{6}{9}{Example data to illustate traditional Survival Analsyis.\relax }{table.caption.12}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces  Kaplan-Meier table corresponding to the example data in Table\nobreakspace  {}(\ref  {tab:censoredexample}).\relax }}{9}{table.caption.13}}
 \newlabel{tab:kaplanexample}{{7}{9}{Kaplan-Meier table corresponding to the example data in Table~(\ref {tab:censoredexample}).\relax }{table.caption.13}{}}
+\newlabel{subsec:transformation}{{}{9}{Transformation of Censored Data for Machine Learning}{section*.17}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces  Traditional Kaplan-Meier estimate of the survival curve for all colon cancer patients. Fitted with 113072 observations, 71804 censored.\relax }}{10}{figure.caption.14}}
 \newlabel{fig:colonkaplan}{{1}{10}{Traditional Kaplan-Meier estimate of the survival curve for all colon cancer patients. Fitted with 113072 observations, 71804 censored.\relax }{figure.caption.14}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces  Traditional Kaplan-Meier estimate of the survival curve for all breast cancer patients. Fitted with 329949 observatins, 292279 censored.\relax }}{10}{figure.caption.15}}
 \newlabel{fig:breastkaplan}{{2}{10}{Traditional Kaplan-Meier estimate of the survival curve for all breast cancer patients. Fitted with 329949 observatins, 292279 censored.\relax }{figure.caption.15}{}}
+\citation{amstat}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces  Traditional Kaplan-Meier estimate of the survival curve for all lung cancer patients. Fitted with 177089 observatins, 47409 censored.\relax }}{11}{figure.caption.16}}
 \newlabel{fig:lungkaplan}{{3}{11}{Traditional Kaplan-Meier estimate of the survival curve for all lung cancer patients. Fitted with 177089 observatins, 47409 censored.\relax }{figure.caption.16}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces {\bf  Figure Title first bold sentence Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam.} Figure Caption Proin rutrum vel massa non gravida. Quisque tempor sem et dignissim rutrum. A: Lorem ipsum dolor sit amet. B: Consectetur adipiscing elit.\relax }}{11}{figure.caption.18}}
-\newlabel{fig1}{{4}{11}{{\bf Figure Title first bold sentence Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam.} Figure Caption Proin rutrum vel massa non gravida. Quisque tempor sem et dignissim rutrum. A: Lorem ipsum dolor sit amet. B: Consectetur adipiscing elit.\relax }{figure.caption.18}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces  {\bf  Table caption Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam.}\relax }}{12}{table.caption.20}}
-\newlabel{table1}{{8}{12}{{\bf Table caption Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam.}\relax }{table.caption.20}{}}
-\@writefile{toc}{\contentsline {paragraph}{3rd Level Heading.}{12}{section*.25}}
+\newlabel{eq:kaplanmeier}{{3}{11}{Transformation of Censored Data for Machine Learning}{equation.0.3}{}}
+\newlabel{eq:hhazard}{{4}{11}{Transformation of Censored Data for Machine Learning}{equation.0.4}{}}
+\newlabel{eq:hazardtosurvival}{{8}{12}{Transformation of Censored Data for Machine Learning}{equation.0.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces  Example of four columns in an uncensored record in the untransformed dataset.\relax }}{12}{table.caption.18}}
+\newlabel{tab:originaldead}{{8}{12}{Example of four columns in an uncensored record in the untransformed dataset.\relax }{table.caption.18}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces  Example of four columns in a censored record in the untransformed dataset.\relax }}{12}{table.caption.19}}
+\newlabel{tab:originalalive}{{9}{12}{Example of four columns in a censored record in the untransformed dataset.\relax }{table.caption.19}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces  Example of four columns in an uncensored record in the transformed dataset.\relax }}{12}{table.caption.20}}
+\newlabel{tab:transformeddead}{{10}{12}{Example of four columns in an uncensored record in the transformed dataset.\relax }{table.caption.20}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces  Example of four columns in a censored record in the transformed dataset.\relax }}{13}{table.caption.21}}
+\newlabel{tab:transformedalive}{{11}{13}{Example of four columns in a censored record in the transformed dataset.\relax }{table.caption.21}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces {\bf  Figure Title first bold sentence Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam.} Figure Caption Proin rutrum vel massa non gravida. Quisque tempor sem et dignissim rutrum. A: Lorem ipsum dolor sit amet. B: Consectetur adipiscing elit.\relax }}{13}{figure.caption.23}}
+\newlabel{fig1}{{4}{13}{{\bf Figure Title first bold sentence Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam.} Figure Caption Proin rutrum vel massa non gravida. Quisque tempor sem et dignissim rutrum. A: Lorem ipsum dolor sit amet. B: Consectetur adipiscing elit.\relax }{figure.caption.23}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces  {\bf  Table caption Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam.}\relax }}{13}{table.caption.25}}
+\newlabel{table1}{{12}{13}{{\bf Table caption Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam.}\relax }{table.caption.25}{}}
+\@writefile{toc}{\contentsline {paragraph}{3rd Level Heading.}{14}{section*.30}}
 \bibdata{machinebib}
 \bibcite{pythonmachinelearning}{1}
-\newlabel{S1_Video}{{}{13}{S1 Video}{section*.29}{}}
-\newlabel{S1_Text}{{}{13}{S1 Text}{section*.30}{}}
-\newlabel{S1_Fig}{{}{13}{S1 Fig}{section*.31}{}}
-\newlabel{S2_Fig}{{}{13}{S2 Fig}{section*.32}{}}
-\newlabel{S1_Table}{{}{13}{S1 Table}{section*.33}{}}
 \bibcite{cam}{2}
 \bibcite{VanPoucke2016}{3}
 \bibcite{seerwebsite}{4}
+\newlabel{S1_Video}{{}{15}{S1 Video}{section*.34}{}}
+\newlabel{S1_Text}{{}{15}{S1 Text}{section*.35}{}}
+\newlabel{S1_Fig}{{}{15}{S1 Fig}{section*.36}{}}
+\newlabel{S2_Fig}{{}{15}{S2 Fig}{section*.37}{}}
+\newlabel{S1_Table}{{}{15}{S1 Table}{section*.38}{}}
 \bibcite{ISI:000337467400005}{5}
 \bibcite{ISI:000355882700012}{6}
 \bibcite{Gordon19851065}{7}
@@ -91,6 +105,8 @@
 \bibcite{geocode}{14}
 \bibcite{elevation}{15}
 \bibcite{supp}{16}
-\newlabel{LastPage}{{}{15}{}{page.15}{}}
-\xdef\lastpage@lastpage{15}
-\xdef\lastpage@lastpageHy{15}
+\bibcite{Kaplan1958457}{17}
+\bibcite{kuhn}{18}
+\newlabel{LastPage}{{}{17}{}{page.17}{}}
+\xdef\lastpage@lastpage{17}
+\xdef\lastpage@lastpageHy{17}

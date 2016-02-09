@@ -630,7 +630,7 @@ After the above one-hot encoding procedure, the new variable
 \codewhite{SURVIVAL MONTHS} and \codewhite{vital\_status\_recode\_Dead} are all that is needed to construct the Kaplan-Meier estimates for the SEER datasets.
 The Kaplan-Meier estimates of the survival curves for colon (Figure~(\ref{fig:colonkaplan})), lung 
 (Figure~(\ref{fig:lungkaplan})), and breast cancer (Figure~(\ref{fig:breastkaplan})) are constructed from the full population of cancer patients in the respective datasets.
-An unsatisfactory feature of these curves is that these estimates are based on populations and data with enough heterogeneity to make them not very meaningful to an indivual. Patients with very disparate characteristics are given the same prognosis by these Kaplan-Meier survival curve estimates. Therefore it is desirable to find robust predictors for survival curves of individual subjects where the input is an individual record as opposed to a population. In section~(\ref{subsec:transformation}) we present the data transformation that allows for machine learning to be applied to censored data.
+An unsatisfactory feature of these curves is that these estimates are based on populations and data with enough heterogeneity to make them not very meaningful to an indivual. Patients with very disparate characteristics are given the same prognosis by these Kaplan-Meier survival curve estimates. Therefore it is desirable to find robust predictors for survival curves of individual subjects where the input is an individual record as opposed to a population. We present below the data transformation that allows for machine learning to be applied to censored data.
 
 
 
@@ -672,6 +672,125 @@ An unsatisfactory feature of these curves is that these estimates are based on p
 \end{figure}
 
 
+\subsection*{Transformation of Censored Data for Machine Learning}
+\label{subsec:transformation}
+
+In this section we describe an inuitive way to transform right-censored data appropriately so that it may be used as input to machine learning algorithms that learn the hazard fuction. The full details of this transformation, and a large inspiration for this study, can be flound in this blog post~\cite{kuhn}.
+
+
+
+The overall philosophy of the Kaplan-Meier estimate of the survival curve for a population differs fundamentally from the methods described below and used in this study. 
+The Kaplan-Meier estimate of the survival curve is given by
+\begin{equation}
+\label{eq:kaplanmeier}
+\hat{S}(t) = \prod_{t_i < t} \frac{n_i - d_i}{n_i}
+\end{equation}
+where $d_i$ are the number of death events at time $t$ and $n_t$ is the number of subjects at risk of death just prior to time $t$. 
+Equation~(\ref{eq:kaplanmeier}) uses the entire data set to arrive at an estimate of the entire population survival curve. In contrast, the method described below uses the entire data set to learn a model so as to predict hazard and survival curves from the data for as yet unseen individuals.
+
+
+The key observation is to note that the hazard function can be directly learned via standard machine learning methods. It can be rewritten as
+\begin{equation}
+\label{eq:hhazard}
+\lambda(\mathbf{X}, t) = P(Y = t|Y \geq t, \mathbf{X}),
+\end{equation}
+the probability that, if someone has survived up until month $t$, they will die in that month.
+where $\mathbf{X}$ represents all of the data for that particular record, and in our case $Y$ represents the true, uncensored number of survival months of the patient.
+What is actually provided in the SEER data is the related variable \codewhite{SURVIVAL MONTHS} $T$ (how long each subject was in the study), and whether they exited by dying or being censored ($D$), \codewhite{VITAL STATUS RECODE}. 
+$D$ is a Boolean variable, so $D = 1$ if $T = Y$, and $D = 0$ if $T < Y$.
+
+
+In the discrete time variable case (which holds for the SEER data; \codewhite{SURVIVAL MONTHS} takes on integer values), the relationship between the hazard function and the survival function is given as follows~\cite{amstat}. Supppose that 
+$a_{j} < t \leq a_{j+1}$ where $a_{j}$ represents $j$ months. Then
+
+\begin{eqnarray}
+S(t) &  = & P(T \geq a_{1}, T \geq a_{2}, \cdots , T \geq a_{j+1}) \\
+   & = & P(T \geq a_{1}) P(T \geq a_{2} | T \geq a_{1}) \cdots P(T \geq a_{j+1} | T \geq a_{j}) \\
+ & = & (1 - \lambda_{1}) \times \cdots \times (1 - \lambda_{j}) \\
+ & = & \prod_{k: a_{k} < t}(1 - \lambda_{k}) \label{eq:hazardtosurvival}
+\end{eqnarray}
+
+
+
+Treating $T$ as just another covariate is the key to the transformation. Each datapoint in the hidden classification problem is the combination of an $\mathbf{X}_{i}$ in the orginal dataset plus some month $t$, and the classification problem is "did point $\mathbf{X}_{i}$ die in month $t$.'' We will call this new variable $D_{it}$ (\codewhite{newtarget}).
+We can transform our original data set into a new one, with one row for each month that each $\mathbf{X}_{i}$ is in the sample; train a standard classifier on this new dataset with $D_{it}$ as the target, and derive a survival model from the orginal dataset.
+Psuedocode for this transformation is found in the Supporting Information section.
+
+Explicit examples will help make this transformation clear.
+The untransformed datapoint represented Table~(\ref{tab:originaldead}) is transformed to the multiple records shown in Table~(\ref{tab:transformeddead}). All uncensored data is transformed in this way. All censored data is similarly transformed. 
+The untransformed datapoint represented Table~(\ref{tab:originalalive}) is transformed to the multiple records shown in Table~(\ref{tab:transformedalive}).
+
+
+
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\caption{\label{tab:originaldead} Example of four columns in an uncensored record in the untransformed dataset.}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lrrrr}
+\toprule
+{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{survival\_months} &  \codewhite{vital\_status\_recode\_Dead} \\
+\midrule
+newindex &                &                &        &            \\
+205      &             60 &           1951 &      3 &          1 \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
+
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\caption{\label{tab:originalalive} Example of four columns in a censored record in the untransformed dataset.}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lrrrr}
+\toprule
+{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{survival\_months} &  \codewhite{vital\_status\_recode\_Dead} \\
+\midrule
+newindex &                &                &        &            \\
+205      &             40 &           1950 &      3 &          0 \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\caption{\label{tab:transformeddead} Example of four columns in an uncensored record in the transformed dataset.}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lrrrr}
+\toprule
+{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{month} &  \codewhite{newtarget} \\
+\midrule
+newindex &                &                &        &            \\
+205      &             60 &           1951 &      0 &          0 \\
+205      &             60 &           1951 &      1 &          0 \\
+205      &             60 &           1951 &      2 &          0 \\
+205      &             60 &           1951 &      3 &          1 \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
+\begin{table}[tbp]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\caption{\label{tab:transformedalive} Example of four columns in a censored record in the transformed dataset.}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lrrrr}
+\toprule
+{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{month} &  \codewhite{newtarget} \\
+\midrule
+newindex &                &                &        &            \\
+205      &             40 &           1950 &      0 &          0 \\
+205      &             40 &           1950 &      1 &          0 \\
+205      &             40 &           1950 &      2 &          0 \\
+205      &             40 &           1950 &      3 &          0 \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
 
 
 \subsection*{Etiam eget sapien nibh.}
