@@ -599,7 +599,28 @@ The Kaplan-Meier survival estimate corresponding to the data given in Table~(\re
 \end{adjustwidth}
 \end{table}
 
-
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\caption{\label{tab:kaplanexample} Kaplan-Meier table corresponding to the example data in Table~(\ref{tab:censoredexample}).}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lrrrrrr}
+\toprule
+{} &  Censored Status &  Survival Time &  At Risk &  Hazard Function &  Prob of Surv & Survival Function \\
+\midrule
+4 &                0 &            0.50 &              10 &       0.000000 &      1.000000 &      1.000000 \\
+0 &                1 &            0.75 &               9 &       0.111111 &      0.888889 &      0.888889 \\
+8 &                1 &            2.30 &               8 &       0.125000 &      0.875000 &      0.777778 \\
+3 &                1 &            2.40 &               7 &       0.142857 &      0.857143 &      0.666667 \\
+6 &                0 &            3.50 &               6 &       0.000000 &      1.000000 &      0.666667 \\
+5 &                1 &            4.50 &               5 &       0.200000 &      0.800000 &      0.533333 \\
+9 &                1 &            5.20 &               4 &       0.250000 &      0.750000 &      0.400000 \\
+7 &                0 &            5.80 &               3 &       0.000000 &      1.000000 &      0.400000 \\
+1 &                1 &            6.10 &               2 &       0.500000 &      0.500000 &      0.200000 \\
+2 &                0 &            7.00 &               1 &       0.000000 &      1.000000 &      0.200000 \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
 
 \subsection*{Etiam eget sapien nibh.}
 
