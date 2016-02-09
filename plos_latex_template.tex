@@ -850,7 +850,7 @@ The hazard functions thus learned and predicted are intermediary products; what 
 From the resulting hazard functions for each unique patient, we can construct the
 resulting survival functions as presented in section~(\ref{subsec:pseudocode}) and Equation~(\ref{eq:hazardtosurvival}) and explicitly given in python code in the notebooks at the github repository containing supplemental material for this study~\cite{supp}.
 For each subject $i$, all input data minus \codewhite{months} and \codewhite{newtarget} is represented by $\mathbf{X}_{i}$. After the classfier models have trained with target \codewhite{newtarget} on the (very large) training set, each subject's survival function is computed in the corresponding (much smaller) test set.
-These functions are computed by using the model to predict $\lambda(\mathbf{X}_i, t_{j})$ for $j$ running from 0 to 120 months, and $\mathbf{X}_{i}$ corresponds to the single row corresponding to subject $i$ in the original untrasnformed dataset.
+These functions are computed by using the model to predict $\lambda(\mathbf{X}_i, t_{j})$ for $j$ running from 0 to 120 months, and $\mathbf{X}_{i}$ corresponds to the single row corresponding to subject $i$ in the original untransformed dataset.
 
 
 \paragraph{Decision Trees and Random Forests}
@@ -872,7 +872,12 @@ Figure~(\ref{fig:ensemble}) illustrates the power of ensemble methods; the Figur
 \end{figure}
 
 
+A big advantage of random forests is that honing in on suitable hyperparameter values (the number of trees in the forest, the depth of each decision tree, the specific measure of information gain used to choose the node splitting, etc) is not very difficult. The ensemble method is robust to noise from the individual decision trees, which helps to prevent overfitting (memorizing the training dataset targets instead of generalizing from learned rules to perform successfuly on unseen data). The only parameter that has a clearly noticeable effect on performance is the number of trees to include in the forest; in general, the more trees the better the performance, but there is a price to pay in terms of computational cost. The number of trees for the forests trained in this study was relatively small, 20 trees for breast cancer and 25 for both the lung and colon cancer models. 
 
+IOBS has chosen to use the Python scikit-learn implemenation of the Random Forest machine 
+learning classifier~\cite{rf}.
+Random Forests are frequent winners of the Kaggle machine learning competitions~\cite{kagglerf}.
+The model parameters for each cancer type are given in the Supporting Information section.
 
 \subsection*{Etiam eget sapien nibh.}
 
@@ -940,6 +945,126 @@ CO\textsubscript{2} Maecenas convallis mauris sit amet sem ultrices gravida. Eti
 Sed non aliquet felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo justo ac dui pretium imperdiet. Sed suscipit iaculis mi at feugiat. Ut neque ipsum, luctus id lacus ut, laoreet scelerisque urna. Phasellus venenatis, tortor nec vestibulum mattis, massa tortor interdum felis, nec pellentesque metus tortor nec nisl. Ut ornare mauris tellus, vel dapibus arcu suscipit sed. Nam condimentum sem eget mollis euismod. Nullam dui urna, gravida venenatis dui et, tincidunt sodales ex. Nunc est dui, sodales sed mauris nec, auctor sagittis leo. Aliquam tincidunt, ex in facilisis elementum, libero lectus luctus est, non vulputate nisl augue at dolor. For more information, see \nameref{S1_Text}.
 
 \section*{Supporting Information}
+
+\subsection*{Colon Cancer Feature Selection}
+\label{Colon_Cancer_Feature_Selection}
+
+
+The feature set used as input into both the Random Forest and Neural Network models, after the transformation described in section~\nameref{subsec:transformation} is given below and also available in full detail in the file 
+\codewhite{NewPatientColonML.html}.
+
+
+\begin{itemize}[noitemsep]
+\item cs\_tumor\_size
+\item elevation
+\item grade\_cell type not determined
+\item grade\_moderately differentiated
+\item grade\_poorly differentiated
+\item grade\_undifferentiated; anaplastic
+\item grade\_well differentiated
+\item histology\_recode\_broad\_groupings\_acinar cell neoplasms
+\item histology\_recode\_broad\_groupings\_adenomas and adenocarcinomas
+\item histology\_recode\_broad\_groupings\_blood vessel tumors
+\item histology\_recode\_broad\_groupings\_complex epithelial neoplasms
+\item histology\_recode\_broad\_groupings\_complex mixed and stromal neoplasms
+\item histology\_recode\_broad\_groupings\_cystic, mucinous and serous neoplasms
+\item histology\_recode\_broad\_groupings\_ductal and lobular neoplasms
+\item histology\_recode\_broad\_groupings\_epithelial neoplasms, NOS
+\item histology\_recode\_broad\_groupings\_fibromatuos neoplasms
+\item histology\_recode\_broad\_groupings\_germ cell neoplasms
+\item histology\_recode\_broad\_groupings\_lipomatous neplasms
+\item histology\_recode\_broad\_groupings\_miscellaneous bone tumors
+\item histology\_recode\_broad\_groupings\_myomatous neoplasms
+\item histology\_recode\_broad\_groupings\_neuroepitheliomatous neoplasms
+\item histology\_recode\_broad\_groupings\_nevi and melanomas
+\item histology\_recode\_broad\_groupings\_paragangliomas and glumus tumors
+\item histology\_recode\_broad\_groupings\_soft tissue tumors and sarcomas, NOS
+\item histology\_recode\_broad\_groupings\_squamous cell neoplasms
+\item histology\_recode\_broad\_groupings\_synovial-like neoplasms
+\item histology\_recode\_broad\_groupings\_transistional cell papillomas and carcinomas
+\item histology\_recode\_broad\_groupings\_unspecified neoplasms
+\item lat
+\item laterality\_Left: origin of primary
+\item laterality\_Not a paired site
+\item laterality\_Only one side involved, right or left origin unspecified
+\item laterality\_Paired site, but no information concerning laterality; midline tumor
+\item laterality\_Right: origin of primary
+\item lng
+\item marital\_status\_at\_dx\_Divorced
+\item marital\_status\_at\_dx\_Married (including common law)
+\item marital\_status\_at\_dx\_Separated
+\item marital\_status\_at\_dx\_Single (never married)
+\item marital\_status\_at\_dx\_Unknown
+\item marital\_status\_at\_dx\_Unmarried or domestic partner
+\item marital\_status\_at\_dx\_Widowed
+\item month\_of\_diagnosis\_Apr
+\item month\_of\_diagnosis\_Aug
+\item month\_of\_diagnosis\_Dec
+\item month\_of\_diagnosis\_Feb
+\item month\_of\_diagnosis\_Jan
+\item month\_of\_diagnosis\_Jul
+\item month\_of\_diagnosis\_Jun
+\item month\_of\_diagnosis\_Mar
+\item month\_of\_diagnosis\_May
+\item month\_of\_diagnosis\_Nov
+\item month\_of\_diagnosis\_Oct
+\item month\_of\_diagnosis\_Sep
+\item number\_of\_primaries
+%\item patient\_id\_number
+\item race\_ethnicity\_Amerian Indian, Aleutian, Alaskan Native or Eskimo
+\item race\_ethnicity\_Asian Indian
+\item race\_ethnicity\_Asian Indian or Pakistani
+\item race\_ethnicity\_Black
+\item race\_ethnicity\_Chinese
+\item race\_ethnicity\_Fiji Islander
+\item race\_ethnicity\_Filipino
+\item race\_ethnicity\_Guamanian
+\item race\_ethnicity\_Hawaiian
+\item race\_ethnicity\_Hmong
+\item race\_ethnicity\_Japanese
+\item race\_ethnicity\_Kampuchean
+\item race\_ethnicity\_Korean
+\item race\_ethnicity\_Laotian
+\item race\_ethnicity\_Melanesian
+\item race\_ethnicity\_Micronesian
+\item race\_ethnicity\_New Guinean
+\item race\_ethnicity\_Other
+\item race\_ethnicity\_Other Asian
+\item race\_ethnicity\_Pacific Islander
+\item race\_ethnicity\_Pakistani
+\item race\_ethnicity\_Polynesian
+\item race\_ethnicity\_Samoan
+\item race\_ethnicity\_Thai
+\item race\_ethnicity\_Tongan
+\item race\_ethnicity\_Unknown
+\item race\_ethnicity\_Vietnamese
+\item race\_ethnicity\_White
+\item seer\_historic\_stage\_a\_Distant
+\item seer\_historic\_stage\_a\_In situ
+\item seer\_historic\_stage\_a\_Localized
+\item seer\_historic\_stage\_a\_Regional
+\item seer\_historic\_stage\_a\_Unstaged
+\item sex\_Female
+\item spanish\_hispanic\_origin\_Cuban
+\item spanish\_hispanic\_origin\_Dominican Republic
+\item spanish\_hispanic\_origin\_Mexican
+\item spanish\_hispanic\_origin\_Non-Spanish/Non-hispanic
+\item spanish\_hispanic\_origin\_Other specified Spanish/Hispanic origin (excludes Dominican Repuclic)
+\item spanish\_hispanic\_origin\_Puerto Rican
+\item spanish\_hispanic\_origin\_South or Central American (except Brazil)
+\item spanish\_hispanic\_origin\_Spanish surname only
+\item spanish\_hispanic\_origin\_Spanish, NOS; Hispanic, NOS; Latino, NOS
+\item spanish\_hispanic\_origin\_Uknown whether Spanish/Hispanic or not
+%\item survival\_months
+%\item vital\_status\_recode\_Dead
+\item year\_of\_birth
+\item year\_of\_diagnosis
+\item month
+\end{itemize}
+
+and 
+\codewhite{newtarget} is the target variable, indicating whether or not the subject died in month given by the value of the \codewhite{month} variable.
+
 
 % Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
 \subsection*{S1 Video}

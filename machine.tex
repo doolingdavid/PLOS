@@ -1063,6 +1063,7 @@ It it interesting to note that both the random forest and neural network lung ca
 \section{Further Directions}
 \label{sec:furtherdirections}
 
+%   the SEER-Medicare database~
 
 The purpose of this study has been twofold; to develop a general methodology of data transformation to survival data with censored observations so that machine learning algorithms can be applied and to help further the cause of PPPM medicine by developing models of personalized suvival curve prognosis.
 To help further refine the methodology, we would like to apply it to different survival datasets~\cite{umass}, not necessarily within the healthcare domain. In particular, the methods presented in this paper do not take into account time varying features. For example, the \codewhite{cs\_tumor\_ size} variable that has been a part of this study is kept fixed at the value measured at diagnosis for all records corresponding to a given subject. Clearly, the actual tumor size varies along with time and a sophisitcated model can be developed to take this into account, given available datasets. Unfortunately, the SEER datasets considered in this study do not provide this kind of granularity over time.
