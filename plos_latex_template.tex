@@ -823,6 +823,57 @@ Finally, we emphasize the crucial point that the features \codewhite{survival\_m
 \codewhite{vital\_status\_recode\_Dead} are dropped from both the training and and testing data, and are replaced with the features \codewhite{months} and \codewhite{newtarget}, as illustrated in Tables~(\ref{tab:originaldead},~\ref{tab:originalalive},~\ref{tab:transformeddead},~\ref{tab:transformedalive}). The information of which subjects represent censored data (\codewhite{vital\_status\_recode\_Dead} == 0) and which died is retained and recoverable trough the \codewhite{newindex} variable and is needed for proper evaluation of the performance metrics; when evaluating AUC curves for the 6, 12, and 60 month binary classifiers, we need to limit the test data to those subjects that we know definitively whether or not they survived 6, 12 or 60 months respectively. This requirement will necessitate the elmination of some of the censored data when computing some of the performance metrics. We introduce the two machine learning algorithms used in this study below, chosen because of their high performance in machine learning competitions and their complementary methods, so that their mutual agreement shown below on the test datasets can be taken as indication that they are actually learning useful information.
 
 
+Random Forests are made up of an ensemble of independet \textbf{Decision trees} that are purposefully exposed to only subsets of the data. The general philosophy is presented in the popular science book "The Wisdom of Crowds''~\cite{wisdom}.
+The idea is that a large number of independent non-expert opinions converge on the correct answer when averaged. The success of this philosophy of prediction was startingly shown by the success of the political and world event predictions made by the prediction market site Intrade, before its forced closure by the Commodity Futures Trading Commission~\cite{cassidy}. %\footnote{``What killed Intrade?``, John Cassidy, \textit{The New Yorker}, 10 Mar, 2013, %accessed 11 Jan 2016, \url{http://www.newyorker.com/news/john-cassidy/what-killed-%intrade}.} 
+ The other class of methods used by IOBS to develop predictive models are called neural networks, and are modelled on how the human brain learns high level concepts from lower level ones. 
+As opposed to the crowd-based wisdom of a random forest, a neural network is analgous to a seasoned expert. 
+%The philosophy behind the training and achieved accuracies of neural network classifiers and %predictors is that of going to a seasoned expert. 
+A Neural network learns from repeated exposure to the training data and improves its predictions with each pass over the data.
+ The general philosophy is simlar to that represented by the well-known maxim that it takes 10,000 hours to become an expert in any given field~\cite{outliers}.
+%\footnote{``The 10,000 Hour Rule,` Malcolm Gladwell, accessed 11 Jan 2016, \url{http://%gladwell.com/outliers/the-10000-hour-rule/}.}
+
+
+\subsection*{Prediction Models}
+\label{sec:predmodels}
+
+With the datasets transformed as described above, we are now able to use them to train and evaluate machine learning classifiers.
+The classifier models described in this section are learning the hazard function: given all of the data given in the Supporting Information section for each cancer type and includes the field \codewhite{months} (the months after diagnosis), the models predict the target variable \codewhite{newtarget}, which is a binary class label equal to 1 if the subject died in that month and 0 otherwise.
+Fortunately, both random forests and neural networks are capable of not only performing strict class prediction, i.e. predicing whether \codewhite{newtarget} is 0 or 1, but are also able to predict the \emph{probability} of \codewhite{newtarget} being 0 or 1, and thus learning the hazard function.
+%Both random forests and neural networks can be used not only as binary classifiers, but also have the ability to predict %the \emph{probabilities} of belonging to either class encoded by \codewhite{newtarget}. In particular, the predicted %probability 
+%of belonging to class 1 is exactly the hazard function corresponding to that value of \codewhite{months}: the probability %of dying in that month,
+%, given that the patient represented by the record has survived up to that month. 
+The models learn $\lambda(\mathbf{X}, \codewhite{months})$.
+This prediction task should not be confused with the regression problem of trying to predict precisely in what month a patient will die.
+
+
+The hazard functions thus learned and predicted are intermediary products; what we are really pursuing are the survival functions for each patient that are derived from the predicted hazard functions.
+From the resulting hazard functions for each unique patient, we can construct the
+resulting survival functions as presented in section~(\ref{subsec:pseudocode}) and Equation~(\ref{eq:hazardtosurvival}) and explicitly given in python code in the notebooks at the github repository containing supplemental material for this study~\cite{supp}.
+For each subject $i$, all input data minus \codewhite{months} and \codewhite{newtarget} is represented by $\mathbf{X}_{i}$. After the classfier models have trained with target \codewhite{newtarget} on the (very large) training set, each subject's survival function is computed in the corresponding (much smaller) test set.
+These functions are computed by using the model to predict $\lambda(\mathbf{X}_i, t_{j})$ for $j$ running from 0 to 120 months, and $\mathbf{X}_{i}$ corresponds to the single row corresponding to subject $i$ in the original untrasnformed dataset.
+
+
+\paragraph{Decision Trees and Random Forests}
+\emph{Decision tree} classifiers are attractive models because they can be intrepeted easily. Like the name decision tree suggests, we can think of this model as breaking down our data by making decisions based on asking a series of questions.
+Based on the features in our training set, the decision tree model learns a series of questions to infer the class labels of the samples. 
+
+\emph{Random forests} have gained huge popularity in applications of machine learning during the last decade due to their good classification performance, scalability, and ease of use. Intuitively, a random forest can be considered as an \emph{ensemble of decision trees}. The idea behind ensemble learning is to combine \emph{weak learners} to build a more robust model, a \emph{strong learner}, that has a better generalization error and is less susceptible to overfitting. 
+
+The goal behind \emph{ensemble methods} is to combine different classifiers into a meta-classifier that has a better generalization performance than each individual classifier alone. For example, assuming that we collected predictions from 10 experts, ensemble methods would allow us to strategically combine these predictions by the 10 experts to come up with a prediction that is more accurate and robust than the predictions by each individual expert. The individual decision trees that make an ensemble are called base learners, and as long as the error rate of each base learner is less than .50, the combined random forest will benefit from the affects of combining predictions to achieve a far greater accuracy.
+
+Figure~(\ref{fig:ensemble}) illustrates the power of ensemble methods; the Figure illustrates how the ensemble error rate is much lower than the Base learner error rate, as long as the Base learner error rate is less than 0.5. The Figure illustrates this effect for an ensemble of 500 base learners.
+
+
+
+\begin{figure}[!ht]
+  \centering
+    \includegraphics[scale=.75]{ensemble}
+\caption{\label{fig:ensemble} Illustration of ensemble methods showing how a collection of base learners with poor accuracy can combine to produce an accurate ensemble learner.}
+\end{figure}
+
+
+
+
 \subsection*{Etiam eget sapien nibh.}
 
 % For figure citations, please use "Fig." instead of "Figure".
