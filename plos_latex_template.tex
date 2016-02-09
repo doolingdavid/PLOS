@@ -793,6 +793,36 @@ newindex &                &                &        &            \\
 \end{table}
 
 
+
+One obvious side effect of this transformation is that it explodes the length of the dataset.
+For this study, the original, untransformed colon cancer DataFrame has shape $(113072, 103)$, and the total transformed colon cancer DataFrame has shape $(4165251, 103)$.
+Similary, the original, untransformed lung cancer DataFrame has shape $(177089, 115)$, and the total transformed lung cancer DataFrame has shape $(3079931, 115)$.
+The biggest explosion in dataset size occured with the breast cancer data, which is a consequence of the relatively high survival rates in breast cancer. A subject who is censored with a recorded survival months of 48 will contribute an extra 48 rows to the transformed dataset.  
+The original, untransformed breast cancer DataFrame has shape $(329949, 67)$, and the total transformed breast cancer DataFrame has shape $(15085711, 67)$.
+Traning machine learning algorithms on such large datasets, even after splitting into training and testing sets described below, require large RAM. All computations for this study were performed on a Dell XPS 8700 Desktop with 32GB of RAM.
+
+\subsection*{Training and Test Partitions}
+\label{subsec:traintest}
+
+
+After performing the data transformation adumbrated above, it is necessary to be mindful of how we partition the data into training and testing data. Each subject that was represented by a single row in the original untransformed dataset now potentially is represented by multiple rows in the transformed dataset, and care must be taken to ensure that all of the rows corresponding to a particular subject are either assigned exclusively to the training set or exclusive to the testing set. 
+An additional characteristic of this transformed data that requires careful treatment involves balancing. The transformation results in many new records with the target variable \codewhite{newtarget} == 0. The training and test sets must be chosen such that the ratio of the number of records with \codewhite{newtarget} == 0 to that of the number of records with \codewhite{newtarget} == 1 is the same in the training and test datasets.
+This ratio turns out to be $\approx 396$ for the breast cancer data, $\approx  99$ for the colon cancer data, and 
+$\approx 22.75$ for the lung cancer data. 
+The shapes of the training and testing datasets for breast cancer used in this study are $(14936862, 67)$ and 
+$(148849, 67)$, respectively.
+For lung cancer, the corresponding datasets have shapes $(2988768, 115)$ and $(91163, 115)$.
+Finallly, for colon cancer the partition into training and test datasets of the transformed data have the shapes 
+$(3958008, 103)$ and $(207243, 103)$. Multiple rows correspond to the same test patient in these datasets.
+The colon cancer test dataset represents 5654 distinct subjects; the breast cancer test dataset represents 3300 distinct subjects; and the lung test dataset contains data for 5313 distinct subjects.
+
+The models described below are trained to learn the values of \codewhite{newtarget}, which is a binary variable: a value of '0' indicating that the subject is still alive at the given month, while a value of '1' indicates that the patient died at that particular value of \codewhite{months}. The random forests and neural networks described below are binary classifiers with the target \codewhite{newtarget}. Fortunately, both the random forests and neural networks are capable of not only performing strict class prediction, i.e. predicting whether \codewhite{newtarget} is '0' or '1', but are also able to predict the \textit{probability} of \codewhite{newtarget} being '0' or '1'., and thus learning the hazard function.
+
+
+Finally, we emphasize the crucial point that the features \codewhite{survival\_months} and \\
+\codewhite{vital\_status\_recode\_Dead} are dropped from both the training and and testing data, and are replaced with the features \codewhite{months} and \codewhite{newtarget}, as illustrated in Tables~(\ref{tab:originaldead},~\ref{tab:originalalive},~\ref{tab:transformeddead},~\ref{tab:transformedalive}). The information of which subjects represent censored data (\codewhite{vital\_status\_recode\_Dead} == 0) and which died is retained and recoverable trough the \codewhite{newindex} variable and is needed for proper evaluation of the performance metrics; when evaluating AUC curves for the 6, 12, and 60 month binary classifiers, we need to limit the test data to those subjects that we know definitively whether or not they survived 6, 12 or 60 months respectively. This requirement will necessitate the elmination of some of the censored data when computing some of the performance metrics. We introduce the two machine learning algorithms used in this study below, chosen because of their high performance in machine learning competitions and their complementary methods, so that their mutual agreement shown below on the test datasets can be taken as indication that they are actually learning useful information.
+
+
 \subsection*{Etiam eget sapien nibh.}
 
 % For figure citations, please use "Fig." instead of "Figure".
