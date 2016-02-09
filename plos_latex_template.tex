@@ -899,7 +899,22 @@ A big advantage of random forests is that honing in on suitable hyperparameter v
 IOBS has chosen to use the Python scikit-learn implemenation of the Random Forest machine 
 learning classifier~\cite{rf}.
 Random Forests are frequent winners of the Kaggle machine learning competitions~\cite{kagglerf}.
-The model parameters for each cancer type are given in the Supporting Information section.
+The model parameters for each cancer type are given in sections~(\nameref{subsec:lungrf},~\nameref{subsec:colonrf},~\nameref{subsec:breastrf}).
+
+
+\paragraph{Multi-Layer Perceptron Neural Networks}
+Neural networks are a biologically-inspired programming paradigm that enable computers to learn from observational data~\cite{deeplearning}.
+%As you may know, \textbf{deep learning} is getting a lot of press and is without any doubt the %hottest topic in the machine learning field.
+Deep learning can be understood as a set of algorithms that were developed to train artificial neural networks with many layers most efficiently.
+ Neural networks are a hot topic not only in academic research, but also in big technology companies such as Facebook, Microsoft, and Google who invest heavily in artificial neural networks and deep learning research. As of today, complex neural networks powered by deep learning algorithms are considered as state-of-the-art when it comes to complex problem solving such as image and voice recognition.
+In addition, the pharmaceutical industry recently started to use deep learning techniques for drug discovery and toxicity prediction, and research has shown that these novel techniques substantially exceed the performance of traditional methods for virtual screening~\cite{toxicity}.
+
+IOBS has chosen to use the Multi-Layer Perceptron Neural Network (MLP neural network) implementation Keras developed at MIT.
+Keras was initially developed as part of the research effort of project ONEIROS (Open-ended Neuro-Electronic Intelligent Robot Operating System)~\cite{keras}.
+Keras is a minimalist, highly modular neural networks library, written in Python and capable of running on top of either TensorFlow or Theano. The model architecture for each cancer type are given in sections~(\ref{subsec:breastnn},~\ref{subsec:colonnn},~\ref{subsec:lungnn}). Training a neural network and choosing an appropriate architecture is as much art as science~\cite{deeplearning}, and the search for a good neural network architecture for the lung cancer case was more demanding than for the breast and colon. The presence of both non-small cell lung cancer (NSCLC) and small cell lung cancer (SCLC) in the SEER data may be the source of this need for more iterations and trials of different architectures when training the lung cancer neural network models.
+
+
+
 
 \subsection*{Etiam eget sapien nibh.}
 
