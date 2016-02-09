@@ -412,7 +412,7 @@ For example, Table~(\ref{tab:nmhead}) shows how five entries of \codewhite{STATE
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:nmhead} Example of the transformation of \codewhite{STATE-COUNTY RECODE} to \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}.}
+\caption{\label{tab:nmhead} {\bf Example of the transformation of \codewhite{STATE-COUNTY RECODE} to \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}.}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{llrrr}
 \toprule
@@ -451,7 +451,7 @@ The SEER variable \codewhite{CS TUMOR SIZE} records the tumor size in millimeter
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:colonfilter} Filters applied to the Colon Cancer data.}
+\caption{\label{tab:colonfilter} {\bf Filters applied to the Colon Cancer data.}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{lr}
 \toprule
@@ -477,7 +477,7 @@ The SEER variable \codewhite{CS TUMOR SIZE} records the tumor size in millimeter
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:lungfilter} Filters applied to the Lung Cancer data.}
+\caption{\label{tab:lungfilter} {\bf Filters applied to the Lung Cancer data.}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{lr}
 \toprule
@@ -502,7 +502,7 @@ The SEER variable \codewhite{CS TUMOR SIZE} records the tumor size in millimeter
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:breastfilter} Filters applied to the Breast Cancer data.}
+\caption{\label{tab:breastfilter} {\bf Filters applied to the Breast Cancer data.}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{lr}
 \toprule
@@ -578,7 +578,7 @@ The Kaplan-Meier survival estimate corresponding to the data given in Table~(\re
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:censoredexample} Example data to illustate traditional Survival Analsyis.}
+\caption{\label{tab:censoredexample} {\bf Example data to illustate traditional Survival Analsyis.}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrr}
 \toprule
@@ -601,7 +601,7 @@ The Kaplan-Meier survival estimate corresponding to the data given in Table~(\re
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:kaplanexample} Kaplan-Meier table corresponding to the example data in Table~(\ref{tab:censoredexample}).}
+\caption{\label{tab:kaplanexample} {\bf Kaplan-Meier table corresponding to the example data in Table~(\ref{tab:censoredexample}).}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrrrrr}
 \toprule
@@ -746,7 +746,7 @@ The untransformed datapoint represented Table~(\ref{tab:originalalive}) is trans
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:originaldead} Example of four columns in an uncensored record in the untransformed dataset.}
+\caption{\label{tab:originaldead} {\bf Example of four columns in an uncensored record in the untransformed dataset.}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrrr}
 \toprule
@@ -763,7 +763,7 @@ newindex &                &                &        &            \\
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:originalalive} Example of four columns in a censored record in the untransformed dataset.}
+\caption{\label{tab:originalalive} {\bf Example of four columns in a censored record in the untransformed dataset.}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrrr}
 \toprule
@@ -779,7 +779,7 @@ newindex &                &                &        &            \\
 
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:transformeddead} Example of four columns in an uncensored record in the transformed dataset.}
+\caption{\label{tab:transformeddead} {\bf Example of four columns in an uncensored record in the transformed dataset.}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrrr}
 \toprule
@@ -798,7 +798,7 @@ newindex &                &                &        &            \\
 
 \begin{table}[tbp]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:transformedalive} Example of four columns in a censored record in the transformed dataset.}
+\caption{\label{tab:transformedalive} {\bf Example of four columns in a censored record in the transformed dataset.}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrrr}
 \toprule
@@ -911,7 +911,7 @@ In addition, the pharmaceutical industry recently started to use deep learning t
 
 IOBS has chosen to use the Multi-Layer Perceptron Neural Network (MLP neural network) implementation Keras developed at MIT.
 Keras was initially developed as part of the research effort of project ONEIROS (Open-ended Neuro-Electronic Intelligent Robot Operating System)~\cite{keras}.
-Keras is a minimalist, highly modular neural networks library, written in Python and capable of running on top of either TensorFlow or Theano. The model architecture for each cancer type are given in sections~(\ref{subsec:breastnn},~\ref{subsec:colonnn},~\ref{subsec:lungnn}). Training a neural network and choosing an appropriate architecture is as much art as science~\cite{deeplearning}, and the search for a good neural network architecture for the lung cancer case was more demanding than for the breast and colon. The presence of both non-small cell lung cancer (NSCLC) and small cell lung cancer (SCLC) in the SEER data may be the source of this need for more iterations and trials of different architectures when training the lung cancer neural network models.
+Keras is a minimalist, highly modular neural networks library, written in Python and capable of running on top of either TensorFlow or Theano. The model architecture for each cancer type are given in sections~(\nameref{subsec:breastnn},~\nameref{subsec:colonnn},~\nameref{subsec:lungnn}). Training a neural network and choosing an appropriate architecture is as much art as science~\cite{deeplearning}, and the search for a good neural network architecture for the lung cancer case was more demanding than for the breast and colon cases. The presence of both non-small cell lung cancer (NSCLC) and small cell lung cancer (SCLC) in the SEER data may be the source of this need for more iterations and trials of different architectures when training the lung cancer neural network models.
 
 
 
@@ -935,7 +935,78 @@ Figure Caption Proin rutrum vel massa non gravida. Quisque tempor sem et digniss
 
 % Results and Discussion can be combined.
 \section*{Results}
-Nulla mi mi, venenatis sed ipsum varius, Table~\ref{table1} volutpat euismod diam. Proin rutrum vel massa non gravida. Quisque tempor sem et dignissim rutrum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at justo vitae nulla elementum commodo eu id massa. In vitae diam ac augue semper tincidunt eu ut eros. Fusce fringilla erat porttitor lectus cursus, vel sagittis arcu lobortis. Aliquam in enim semper, aliquam massa id, cursus neque. Praesent faucibus semper libero.
+\label{sec:results}
+
+
+In order to evaluate the performance of the models, we first construct three binary classifiers corresponding to whether or not a subject survived 6, 12, or 60 months after diagnosis. 
+This is done by iterating over all distinct patient indices in the test set, prediciting the full survival function, and capturing the values corresonding to 6, 12, and 60 months.  
+If the survival function evaluted at 6 months is greater than or equal to .5 for a given subject, then the 6 months binary classifier predicts that that subject will be alive 6 months after diagnosis. Similarly, if the survival function evaluted at 60 months is less than .5, then the 12 months binary classifier predicts that that subject will be dead 12 months after diagnosis. Figure~(\ref{fig:survivalexample}) illustrates the method; in this case the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts expiry.
+
+
+%\begin{figure}[tbp]
+\begin{figure}[h]
+\centering 
+%\begin{center}/\end{center} takes some additional vertical space
+%\includegraphics[width=.45\textwidth,trim=0 380 0 200,clip]{img1.pdf}
+%\hfill
+\begin{center}
+\includegraphics[width=.90\textwidth,origin=c]{survivalexample.pdf}
+% "\includegraphics" is very powerful; the graphicx package is already loaded
+\caption{\label{fig:survivalexample} Example of the construction of the binary classifiers for 6, 12, and 60 months survival.
+A subject's hazard curve $\lambda(\mathbf{X}, t)$ is predicted by the model for times out to 120 months. The survival curve is then readily computed as in Equation~(\ref{eq:cdf}). For this example, the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts expiry.}
+\end{center}
+\end{figure}
+
+
+
+Because of censoring it is necessary to apply some Boolean filters to the data in order to correctly assess the resulting classifiers.
+To construct AUC curves for the 6 month classifier, we restrict ourselves to considering
+subjects in the test data where either of the following mutually exlusive conditions holds:
+
+\begin{itemize}[noitemsep]
+\item \codewhite{survival\_months} $>=$ 6 AND \codewhite{vital\_status\_recode} == 0
+\item \codewhite{vital\_status\_recode} == 1
+\end{itemize}
+
+
+
+
+That is, we restrict ourselves to subsets of the data where we know for certain whether or not the subject survived at least 6 months. Similarly for the 12 and 60 months surivival classifiers. 
+
+\subsection*{Performance Metrics}
+\label{sec:performancemetrics}
+
+
+
+The AUC scores for each of the 18 different binary classifiers are listed in Table~(\ref{tab:AUC}). We emphasize the above-mentioned discussion concerning the correct treatment of the censored test data when evaluating performance metrics.
+Namely, when computing the AUC for the 12 month survival curve classifiers, we restrict the test data subjects to those that in the untransformed data set that satisfy either of the following mutually exclusive conditions:
+
+
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\caption{\label{tab:AUC} {\bf AUC values for the Random Forest and Neural Networks model
+binary classifiers derived from the full survival curve predictions; see text for details. The number of subjects that were used in the calculation of a given AUC score are given in parenthesis after the score. }}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lrrr}
+\toprule
+%\rowcolors{1}{white}{yellow}
+%\hline
+Model & 6 Months AUC & 12 Months AUC & 60 Months AUC \\ 
+\midrule
+Breast RF &  .846  (3035)     &     .885  (2797)         &  .844 (1392) \\ 
+Breast NN &   .855 (3035)    &     .867  (2797)    &    .836  (1392) \\ 
+Colon RF  &     .804 (5281)         &      .806 (5003)          &      .828   (3232)        \\ 
+Colon NN   &     .797 (5281)         &          .804 (5003)        &   .841 (3232) \\ 
+Lung RF    &      .772  (5019)             &        .796 (4860)              &   .874 (4143)  \\ 
+Lung NN    &        .765  (5019)            &        .796  (4860)             &  .875 (4143)  \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
+
+%Nulla mi mi, venenatis sed ipsum varius, Table~\ref{table1} volutpat euismod diam. Proin %rutrum %vel massa non gravida. Quisque tempor sem et dignissim rutrum. Lorem ipsum dolor %sit amet, %consectetur adipiscing elit. Morbi at justo vitae nulla elementum commodo eu id %massa. In vitae %diam ac augue semper tincidunt eu ut eros. Fusce fringilla erat porttitor lec%tus cursus, vel sagittis %arcu lobortis. Aliquam in enim semper, aliquam massa id, cursus %neque. Praesent faucibus %semper libero.
 
 
 \begin{table}[!ht]
