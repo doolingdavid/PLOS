@@ -441,7 +441,9 @@ An added benefit of this shift from the single categorical variable \codewhite{S
 
 
 This study focused on three different cancer types, namely colorectal cancer, lung cancer, and breast cancer. 
-In the SEER data, there are instances of subjects with multiple rows; whenever a subject, or patient, is diagnosed with a new tumor, an additional record is added. In this study, we restrict attention to the data corresponding to the first record of each subject; i.e., we wish to make models that predict survival prognosis based on the data available right after diagnosis. The full set of conditions defining the subsets of the SEER data used in this study follows below.
+In the SEER data, there is a record for each primary tumor. It multple records exist for a given patient, only the first chronologically was included. The full set of conditions defining the subsets of the SEER data used in this study follows below is included in section~\nameref{sec:supporting}.
+
+%there are instances of subjects with multiple rows; whenever a subject, or patient, is diagnosed %with a new tumor, an additional record is added. In this study, we restrict attention to the data %corresponding to the first record of each subject; i.e., we wish to make models that predict %survival prognosis based on the data available right after diagnosis. The full set of conditions %defining the subsets of the SEER data used in this study follows below.
 
 
 
