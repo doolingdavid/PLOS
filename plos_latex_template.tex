@@ -1203,13 +1203,64 @@ at least 6, 12, and 60 months are .89, .83, and .50, respectively.
   \centering
     \includegraphics[scale=.8]{boston1940}
 \caption{\label{fig:boston1940} Colon Cancer Survival Curve predicted from the data in 
-Table~(\ref{tab:boston1940}) using the neural network web app \url{http://coloncancer.herokuapp.com/}.}
+Table~(\ref{tab:boston1940}) using the neural network web app \url{https://github.com/doolingdavid/colon-cancer-nn-errors.git}.}
 \end{figure}
 
+Changing the data in Table~\ref{tab:boston1940} so that the address field is changed from Boston, Massachusetts to Denver, Colorado but keeping all other variables are unchanged results in the predicted probabilities of living at least 6, 12, and 60 months: .945, .902, .665. 
+Behind the scenes, the apps use the input to the address field to make a call to the Google Maps API to convert the address into a latitude, longitude and elevation.
+These probablities are noticeably higher and reflect the documented effects of both longitude and elevation on cancer treatment and prognosis in the United States~\cite{kob4}.
+
+A similar example of how changing the inputs to the models affects the predicted survival curves in interesting ways can be seen with the random forest model for lung cancer. Changing the data in Table~\ref{tab:lungmaritalstatus} by toggling between the male/female, and married/single four possible permutations results in the following prediction probabilites for 6, 12, and 60 month survival:
+
+\begin{itemize}[noitemsep]
+\item male/married:  .53, .27, .01
+\item male/single: .35, .18, .009
+\item female/married:  .55, .31, .01
+\item female/single: .50, .27, .01
+\end{itemize}
 
 
-%Nulla mi mi, venenatis sed ipsum varius, Table~\ref{table1} volutpat euismod diam. Proin %rutrum %vel massa non gravida. Quisque tempor sem et dignissim rutrum. Lorem ipsum dolor %sit amet, %consectetur adipiscing elit. Morbi at justo vitae nulla elementum commodo eu id %massa. In vitae %diam ac augue semper tincidunt eu ut eros. Fusce fringilla erat porttitor lec%tus cursus, vel sagittis %arcu lobortis. Aliquam in enim semper, aliquam massa id, cursus %neque. Praesent faucibus %semper libero.
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
+\caption{{\bf Example input data to the Lung Cancer random forest app \url{https://github.com/doolingdavid/lung-cancer-rf-errors.git}.}}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lr}
+\toprule
+  Variable  & Value \\ 
+\midrule
+  What is the tumor size (mm) & 500 \\  
+  What is the patient's address? & newark new jersey \\ 
+  Grade & well differentiated \\  
+  Histology & acinar cell neoplasms \\ 
+  Laterality & \makecell{bilateral involvement, lateral origin unknown; \\ stated to be single primary} \\  
+ Martial Status at Dx & Married including common law \\  
+ Month of Diagnosis & Jan \\  
+ How many primaries & 1 \\  
+  Race$\_$ethnicity & White \\  
+  seer$\_$historic$\_$stage$\_$a  & Distant \\ 
+  Gender & Female \\  
+  spanish$\_$hispanic$\_$origin & Non-spanish/Non-hispanic \\ 
+ Year of Birth & 1970 \\  
+  Year of Diagnosis & 2011 \\
+\bottomrule
+\end{tabular}
+\label{tab:lungmaritalstatus}
+\end{adjustwidth}
+\end{table}
 
+
+
+Inputting the same combinations of data into the lung cancer neural network app \url{https://github.com/doolingdavid/lung-cancer-nn-errors.git}
+yields the following probabilities:
+
+\begin{itemize}[noitemsep]
+\item male/married: .42, .24, .04
+\item male/single: .40, .22, .03
+\item female/married: .44, .26, .04
+\item female/single: .42, .24, .04
+\end{itemize}
+
+It it interesting to note that both the random forest and neural network lung cancer models predict greater 6 month survival rates for married people, with a slightly greater benefit for males than females. The effect is greater in the random forest model, but is also visible in the neural network model. 
 
 %\begin{table}[!ht]
 %\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
