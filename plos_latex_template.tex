@@ -325,23 +325,24 @@ The survival function can then be derived from the hazard function.
 \label{sec:materialsandmethods}
 % \section{Data acquition}
 For this study we use the publically available 1973-2012 SEER incidence data files corresponding to colon, breast and lung cancer contained in the list below.
-SEER requires that researchers submit a request for the data, which includes an agreement form. Detailed documentation explaining the contents of both the incidence data files used in this study as well as a data dictionary for the 1973-2012 SEER incidence data files are available without the need to register or submit a data request \cite{seerdoc}.
+SEER requires that researchers submit a request for the data, which includes an agreement form. Detailed documentation explaining the contents of both the incidence data files used in this study as well as a data dictionary for the 1973-2012 SEER incidence data files are available without the need to register or submit a data request \cite{seerdoc}. The raw data files in this study and the subsets dedfined by the appropriate filters are given in detail in
+subsection~\nameref{sec:raw}, in the appendix~\nameref{sec:supporting}. 
  
 
-\begin{itemize}[noitemsep]
-\item incidence\textbackslash yr1973\_2012.seer9\textbackslash COLRECT.txt
-\item incidence\textbackslash yr1973\_2012.seer9\textbackslash BREAST.txt
-\item incidence\textbackslash yr1973\_2012.seer9\textbackslash RESPIR.txt
-\item incidence\textbackslash yr1992\_2012.sj\_la\_rg\_ak\textbackslash COLRECT.txt
-\item incidence\textbackslash yr1992\_2012.sj\_la\_rg\_ak\textbackslash BREAST.txt
-\item incidence\textbackslash yr1992\_2012.sj\_la\_rg\_ak\textbackslash RESPIR.txt
-\item incidence\textbackslash yr2000\_2012.ca\_ky\_lo\_nj\_ga\textbackslash COLRECT.txt
-\item incidence\textbackslash yr2000\_2012.ca\_ky\_lo\_nj\_ga\textbackslash BREAST.txt
-\item incidence\textbackslash yr2000\_2012.ca\_ky\_lo\_nj\_ga\textbackslash RESPIR.txt
-\item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash COLRECT.txt
-\item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash BREAST.txt
-\item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash RESPIR.txt
-\end{itemize}
+%\begin{itemize}[noitemsep]
+%\item incidence\textbackslash yr1973\_2012.seer9\textbackslash COLRECT.txt
+%\item incidence\textbackslash yr1973\_2012.seer9\textbackslash BREAST.txt
+%\item incidence\textbackslash yr1973\_2012.seer9\textbackslash RESPIR.txt
+%\item incidence\textbackslash yr1992\_2012.sj\_la\_rg\_ak\textbackslash COLRECT.txt
+%\item incidence\textbackslash yr1992\_2012.sj\_la\_rg\_ak\textbackslash BREAST.txt
+%\item incidence\textbackslash yr1992\_2012.sj\_la\_rg\_ak\textbackslash RESPIR.txt
+%\item incidence\textbackslash yr2000\_2012.ca\_ky\_lo\_nj\_ga\textbackslash COLRECT.txt
+%\item incidence\textbackslash yr2000\_2012.ca\_ky\_lo\_nj\_ga\textbackslash BREAST.txt
+%\item incidence\textbackslash yr2000\_2012.ca\_ky\_lo\_nj\_ga\textbackslash RESPIR.txt
+%\item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash COLRECT.txt
+%\item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash BREAST.txt
+%\item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash RESPIR.txt
+%\end{itemize}
 
 
 \subsection*{Data preparation and preprocessing}
@@ -1330,6 +1331,27 @@ The daunting and exciting task of teasing out actual causality relationships wit
 \section*{Supporting Information}
 \label{sec:supporting}
 
+\subsection*{Raw SEER datafiles}
+\label{sec:raw}
+
+\begin{itemize}[noitemsep]
+\item incidence\textbackslash yr1973\_2012.seer9\textbackslash COLRECT.txt
+\item incidence\textbackslash yr1973\_2012.seer9\textbackslash BREAST.txt
+\item incidence\textbackslash yr1973\_2012.seer9\textbackslash RESPIR.txt
+\item incidence\textbackslash yr1992\_2012.sj\_la\_rg\_ak\textbackslash COLRECT.txt
+\item incidence\textbackslash yr1992\_2012.sj\_la\_rg\_ak\textbackslash BREAST.txt
+\item incidence\textbackslash yr1992\_2012.sj\_la\_rg\_ak\textbackslash RESPIR.txt
+\item incidence\textbackslash yr2000\_2012.ca\_ky\_lo\_nj\_ga\textbackslash COLRECT.txt
+\item incidence\textbackslash yr2000\_2012.ca\_ky\_lo\_nj\_ga\textbackslash BREAST.txt
+\item incidence\textbackslash yr2000\_2012.ca\_ky\_lo\_nj\_ga\textbackslash RESPIR.txt
+\item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash COLRECT.txt
+\item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash BREAST.txt
+\item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash RESPIR.txt
+\end{itemize}
+
+
+
+
 \subsection*{Colon Cancer Feature Selection}
 \label{Colon_Cancer_Feature_Selection}
 
@@ -1446,8 +1468,11 @@ The feature set used as input into both the Random Forest and Neural Network mod
 \item month
 \end{itemize}
 
+
 and 
 \codewhite{newtarget} is the target variable, indicating whether or not the subject died in month given by the value of the \codewhite{month} variable.
+
+
 
 
 
@@ -1575,6 +1600,10 @@ The feature set used as input into both the Random Forest and Neural Network mod
 \item month
 \end{itemize}
 
+
+and 
+\codewhite{newtarget} is the target variable, indicating whether or not the subject died in month given by the value of the \codewhite{month} variable.
+
 \subsection*{Breast Cancer Feature Selection}
 \label{Breast_Cancer_Feature_Selection}
 
@@ -1659,8 +1688,6 @@ and
 
 
 
-and 
-\codewhite{newtarget} is the target variable, indicating whether or not the subject died in month given by the value of the \codewhite{month} variable.
 
 
 \subsection*{Pseudocode for the Data Transformation}
