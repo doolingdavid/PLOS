@@ -872,8 +872,8 @@ The hazard functions thus learned and predicted are intermediary products; what 
 From the resulting hazard functions for each unique patient, we can construct the
 resulting survival functions as presented in section~(\ref{subsec:pseudocode}) and Equation~(\ref{eq:hazardtosurvival}) and explicitly given in python code in the notebooks at the github repository containing supplemental material for this study~\cite{supp}.
 For each subject $i$, all input data minus \codewhite{months} and \codewhite{newtarget} is represented by $\mathbf{X}_{i}$. After the classfier models have trained with target \codewhite{newtarget} on the (very large) training set, each subject's survival function is computed in the corresponding (much smaller) test set.
-These functions are computed by using the model to predict $\lambda(\mathbf{X}_i, t_{j})$ for $j$ running from 0 to 120 months, and $\mathbf{X}_{i}$ corresponds to the single row corresponding to subject $i$ in the original untransformed dataset.
-
+These functions are computed by using the model to predict $\lambda(\mathbf{X}_i, t_{j})$ for $j$ running from 0 to 107 months, and $\mathbf{X}_{i}$ corresponds to the single row corresponding to subject $i$ in the original untransformed dataset.
+107 months was the maximum value of survival months in all three of the cancer datasets, and is a consequence of the data subsets chosen for this study.
 
 \paragraph{Decision Trees and Random Forests}
 \emph{Decision tree} classifiers are attractive models because they can be intrepeted easily. Like the name decision tree suggests, we can think of this model as breaking down our data by making decisions based on asking a series of questions.
@@ -950,10 +950,10 @@ If the survival function evaluted at 6 months is greater than or equal to .5 for
 %\includegraphics[width=.45\textwidth,trim=0 380 0 200,clip]{img1.pdf}
 %\hfill
 \begin{center}
-\includegraphics[width=.90\textwidth,origin=c]{survivalexample.pdf}
+\includegraphics[width=.90\textwidth,origin=c]{survivalexamplewitherrors.pdf}
 % "\includegraphics" is very powerful; the graphicx package is already loaded
 \caption{\label{fig:survivalexample} Example of the construction of the binary classifiers for 6, 12, and 60 months survival.
-A subject's hazard curve $\lambda(\mathbf{X}, t)$ is predicted by the model for times out to 120 months. The survival curve is then readily computed as in Equation~(\ref{eq:cdf}). For this example, the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts expiry.}
+A subject's hazard curve $\lambda(\mathbf{X}, t)$ is predicted by the model for times out to 107 months. The survival curve is then readily computed as in Equation~(\ref{eq:cdf}). For this example, the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts expiry.}
 \end{center}
 \end{figure}
 
