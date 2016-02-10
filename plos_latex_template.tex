@@ -685,22 +685,22 @@ In this section we describe an inuitive way to transform right-censored data app
 
 
 
-The overall philosophy of the Kaplan-Meier estimate of the survival curve for a population differs fundamentally from the methods described below and used in this study. 
-The Kaplan-Meier estimate of the survival curve is given by
-\begin{equation}
-\label{eq:kaplanmeier}
-\hat{S}(t) = \prod_{t_i < t} \frac{n_i - d_i}{n_i}
-\end{equation}
-where $d_i$ are the number of death events at time $t$ and $n_t$ is the number of subjects at risk of death just prior to time $t$. 
-Equation~(\ref{eq:kaplanmeier}) uses the entire data set to arrive at an estimate of the entire population survival curve. In contrast, the method described below uses the entire data set to learn a model so as to predict hazard and survival curves from the data for as yet unseen individuals.
+%The overall philosophy of the Kaplan-Meier estimate of the survival curve for a population %differs fundamentally from the methods described below and used in this study. 
+%The Kaplan-Meier estimate of the survival curve is given by
+%\begin{equation}
+%\label{eq:kaplanmeier}
+%\hat{S}(t) = \prod_{t_i < t} \frac{n_i - d_i}{n_i}
+%\end{equation}
+%where $d_i$ are the number of death events at time $t$ and $n_t$ is the number of subjects %at risk of death just prior to time $t$. 
+%Equation~(\ref{eq:kaplanmeier}) uses the entire data set to arrive at an estimate of the entire %population survival curve. In contrast, the method described below uses the entire data set to %learn a model so as to predict hazard and survival curves from the data for as yet unseen %individuals.
 
 
 The key observation is to note that the hazard function can be directly learned via standard machine learning methods. It can be rewritten as
 \begin{equation}
 \label{eq:hhazard}
-\lambda(\mathbf{X}, t) = P(Y = t|Y \geq t, \mathbf{X}),
+\lambda(\mathbf{X}, t_{i}) = P(Y = t_{i}|Y \geq t_{i}, \mathbf{X}),
 \end{equation}
-the probability that, if someone has survived up until month $t$, they will die in that month.
+the probability that, if someone has survived up until month $t_{i}$, they will die in that month.
 where $\mathbf{X}$ represents all of the data for that particular record, and in our case $Y$ represents the true, uncensored number of survival months of the patient.
 What is actually provided in the SEER data is the related variable \codewhite{SURVIVAL MONTHS} $T$ (how long each subject was in the study), and whether they exited by dying or being censored ($D$), \codewhite{VITAL STATUS RECODE}. 
 $D$ is a Boolean variable, so $D = 1$ if $T = Y$, and $D = 0$ if $T < Y$.
@@ -710,16 +710,17 @@ $D$ is a Boolean variable, so $D = 1$ if $T = Y$, and $D = 0$ if $T < Y$.
 It follows directly from equation~\ref{eq:hhazard} that 
 \begin{equation}
 \label{eq:pmf}
-P(Y = t | \mathbf{X}) = \lambda(\mathbf{X}, t) \prod_{i=1}^{t-1} (1 - \lambda(\mathbf{X}, i))
-\end{equation},
-which is the full probablity distribution of dying at time Y~\cite{kuhn}.
+P(Y = t_{j} | \mathbf{X}) = \lambda(\mathbf{X}, t_{j}) \prod_{i=1}^{j-1} (1 - \lambda(\mathbf{X}, t_{i}))
+\end{equation}
+Knowing $P(Y = t_{j} | \mathbf{X}) $ for all $t_{j}$ gives the 
+full probablity distribution of dying at time Y~\cite{kuhn}.
 The survival function is then readily derived from this distribution as
 \begin{equation}
 \label{eq:cdf}
 S(\mathbf{X},t_{k}) = 1 - CDF(\mathbf{X}, t_{k})
 \end{equation}
 where $CDF(\mathbf{X}, t_{k}) = \sum_
-{k=1}^{n} P(Y = t_{k} | \mathbf{X}) $ is the cumulative density function correponding to the probability mass function in equation~\ref{eq:pmf}~\cite{downey}.
+{i=1}^{k} P(Y = t_{i} | \mathbf{X}) $ is the cumulative density function correponding to the probability mass function in equation~\ref{eq:pmf}~\cite{downey}.
 
 
 
@@ -741,8 +742,8 @@ where $CDF(\mathbf{X}, t_{k}) = \sum_
 
 
 
-Treating $T$ as just another covariate is the key to the transformation. Each datapoint in the hidden classification problem is the combination of an $\mathbf{X}_{i}$ in the orginal dataset plus some month $t$, and the classification problem is "did point $\mathbf{X}_{i}$ die in month $t$.'' We will call this new variable $D_{it}$ (\codewhite{newtarget}).
-We can transform our original data set into a new one, with one row for each month that each $\mathbf{X}_{i}$ is in the sample; train a standard classifier on this new dataset with $D_{it}$ as the target, and derive a survival model from the orginal dataset.
+Treating $T$ as just another covariate is the key to the transformation. Each datapoint in the hidden classification problem is the combination of an $\mathbf{X}_{i}$ in the orginal dataset plus some month $t_{j}$, and the classification problem is "did point $\mathbf{X}_{i}$ die in month $t_{j}$.'' We will call this new variable $D_{ij}$ (\codewhite{newtarget}).
+We can transform our original data set into a new one, with one row for each month that each $\mathbf{X}_{i}$ is in the sample; train a standard classifier on this new dataset with $D_{ij}$ as the target, and derive a survival model from the orginal dataset.
 Psuedocode for this transformation is found in section~\nameref{subsec:pseudocode}.
 
 Explicit examples will help make this transformation clear.
