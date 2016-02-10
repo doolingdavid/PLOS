@@ -710,9 +710,10 @@ which is the full probablity distribution of dying at time Y~\cite{kuhn}.
 The survival function is then readily derived from this distribution as
 \begin{equation}
 \label{eq:cdf}
-S(\mathbf{X},t) = 1 - CDF(\mathbf{X}, t)
+S(\mathbf{X},t_{k}) = 1 - CDF(\mathbf{X}, t_{k})
 \end{equation}
-where $CDF(\mathbf{X}, t)$ is the cumulative density function correponding to the probability mass function in equation~\ref{eq:pmf}~\cite{downey}.
+where $CDF(\mathbf{X}, t_{k}) = \sum_
+{k=1}^{n} P(Y = t_{k} | \mathbf{X}) $ is the cumulative density function correponding to the probability mass function in equation~\ref{eq:pmf}~\cite{downey}.
 
 
 
