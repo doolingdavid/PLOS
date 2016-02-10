@@ -973,6 +973,26 @@ subjects in the test data where either of the following mutually exlusive condit
 
 That is, we restrict ourselves to subsets of the data where we know for certain whether or not the subject survived at least 6 months. Similarly for the 12 and 60 months surivival classifiers. 
 
+\paragraph{Survival Curve Error Estimates}
+The standard calculation of confidence intervals used in the Kaplan-Meier estimates of survival curves does not apply for these personal predictions. The following bootstrap method was used to calculate the upper and lower bounds corresponding to 95\% confidence intervals.
+From equation~\ref{eq:cdf}, we can obtain the cumulative distribution function (CDF) associated with each individual survival curve.
+We then sample from this CDF in a way that reflects the underlying data used to produce the model. The training data used to create the model has an underlying distribution of survival months. In the transformed training dataset, each subject contributes as many rows as the number of survival months plus one (patients with zero survival months still represent one row of the training data). A subject that survived 50 months contributes 51 "points" to the training of the model. If all patients lived out to 107 months, the model would contain less uncertainty. This observation leads to the following algorithm for determining the error estimates to the predicted survival curves:
+
+\begin{itemize}[noitemsep]
+\item compute the CDF associated with the survival curve
+\item use the underlying training data CDF of survival months to choose the number of points
+to draw from the survival curve CDF, and compute a new survival curve 
+\item Repeat the previous step 10,000 times and collect the curves into a list. Changing the number of curves affects how smooth the upper and lower bounds are, but does not affect the interval size between for each month.
+\item extract for each month from the list of curves the .975 and .025 percentiles to record the values for the upper and lower curves
+\end{itemize}
+
+The process is somewhat anologous to the following hypothetical situation. Imagine a patient going to an expert, and the expert after collecting data on the patient and keeping records predicts the central, single survival curve. The patient then seeks multiple "second opinions.'' These second opinions are generated not from independent examinations of the patient, but by outside experts sampling from the data already collected by the expert initially consulted. 
+Then the predictions of 95\% of these 10,000 experts all fall within the band determined by the upper and lower curves.
+
+
+
+
+
 \subsection*{Performance Metrics}
 \label{sec:performancemetrics}
 
