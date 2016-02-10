@@ -264,49 +264,53 @@ This capability to provide individualized survival curve prognosis is a direct r
 
 
 
-The Surveillance, Epidemiolgy, and End Results (SEER) Program of the National Cancer Institute (NCI) has been collecting data because intuitively 
+The Surveillance, Epidemiolgy, and End Results (SEER) Program of the National Cancer Institute (NCI) has been collecting data since 1973.
+Intuitively 
 researchers feel confident
- that this data will eventually allow researches to detect information crucial to patients and providers including the relationships between the types of data collected (demographic as well as staging information, treatment and disease characteristics) and the survival outcomes.
-Though these relationships evade capture by traditional methods, it is possible to surface them with two machine learning techniques known as \emph{Random Forests} and \emph{Neural Networks}. As will be demonstrated in section , these two methods produce very similar results when applied to the SEER dataset, and are based on almost diametrically opposed learning philosophies, which lends confidence in the validity of the results.
+ that this data will allow researches to detect information crucial to patients and providers, including the relationships between the collected data (demographics, staging, treatment and disease characteristics) and survival outcomes.
+Though these relationships evade capture by traditional methods, it is possible to surface them with two machine learning techniques known as \emph{Random Forests} and \emph{Neural Networks}.
 
-The Surveillance, Epidemiolgy, and End Results (SEER) Program of the National Cancer Institute (NCI) is the most recognized authoritative source of information on cancer incidence and survival in the United States. SEER currently collects and publishes cancer incidence and survival data from population-based cancer registries covering approximately 28 percent of the US population.
-
-
-Quoting directly from the SEER
-website \cite{seerwebsite}:
-
-\begin{quote}
-The SEER program registries routinely collect data on patient demographics, primary tumor site, tumor morphology and stage at diagnosis, first course of treatment, and follow-up for vital status. This program is the only comprehensive source of population-based information in the United States that includes stage of cancer at the time of diagnosis and patient survival data. The mortality data reported by SEER are provided by the National Center for Health Statistics. The population data used in calculating cancer rates is obtained periodically from the Census Bureau. Updated annually and provided as a public service in print and electronic formats, SEER data are used by thousands of researchers, clinicians, public health officials, legislators, policymakers, community groups, and the public.
-\end{quote}
+The SEER program is the most recognized authoritative source of information on cancer incidence and survival in the United States. SEER currently collects and publishes cancer incidence and survival data from population-based cancer registries covering approximately 28 percent of the US population.
 
 
+%Quoting directly from the SEER
+%website \cite{seerwebsite}:
 
-One characterstic of the SEER data that is shared by many datasets in the medical field 
-goes by the name of "censored data.''
-Observations are labeled censored when the survival time information is incomplete.
- The SEER data contains the number of months each patient survived, as well as an indicator variable showing whether or not the patient is still alive at the end of the data collection period.
-Methods to deal effectively with this kind of "right-censored data'' include Kaplan-Meier curves
-and Cox Proportional Hazard models \cite{cam}. The Kaplan-Meier techniques only give estimates for cohorts of patients and are not applicable for predicting the surival curve for a single patient, and the Cox Proportional Hazard models require a fairly restrictive set ot assumptions to be satisifed in order to yield reliable results. 
-%The Cox Proportional Hazard models are not able to capture the nonlinear relationships between the given data fields that %go into making predictions; they can only capture the first-order linear relationships.
+%\begin{quote}
+%The SEER program registries routinely collect data on patient demographics, primary tumor %site, tumor morphology and stage at diagnosis, first course of treatment, and follow-up for vital %status. This program is the only comprehensive source of population-based information in the %United States that includes stage of cancer at the time of diagnosis and patient survival data. %The mortality data reported by SEER are provided by the National Center for Health Statistics. %The population data used in calculating cancer rates is obtained periodically from the Census %Bureau. Updated annually and provided as a public service in print and electronic formats, %SEER data are used by thousands of researchers, clinicians, public health officials, legislators, %policymakers, community groups, and the public.
+%\end{quote}
 
-Previous work applying machine learning methods to subsets of the SEER data include creative attempts to deal with the problems presented by  "right-censored data." Shin et al.~\cite{ISI:000337467400005} use semi-supervised learning techniques to predict 5 year survival, essentially imputing values for SEER records where the survival months infomation is censored at a value less than 5 years. Zolbanin et al.~\cite{ISI:000355882700012} investigate the effects of comordbidities; i.e., patients with two different cancer diagnosises, but their treatment of the censored data underestimates the survival probabilities. All records representing patients who survived at least 60 months as well as all those who died earlier than 60 months were considered, but patients alive prior to 60 months but censored out of the study before 60 months were not included. This treatment biases the data and the predictions, leading to overly pessimistic survival probablilites predicted by the models.
+
+One challenge of the SEER data that is shared by many survival datasets is the inclusion of censored data.
+Observations are labeled censored when the survival information is incomplete.
+ The SEER data contains the number of months each patient survived, as well as the vital status.
+Traditional methods to deal effectively with this kind of "right-censored data'' include Kaplan-Meier curves
+and Cox Proportional Hazard models \cite{cam}. 
+%The Kaplan-Meier techniques only give estimates for cohorts of patients and are not applicable %for predicting the surival curve for a single patient, and the Cox Proportional Hazard models %require a fairly restrictive set ot assumptions to be satisifed in order to yield reliable results. 
+%The Cox Proportional Hazard models are not able to capture the nonlinear relationships %between the given data fields that %go into making predictions; they can only capture the %first-order linear relationships.
+
+Previous work applying machine learning methods to subsets of the SEER data include creative attempts to deal with the problems presented by right-censored data. Shin et al.~\cite{ISI:000337467400005} use semi-supervised learning techniques to predict 5 year survival, essentially imputing values for SEER records where the survival infomation is censored at a value less than 5 years. Zolbanin et al.~\cite{ISI:000355882700012} remove all records corresponding to patients who were living but censored within the 60 month study window. This treatment biases the predictions and leads to overly pessimistic predictions. 
+
+%investigate the effects of comordbidities; i.e., patients with two different cancer diagnosises, %but their treatment of the censored data underestimates the survival probabilities. All records %representing patients who survived at least 60 months as well as all those who died earlier %than 60 months were considered, but patients alive prior to 60 months but censored out of the %study before 60 months were not included. This treatment biases the data and the predictions, %leading to overly pessimistic survival probablilites predicted by the models.
 
 
 Previous work applying machine learning methods based on decision trees to survival data in general have a long history, starting with Gordon et al.~\cite{Gordon19851065}. A summary of more recent developments concerning \emph{survival trees} is provided by Bou-Hamad et al.~\cite{Bou-Hamad201144}. These methods focus on altering the splitting critieria used in decision tree growth to account for the censoring, and use 1958 Kaplan-Meier methods at the resulting nodes for prediction purposes. These methods do not generalize to non-tree-based machine learning algorithms, though Ishwaran et al. have extended the methodology to \emph{random survival forests}, ensembles of \emph{survival trees}~\cite{Ishwaran20101056}.
 
 
-IOBS has applied a little-known technique to transform the SEER data to make it amenable to more powerful machine learning methods. Instead of modifying existing learning algorithms in drastic ways, we focus attention on the input data. This approach allows for different machine learning algorithms to use the same data with no modification. The essential idea is to recast the problem to an appropriate discrete classification problem instead of a regression problem (predicting survival months). Treating months after diagnosis as just another discrete feature, the SEER data (or any other right-censored data) can be transformed to make predictions for the hazard function (
+
+ Instead of modifying existing learning algorithms, we focus attention on the input data. This approach allows us to take advantage of powerful and rapidly improving machine learning derived discrete classifiers without modification. 
+ The essential idea is to recast the problem as a discrete classification problem (predicting the liklihood that a patient is alive in any given month) instead of a regression problem (predicting survival months). Treating months after diagnosis as just another discrete feature, the SEER data (or any other right-censored data) can be transformed to make predictions for the hazard function (
  probability of dying in the next month, given that the patient has not yet died).
-The full survival function can then be derived from the hazard function.
+The survival function can then be derived from the hazard function.
 %Details of this transformation can be found in this blog post \cite{kuhn} and are presented in %section~(\ref{subsec:transformation}).
 
 
-This paper is organized as follows. We introduce the subsets of the SEER data used for this study, and present survival curves computed from traditional methods based on this data for the three cancer types \emph{lung}, \emph{breast}, and \emph{colon}.
-We then present the essential methodology of this work, the data trasnformation that allows censored survival data to be used as input to exisiting machine learning classifiers.  
-Then we present the details of the trained models, including some some subtleties arising from the data transformation pertaining to the partition into training and test datasets. The method of deriving binary classifiers from the models'  predictions for the survival curves is presented. In this paper, we have constructed binary classifiers corresponding to 6, 12, and 60 months, as these are standard metrics in cancer survival prognosis. 
-Then follows a dicussion of the evaluation of the trained models. The performance metrics are the 18 AUC curves associated with the 6, 12, and 60 month survival binary classifiers for the two models associated with each cancer type. We also present additional evidence supporting validity of the predictions by computing the levels of agreement between the random forest and neural network models for each of the 18 binary classifiers and find striking agreement.
-Next we provide urls for 6 web applications that use the trained models to predict individual 
-cancer survival prognosis curves. These apps are hosted on the popular Heroku website, and allow for exploration of the nonlinear relationships between the input features and resulting survival prognosis. It is exactly these kinds of tools that are the goal of Predictive, Preventitive and Personalized Medicine. Finally, we present avenues for future research.
+%This paper is organized as follows. We introduce the subsets of the SEER data used for this %study, and present survival curves computed from traditional methods based on this data for %the three cancer types \emph{lung}, \emph{breast}, and \emph{colon}.
+%We then present the essential methodology of this work, the data trasnformation that allows %censored survival data to be used as input to exisiting machine learning classifiers.  
+%Then we present the details of the trained models, including some some subtleties arising from %the data transformation pertaining to the partition into training and test datasets. The method %of deriving binary classifiers from the models'  predictions for the survival curves is presented. %In this paper, we have constructed binary classifiers corresponding to 6, 12, and 60 months, as %these are standard metrics in cancer survival prognosis. 
+%Then follows a dicussion of the evaluation of the trained models. The performance metrics are %the 18 AUC curves associated with the 6, 12, and 60 month survival binary classifiers for the %two models associated with each cancer type. We also present additional evidence supporting %validity of the predictions by computing the levels of agreement between the random forest %and neural network models for each of the 18 binary classifiers and find striking agreement.
+%Next we provide urls for 6 web applications that use the trained models to predict individual 
+%cancer survival prognosis curves. These apps are hosted on the popular Heroku website, and %allow for exploration of the nonlinear relationships between the input features and resulting %survival prognosis. It is exactly these kinds of tools that are the goal of Predictive, Preventitive %and Personalized Medicine. Finally, we present avenues for future research.
 
 
 %\begin{equation}\label{eq:schemeP} 
@@ -548,130 +552,130 @@ and the \codewhite{STATE-COUNTY RECODE} variable was dropped and replaced with t
 Before applying machine learning models trained with these datasets, we review below the sailent features of survival analysis and censored data. We then describe in detail a method that takes full advantage of all the data, including the right-censored data, and which involves a simple and intuitive transformation, culminating in the full set of features and target variable listed in the back of this report.
 
 
-\subsection*{Traditional Survival Analysis}
-\label{subsec:survprimer}
+%\subsection*{Traditional Survival Analysis}
+%\label{subsec:survprimer}
 
-Survival analysis pertains to data containing survival times, which are \emph{intervals} between certain kinds of events, e.g.; cancer diagnosis date and expiry date. These intervals are often affected by a kind of "partial missingness" called \emph{censoring}. Censored data must be analyzed in a special way to avoid biased estimates and bogus conclusions.
-Special methods have been developed long ago to analyze censored data properly.
+%Survival analysis pertains to data containing survival times, which are \emph{intervals} %between certain kinds of events, e.g.; cancer diagnosis date and expiry date. These intervals %are often affected by a kind of "partial missingness" called \emph{censoring}. Censored data %must be analyzed in a special way to avoid biased estimates and bogus conclusions.
+%Special methods have been developed long ago to analyze censored data properly.
 
-With survival data, including the SEER data considered in this study, you may not know the exact time of death for some subjects. Some of the SEER subjects are still alive at the the time of the latest SEER data release. When the \codewhite{VITAL STATUS RECODE} variable indicates that the subject is still alive, the \codewhite{SURVIVAL MONTHS} variable is only a lower bound on the true number of survival months; this is called the \textit{date of last contact} mode of censoring. You know that each subject either died on a certain date or was definitely alive up to some last-seen date (and you don't know how far beyond that date he or she may ultimately have lived). The latter situation is called a \textit{censored} observation. 
+%With survival data, including the SEER data considered in this study, you may not know the %exact time of death for some subjects. Some of the SEER subjects are still alive at the the time %of the latest SEER data release. When the \codewhite{VITAL STATUS RECODE} variable %indicates that the subject is still alive, the \codewhite{SURVIVAL MONTHS} variable is only a %lower bound on the true number of survival months; this is called the \textit{date of last %contact} mode of censoring. You know that each subject either died on a certain date or was %definitely alive up to some last-seen date (and you don't know how far beyond that date he or %she may ultimately have lived). The latter situation is called a \textit{censored} observation. 
 
-Statisticians have developed some traditional techniques to utilize the partial information contained in censored observations: the life-table method and the Kaplan-Meier method. 
-Both of these methods make use of the partial information to provide unbiased estimates of the two fundamental concepts: - \textit{hazard} and \textit{survival}, both of which are functions of time:
+%Statisticians have developed some traditional techniques to utilize the partial information %contained in censored observations: the life-table method and the Kaplan-Meier method. 
+%Both of these methods make use of the partial information to provide unbiased estimates of %the two fundamental concepts: - \textit{hazard} and \textit{survival}, both of which are %functions of time:
 
-\begin{itemize}[noitemsep]
-\item \textbf{The hazard rate} $\lambda(t)$ is the probability of dying in the next small interval of time, assuming that the subject is alive right now.
-\item \textbf{The survival rate} $S(t)$  is the probability of living for a certain amount of time after some starting point.
-\end{itemize}
-
-
-Incorrect treatment of survival data still seen in practice, and leading to biased results, includes simply excluding all subjects with a censored survival time from any survival analysis, and \emph{imputing} (replacing) the censored (last-seen) date with some reasonable value. Both of these techniques destroy the partial information contained in the censored observations and nullify the validity of the resulting estimates for the hazard rate and survival rate~\cite{cam}.
+%\begin{itemize}[noitemsep]
+%\item \textbf{The hazard rate} $\lambda(t)$ is the probability of dying in the next small %interval of time, assuming that the subject is alive right now.
+%\item \textbf{The survival rate} $S(t)$  is the probability of living for a certain amount of time %after some starting point.
+%\end{itemize}
 
 
-In 1958, Edward L. Kaplan and Paul Meier collaborated to publish the seminal paper on how to estimate the hazard and survival rates for data containing censored observations~\cite{Kaplan1958457}.
-The method is straightforward and for small datasets can be performed by hand. As an example, consider the survival data shown  in Table~(\ref{tab:censoredexample}). In the Kaplan-Meier calculation of the survival curve, the first step is to  
-sort the subjects in Table~(\ref{tab:censoredexample}) labeled 0 through 9 by \emph{Survival Time} in ascending order.  
-This process results in the first two columns (\emph{Censored Status}, and \emph{Survival Times}) in Table~(\ref{tab:kaplanexample}).
-The \emph{At Risk} column decreases by one for each row; in every row a subject has either been censored out of the study or has died. The hazard rate is then computed for each value of \emph{Survival Time} (necessarily a discrete function because the number of subjects is countable), by dividing the value in \emph{Censored Status} by the value in 
-\emph{At Risk}. The hazard function is shown in the \emph{Hazard Function} column in Table~(\ref{tab:kaplanexample}).
-It is then straightforward to calculate the survival function; 1 - hazard function represents the probability of not dying in the next interval of time, assuming that the subject has survived up until now and is represented by column \emph{Prob of Surv}. 
-The cumulative survival probability can then be obtained by sucessively multiplying all these individual time-slice probabilities together. In order to survive 2.4 years, first the subject has to survive .5 years, then survive .75 years, 2.3 years and 2.4 years. The probability of surviving 2.4 years is then the product of these 3 probabilities and is given as .666 in Table(\ref{tab:kaplanexample}) in the \emph{Survival Function} column.
-The Kaplan-Meier survival estimate corresponding to the data given in Table~(\ref{tab:censoredexample}) is shown in Table~(\ref{tab:kaplanexample}).
-
-\begin{table}[!ht]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:censoredexample} {\bf Example data to illustate traditional Survival Analsyis.}}
-\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lrr}
-\toprule
-{} &  Survival Time (Years) &  Censored Status \\
-\midrule
-0 &            0.75 &                1 \\
-1 &            6.10 &                1 \\
-2 &            7.00 &                0 \\
-3 &            2.40 &                1 \\
-4 &            0.50 &                0 \\
-5 &            4.50 &                1 \\
-6 &            3.50 &                0 \\
-7 &            5.80 &                0 \\
-8 &            2.30 &                1 \\
-9 &            5.20 &                1 \\
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
-
-\begin{table}[!ht]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:kaplanexample} {\bf Kaplan-Meier table corresponding to the example data in Table~(\ref{tab:censoredexample}).}}
-\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lrrrrrr}
-\toprule
-{} &  Censored Status &  Survival Time &  At Risk &  Hazard Function &  Prob of Surv & Survival Function \\
-\midrule
-4 &                0 &            0.50 &              10 &       0.000000 &      1.000000 &      1.000000 \\
-0 &                1 &            0.75 &               9 &       0.111111 &      0.888889 &      0.888889 \\
-8 &                1 &            2.30 &               8 &       0.125000 &      0.875000 &      0.777778 \\
-3 &                1 &            2.40 &               7 &       0.142857 &      0.857143 &      0.666667 \\
-6 &                0 &            3.50 &               6 &       0.000000 &      1.000000 &      0.666667 \\
-5 &                1 &            4.50 &               5 &       0.200000 &      0.800000 &      0.533333 \\
-9 &                1 &            5.20 &               4 &       0.250000 &      0.750000 &      0.400000 \\
-7 &                0 &            5.80 &               3 &       0.000000 &      1.000000 &      0.400000 \\
-1 &                1 &            6.10 &               2 &       0.500000 &      0.500000 &      0.200000 \\
-2 &                0 &            7.00 &               1 &       0.000000 &      1.000000 &      0.200000 \\
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
+%Incorrect treatment of survival data still seen in practice, and leading to biased results, %includes simply excluding all subjects with a censored survival time from any survival analysis, %and \emph{imputing} (replacing) the censored (last-seen) date with some reasonable value. %Both of these techniques destroy the partial information contained in the censored %observations and nullify the validity of the resulting estimates for the hazard rate and survival %rate~\cite{cam}.
 
 
+%In 1958, Edward L. Kaplan and Paul Meier collaborated to publish the seminal paper on how to %estimate the hazard and survival rates for data containing censored observations~%%%\cite{Kaplan1958457}.
+%The method is straightforward and for small datasets can be performed by hand. As an %example, consider the survival data shown  in Table~(\ref{tab:censoredexample}). In the %Kaplan-Meier calculation of the survival curve, the first step is to  
+%sort the subjects in Table~(\ref{tab:censoredexample}) labeled 0 through 9 by \emph{Survival %Time} in ascending order.  
+%This process results in the first two columns (\emph{Censored Status}, and \emph{Survival %Times}) in Table~(\ref{tab:kaplanexample}).
+%The \emph{At Risk} column decreases by one for each row; in every row a subject has either %been censored out of the study or has died. The hazard rate is then computed for each value %of \emph{Survival Time} (necessarily a discrete function because the number of subjects is %countable), by dividing the value in \emph{Censored Status} by the value in 
+%\emph{At Risk}. The hazard function is shown in the \emph{Hazard Function} column in %Table~(\ref{tab:kaplanexample}).
+%It is then straightforward to calculate the survival function; 1 - hazard function represents the %probability of not dying in the next interval of time, assuming that the subject has survived up %until now and is represented by column \emph{Prob of Surv}. 
+%The cumulative survival probability can then be obtained by sucessively multiplying all these %individual time-slice probabilities together. In order to survive 2.4 years, first the subject has to %survive .5 years, then survive .75 years, 2.3 years and 2.4 years. The probability of surviving 2.4 %years is then the product of these 3 probabilities and is given as .666 in %Table(\ref{tab:kaplanexample}) in the \emph{Survival Function} column.
+%The Kaplan-Meier survival estimate corresponding to the data given in %Table~(\ref{tab:censoredexample}) is shown in Table~(\ref{tab:kaplanexample}).
 
+%\begin{table}[!ht]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
+%\caption{\label{tab:censoredexample} {\bf Example data to illustate traditional Survival %Analsyis.}}
+%\rowcolors{1}{white}{light-gray}
+%\begin{tabular}{lrr}
+%\toprule
+%{} &  Survival Time (Years) &  Censored Status \\
+%\midrule
+%0 &            0.75 &                1 \\
+%1 &            6.10 &                1 \\
+%2 &            7.00 &                0 \\
+%3 &            2.40 &                1 \\
+%4 &            0.50 &                0 \\
+%5 &            4.50 &                1 \\
+%6 &            3.50 &                0 \\
+%7 &            5.80 &                0 \\
+%8 &            2.30 &                1 \\
+%9 &            5.20 &                1 \\
+%\bottomrule
+%\end{tabular}
+%\end{adjustwidth}
+%\end{table}
 
-After the above one-hot encoding procedure, the new variable
-\codewhite{vital\_status\_recode\_Dead} indicates that the patient is deceased if this variable = 1, or else that the patient's record is right-censored if this variable = 0.
-\codewhite{SURVIVAL MONTHS} and \codewhite{vital\_status\_recode\_Dead} are all that is needed to construct the Kaplan-Meier estimates for the SEER datasets.
-The Kaplan-Meier estimates of the survival curves for colon (Figure~(\ref{fig:colonkaplan})), lung 
-(Figure~(\ref{fig:lungkaplan})), and breast cancer (Figure~(\ref{fig:breastkaplan})) are constructed from the full population of cancer patients in the respective datasets.
-An unsatisfactory feature of these curves is that these estimates are based on populations and data with enough heterogeneity to make them not very meaningful to an indivual. Patients with very disparate characteristics are given the same prognosis by these Kaplan-Meier survival curve estimates. Therefore it is desirable to find robust predictors for survival curves of individual subjects where the input is an individual record as opposed to a population. We present below the data transformation that allows for machine learning to be applied to censored data.
+%\begin{table}[!ht]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
+%\caption{\label{tab:kaplanexample} {\bf Kaplan-Meier table corresponding to the example data %in Table~(\ref{tab:censoredexample}).}}
+%\rowcolors{1}{white}{light-gray}
+%\begin{tabular}{lrrrrrr}
+%\toprule
+%{} &  Censored Status &  Survival Time &  At Risk &  Hazard Function &  Prob of Surv & %Survival Function \\
+%\midrule
+%4 &                0 &            0.50 &              10 &       0.000000 &      1.000000 &      1.000000 %\\
+%0 &                1 &            0.75 &               9 &       0.111111 &      0.888889 &      0.888889 \%\
+%8 &                1 &            2.30 &               8 &       0.125000 &      0.875000 &      0.777778 \%\
+%3 &                1 &            2.40 &               7 &       0.142857 &      0.857143 &      0.666667 \%\
+%6 &                0 &            3.50 &               6 &       0.000000 &      1.000000 &      0.666667 \%\
+%5 &                1 &            4.50 &               5 &       0.200000 &      0.800000 &      0.533333 \%\
+%9 &                1 &            5.20 &               4 &       0.250000 &      0.750000 &      0.400000 \%\
+%7 &                0 &            5.80 &               3 &       0.000000 &      1.000000 &      0.400000 \%\
+%1 &                1 &            6.10 &               2 &       0.500000 &      0.500000 &      0.200000 \%\
+%2 &                0 &            7.00 &               1 &       0.000000 &      1.000000 &      0.200000 \%\
+%\bottomrule
+%\end{tabular}
+%\end{adjustwidth}
+%\end{table}
 
 
 
-\begin{figure}[tbp]
-\centering 
+
+%After the above one-hot encoding procedure, the new variable
+%\codewhite{vital\_status\_recode\_Dead} indicates that the patient is deceased if this variable %= 1, or else that the patient's record is right-censored if this variable = 0.
+%\codewhite{SURVIVAL MONTHS} and \codewhite{vital\_status\_recode\_Dead} are all that is %needed to construct the Kaplan-Meier estimates for the SEER datasets.
+%The Kaplan-Meier estimates of the survival curves for colon (Figure~(\ref{fig:colonkaplan})), %lung 
+%(Figure~(\ref{fig:lungkaplan})), and breast cancer (Figure~(\ref{fig:breastkaplan})) are %constructed from the full population of cancer patients in the respective datasets.
+%An unsatisfactory feature of these curves is that these estimates are based on populations and %data with enough heterogeneity to make them not very meaningful to an indivual. Patients %with very disparate characteristics are given the same prognosis by these Kaplan-Meier survival %curve estimates. Therefore it is desirable to find robust predictors for survival curves of %individual subjects where the input is an individual record as opposed to a population. We %present below the data transformation that allows for machine learning to be applied to %censored data.
+
+
+
+%\begin{figure}[tbp]
+%\centering 
 %\begin{center}/\end{center} takes some additional vertical space
 %\includegraphics[width=.45\textwidth,trim=0 380 0 200,clip]{img1.pdf}
 %\hfill
-\begin{center}
-\includegraphics[width=.90\textwidth,origin=c]{colonkaplan.pdf}
+%\begin{center}
+%\includegraphics[width=.90\textwidth,origin=c]{colonkaplan.pdf}
 % "\includegraphics" is very powerful; the graphicx package is already loaded
-\caption{\label{fig:colonkaplan} Traditional Kaplan-Meier estimate of the survival curve for all colon cancer patients. Fitted with 113072 observations, 71804 censored.}
-\end{center}
-\end{figure}
+%\caption{\label{fig:colonkaplan} Traditional Kaplan-Meier estimate of the survival curve for all %colon cancer patients. Fitted with 113072 observations, 71804 censored.}
+%\end{center}
+%\end{figure}
 
-\begin{figure}[tbp]
-\centering 
+%\begin{figure}[tbp]
+%\centering 
 %\begin{center}/\end{center} takes some additional vertical space
 %\includegraphics[width=.45\textwidth,trim=0 380 0 200,clip]{img1.pdf}
 %\hfill
-\begin{center}
-\includegraphics[width=.90\textwidth,origin=c]{breastkaplan.pdf}
+%\begin{center}
+%\includegraphics[width=.90\textwidth,origin=c]{breastkaplan.pdf}
 % "\includegraphics" is very powerful; the graphicx package is already loaded
-\caption{\label{fig:breastkaplan} Traditional Kaplan-Meier estimate of the survival curve for all breast cancer patients. Fitted with 329949 observatins, 292279 censored.}
-\end{center}
-\end{figure}
+%\caption{\label{fig:breastkaplan} Traditional Kaplan-Meier estimate of the survival curve for all %breast cancer patients. Fitted with 329949 observatins, 292279 censored.}
+%\end{center}
+%\end{figure}
 
 
-\begin{figure}[tbp]
-\centering 
+%\begin{figure}[tbp]
+%\centering 
 %\begin{center}/\end{center} takes some additional vertical space
 %\includegraphics[width=.45\textwidth,trim=0 380 0 200,clip]{img1.pdf}
 %\hfill
-\begin{center}
-\includegraphics[width=.90\textwidth,origin=c]{lungkaplan.pdf}
+%\begin{center}
+%\includegraphics[width=.90\textwidth,origin=c]{lungkaplan.pdf}
 % "\includegraphics" is very powerful; the graphicx package is already loaded
-\caption{\label{fig:lungkaplan} Traditional Kaplan-Meier estimate of the survival curve for all lung cancer patients. Fitted with 177089 observatins, 47409 censored.}
-\end{center}
-\end{figure}
+%\caption{\label{fig:lungkaplan} Traditional Kaplan-Meier estimate of the survival curve for all %lung cancer patients. Fitted with 177089 observatins, 47409 censored.}
+%\end{center}
+%\end{figure}
 
 
 \subsection*{Transformation of Censored Data for Machine Learning}
