@@ -1159,6 +1159,52 @@ python is installed on your system, you can launch the application by running
 and pointing the browser to the local server: \codewhite{http://127.0.0.1:5000}.
 
 
+These machine learning models are used to predict survival curves for a given set of input data. 
+The resulting surival curves predict the probablitiy that a patient with the given input data will survive at least up to month $x$.
+
+ For example, using the Colon Cancer neural network app, and 
+inputing the values listed in Table~(\ref{tab:boston1940}) results in the survival curve depicted in Figure~(\ref{fig:boston1940}); the predicted probablities of living 
+at least 6, 12, and 60 months are .89, .83, and .50, respectively.
+
+
+
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
+\caption{\bf{Example input data to the Colon Cancer neural network app \url{https://github.com/doolingdavid/colon-cancer-nn-errors.git}.}}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lr}
+\toprule
+  Variable  & Value \\ 
+\midrule
+  What is the tumor size (mm) & 300 \\  
+  What is the patient's address? & boston massachusetts \\ 
+  Grade & moderately differentiated \\  
+  Histology & adenomas and adenocarcinomas \\ 
+  Laterality & not a paired site \\  
+ Martial Status at Dx & Single, never married \\  
+ Month of Diagnosis & Jan \\  
+ How many primaries & 1 \\  
+  Race$\_$ethnicity & White \\  
+  seer$\_$historic$\_$stage$\_$a  & Regional \\ 
+  Gender & Male \\  
+  spanish$\_$hispanic$\_$origin & Non-spanish/Non-hispanic \\ 
+ Year of Birth & 1940 \\  
+  Year of Diagnosis & 2010 \\
+\bottomrule
+\end{tabular}
+\label{tab:boston1940}
+\end{adjustwidth}
+\end{table}
+
+
+\begin{figure}[!ht]
+%\caption{Colon Cancer Survival Curve.}
+%  \label{fig:boston1940}
+  \centering
+    \includegraphics[scale=.8]{boston1940}
+\caption{\label{fig:boston1940} Colon Cancer Survival Curve predicted from the data in 
+Table~(\ref{tab:boston1940}) using the neural network web app \url{http://coloncancer.herokuapp.com/}.}
+\end{figure}
 
 
 
