@@ -1126,6 +1126,42 @@ Lung & .861 & .883 & .900 \\
 The six models described in section~\nameref{sec:predmodels}, namely the random forest and MLP neural network models for each of the three cancer types considered in this study, have their full hyperparameter and architecture presented in section~\nameref{sec:supporting}. Python code for all six model training and evaluation is available at the githib respository containing supplemental material for this study~\cite{supp}.
 
 
+
+Using the popular Flask microframework for web applications~\cite{flask}, we have made web applications corresponding to the six models. The list of web applications below will allow readers to freely experiment with the models.
+
+\begin{enumerate}[noitemsep]
+\item breast cancer 
+    \begin{enumerate}[noitemsep]
+    \item random forest: \url{https://github.com/doolingdavid/breast-cancer-rf-errors.git}
+    \item neural network: \url{https://github.com/doolingdavid/breast-cancer-nn-errors.git}
+    \end{enumerate}
+\item lung cancer
+   \begin{enumerate}[noitemsep]
+   \item random forest: \url{https://github.com/doolingdavid/lung-cancer-rf-errors.git}
+   \item neural network: \url{https://github.com/doolingdavid/lung-cancer-nn-errors.git}
+    \end{enumerate}
+\item colon cancer
+  \begin{enumerate}[noitemsep]
+   \item random forest: \url{https://github.com/doolingdavid/colon-cancer-rf-errors.git}
+   \item neural network: \url{https://github.com/doolingdavid/colon-cancer-nn-errors.git}
+   \end{enumerate}
+%\item prostate cancer
+ % \begin{enumerate}[noitemsep]
+%   \item random forest: \url{http://prostate-cancer.herokuapp.com/}
+%   \end{enumerate}
+\end{enumerate}
+
+After downloading the .zip file associate with one of the above web applications, and assuming 
+python is installed on your system, you can launch the application by running
+\begin{verbatim}
+>python hello.py
+\end{verbatim}
+and pointing the browser to the local server: \codewhite{http://127.0.0.1:5000}.
+
+
+
+
+
 %Nulla mi mi, venenatis sed ipsum varius, Table~\ref{table1} volutpat euismod diam. Proin %rutrum %vel massa non gravida. Quisque tempor sem et dignissim rutrum. Lorem ipsum dolor %sit amet, %consectetur adipiscing elit. Morbi at justo vitae nulla elementum commodo eu id %massa. In vitae %diam ac augue semper tincidunt eu ut eros. Fusce fringilla erat porttitor lec%tus cursus, vel sagittis %arcu lobortis. Aliquam in enim semper, aliquam massa id, cursus %neque. Praesent faucibus %semper libero.
 
 
@@ -1148,20 +1184,20 @@ The six models described in section~\nameref{sec:predmodels}, namely the random 
 
 
 
-\subsection*{\lorem\ and \ipsum\ Nunc blandit a tortor.}
+%\subsection*{\lorem\ and \ipsum\ Nunc blandit a tortor.}
 
-Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus consectetur pellentesque. Quisque augue sem, tincidunt sit amet feugiat eget, ullamcorper sed velit. Sed non aliquet felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo justo ac dui pretium imperdiet. Sed suscipit iaculis mi at feugiat. 
+%Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum %eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus %consectetur pellentesque. Quisque augue sem, tincidunt sit amet feugiat eget, ullamcorper sed %velit. Sed non aliquet felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris %commodo justo ac dui pretium imperdiet. Sed suscipit iaculis mi at feugiat. 
 
-\subsection*{Sed ac quam id nisi malesuada congue.}
+%\subsection*{Sed ac quam id nisi malesuada congue.}
 
-Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam. Proin rutrum vel massa non gravida. Quisque tempor sem et dignissim rutrum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at justo vitae nulla elementum commodo eu id massa. In vitae diam ac augue semper tincidunt eu ut eros. Fusce fringilla erat porttitor lectus cursus, vel sagittis arcu lobortis. Aliquam in enim semper, aliquam massa id, cursus neque. Praesent faucibus semper libero.
+%Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam. Proin rutrum vel massa non %gravida. Quisque tempor sem et dignissim rutrum. Lorem ipsum dolor sit amet, consectetur %adipiscing elit. Morbi at justo vitae nulla elementum commodo eu id massa. In vitae diam ac %augue semper tincidunt eu ut eros. Fusce fringilla erat porttitor lectus cursus, vel sagittis arcu %lobortis. Aliquam in enim semper, aliquam massa id, cursus neque. Praesent faucibus semper %libero.
 
-% Please do not create a heading level below \subsection. For 3rd level headings, use \paragraph{}. 
-\subsection*{Subsection 1}
-Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam. Proin rutrum vel massa non gravida. Quisque tempor sem et dignissim rutrum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at justo vitae nulla elementum commodo eu id massa. In vitae diam ac augue semper tincidunt eu ut eros. Fusce fringilla erat porttitor lectus cursus, vel sagittis arcu lobortis. Aliquam in enim semper, aliquam massa id, cursus neque. Praesent faucibus semper libero.
+% Please do not create a heading level below \subsection. For 3rd level headings, use %%\paragraph{}. 
+%\subsection*{Subsection 1}
+%Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam. Proin rutrum vel massa non %gravida. Quisque tempor sem et dignissim rutrum. Lorem ipsum dolor sit amet, consectetur %adipiscing elit. Morbi at justo vitae nulla elementum commodo eu id massa. In vitae diam ac %augue semper tincidunt eu ut eros. Fusce fringilla erat porttitor lectus cursus, vel sagittis arcu %lobortis. Aliquam in enim semper, aliquam massa id, cursus neque. Praesent faucibus semper %libero.
 
-\subsection*{Subsection 2}
-\paragraph{3rd Level Heading.} Nulla mi mi, venenatis sed ipsum varius, volutpat euismod diam. Proin rutrum vel massa non gravida. Quisque tempor sem et dignissim rutrum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at justo vitae nulla elementum commodo eu id massa. In vitae diam ac augue semper tincidunt eu ut eros. Fusce fringilla erat porttitor lectus cursus, vel sagittis arcu lobortis. Aliquam in enim semper, aliquam massa id, cursus neque. Praesent faucibus semper libero.
+%\subsection*{Subsection 2}
+%\paragraph{3rd Level Heading.} Nulla mi mi, venenatis sed ipsum varius, volutpat euismod %diam. Proin rutrum vel massa non gravida. Quisque tempor sem et dignissim rutrum. Lorem %ipsum dolor sit amet, consectetur adipiscing elit. Morbi at justo vitae nulla elementum %commodo eu id massa. In vitae diam ac augue semper tincidunt eu ut eros. Fusce fringilla erat %porttitor lectus cursus, vel sagittis arcu lobortis. Aliquam in enim semper, aliquam massa id, %cursus neque. Praesent faucibus semper libero.
 
 \section*{Discussion}
 Nulla mi mi, venenatis sed ipsum varius, Table~\ref{table1} volutpat euismod diam. Proin rutrum vel massa non gravida. Quisque tempor sem et dignissim rutrum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at justo vitae nulla elementum commodo eu id massa. In vitae diam ac augue semper tincidunt eu ut eros. Fusce fringilla erat porttitor lectus cursus, vel sagittis arcu lobortis. Aliquam in enim semper, aliquam massa id, cursus neque. Praesent faucibus semper libero.
