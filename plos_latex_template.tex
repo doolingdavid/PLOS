@@ -330,21 +330,6 @@ SEER requires that researchers submit a request for the data, which includes an 
 subsection~\nameref{sec:raw}, in the appendix~\nameref{sec:supporting}. 
  
 
-%\begin{itemize}[noitemsep]
-%\item incidence\textbackslash yr1973\_2012.seer9\textbackslash COLRECT.txt
-%\item incidence\textbackslash yr1973\_2012.seer9\textbackslash BREAST.txt
-%\item incidence\textbackslash yr1973\_2012.seer9\textbackslash RESPIR.txt
-%\item incidence\textbackslash yr1992\_2012.sj\_la\_rg\_ak\textbackslash COLRECT.txt
-%\item incidence\textbackslash yr1992\_2012.sj\_la\_rg\_ak\textbackslash BREAST.txt
-%\item incidence\textbackslash yr1992\_2012.sj\_la\_rg\_ak\textbackslash RESPIR.txt
-%\item incidence\textbackslash yr2000\_2012.ca\_ky\_lo\_nj\_ga\textbackslash COLRECT.txt
-%\item incidence\textbackslash yr2000\_2012.ca\_ky\_lo\_nj\_ga\textbackslash BREAST.txt
-%\item incidence\textbackslash yr2000\_2012.ca\_ky\_lo\_nj\_ga\textbackslash RESPIR.txt
-%\item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash COLRECT.txt
-%\item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash BREAST.txt
-%\item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash RESPIR.txt
-%\end{itemize}
-
 
 \subsection*{Data preparation and preprocessing}
 \label{subsec:dataprep} 
@@ -355,63 +340,8 @@ The \codewhite{STATE-COUNTY RECODE} field is a state-county combination where th
 This particular field illustrates an important characteristic of machine learning, that is, the difference  between \textit{categorical features} and \textit{numeric features}. All input into a machine learning algorithm must be numeric, but real numbers carry with them the usually extremely useful property known as the well-ordering property. Machine learning algorithms use the well-ordering property of the real numbers to learn.
 But if one is tasked with encoding a categorical feature into suitable numeric format for machine learning, it is necessary to do so in a way that removes the well-ordering property. Categorical variables are commonly encoded using one-hot encoding, in which the explanatory variable is encoded using one binary feature for each of the variable's possible values~\cite{bowles}.
 
-%As a simple example of how to correctly treat categorical variables in a machine learning %context, consider the SEER variable \codewhite{SEX}. This variable is encoded in the SEER raw %data files with a numeric 1 for males and a numeric 2 for females as shown in %Table~(\ref{tab:sex}). Values such as "Male" and "Female" encoded as numbers are dangerous %because if not handled properly, they can generate bogus results \cite{downey}. Leaving the %infomation for \codewhite{SEX} as in Table~(\ref{tab:sex}) implies that Female is somehow %greater than Male. This implied ordering affects the machine learning algorithms' convergence %on a model. Simply encoding Male by 2 and Female by 1 would result in a comletely different %model, because of the now completely reversed ordering implied in the \codewhite{SEX} %variable. The proper way to transform the SEER \codewhite{SEX} variable is to create two %additional variables: \codewhite{sex$\_$Male} and \codewhite{sex$\_$Female}, and then to %eliminate the variables \codewhite{SEX} and \codewhite{sex\_Male} (keeping both of the %variables \codewhite{sex\_Male} and \codewhite{sex\_Female} is a redundant represetation). %For example,
 
 
-
-
-%\begin{equation}
-%\begin{array}{|c|} \hline
-%\mbox{\codewhite{Sex}} \\ \hline
-%1 \\ \hline \end{array} 
-%\longrightarrow
-% \begin{array}{|c|c|}  \hline
-%\mbox{\codewhite{sex\_Male}} & \mbox{\codewhite{sex\_Female}} \\ \hline
-%1 & 0 \\ \hline
-%\end{array} 
-%\longrightarrow
-%\begin{array}{|c|}  \hline
-%\mbox{\codewhite{sex\_Female}} \\ \hline
-%0  \\ \hline \end{array}
-%\label{eqn:onehotmale}
-%\end{equation}
-
-%and 
-
-
-%\begin{equation}
-%\begin{array}{|c|} \hline
-%\mbox{\codewhite{Sex}} \\ \hline
-%2 \\ \hline \end{array} 
-%\longrightarrow
-% \begin{array}{|c|c|}  \hline
-%\mbox{\codewhite{sex\_Male}} & \mbox{\codewhite{sex\_Female}} \\ \hline
-%0 & 1 \\ \hline
-%\end{array} 
-%\longrightarrow
-%\begin{array}{|c|}  \hline
-%\mbox{\codewhite{sex\_Female}} \\ \hline
-%1  \\ \hline \end{array}
-%\label{eqn:onehotfemale}
-%\end{equation}
-
-
-%\begin{table}[tbp]
-%\begin{center}
-%\rowcolors{1}{white}{light-gray}
-%\begin{tabular}{cc}
-%\toprule
-%Code & Description \\ 
-%\midrule
-%1 & Male \\  
-%2 & Female \\  
-%\bottomrule
-%\end{tabular}
-%\caption{\label{tab:sex} Encoding of gender in the SEER incidence files. These types of %categorical variables need to be transformed via one-hot-encoding.}
-%\end{center}
-%\end{table}
-
-%The procedure outlined in Equations~(\ref{eqn:onehotmale},~\ref{eqn:onehotfemale}) is %known  one-hot encoding 
 One-hot encoding needs to be applied to all of the nominal categorical variables in the SEER data that we wish to include in our predictive models.
 In particular, in order to include the geophgraphical information contained in the SEER categorical variable \codewhite{STATE-COUNTY RECODE}, it becomes necessary to create a new feature variable for each of the distinct (state,county) pairs in the data. In the United States, there are approximately 3,000 counties. Clearly, transforming the \codewhite{STATE-COUNTY RECODE} data representation into distinct (state$\_$county) columns will explode the dataset to become wider than is optimal for machine learning. Adding extra columns to your dataset, making it wider, requires more data rows (making it taller) in order for machine learning algorithms to effectively learn~\cite{bowles}. Because one-hot coding \codewhite{STATE-COUNTY RECODE} would cause such drastic shape changes in our data, we wish to avoid doing so. Fortunately, this variable, though given as a categorical variable, is actually a recode for three ordinal variables. There is an ordering among the (state$\_$county) columns, namely longitude, latitude, and elevation. We can transform the data in \codewhite{STATE-COUNTY RECODE} into three new numerical columns: \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation}.
 
@@ -442,118 +372,23 @@ An added benefit of this shift from the single categorical variable \codewhite{S
 
 
 This study focused on three different cancer types, namely colorectal cancer, lung cancer, and breast cancer. 
-In the SEER data, there is a record for each primary tumor. It multple records exist for a given patient, only the first chronologically was included. The full set of conditions defining the subsets of the SEER data used in this study is included in section~\nameref{sec:subsets}.
-
-%there are instances of subjects with multiple rows; whenever a subject, or patient, is diagnosed %with a new tumor, an additional record is added. In this study, we restrict attention to the data %corresponding to the first record of each subject; i.e., we wish to make models that predict %survival prognosis based on the data available right after diagnosis. The full set of conditions %defining the subsets of the SEER data used in this study follows below.
-
-
-
-% The four COLRECT.txt files were imported into a pandas DataFrame object.
-%This data was then filtered according to the conditions in Table~(\ref{tab:colonfilter}).
-%The RESPIR.txt and BREAST.txt files were imported into separate dataframes in similar fashion %and filtered according
-%to the conditions in Table~(\ref{tab:lungfilter}) and Table~(\ref{tab:breastfilter}), respectively.
-%The SEER variable \codewhite{CS TUMOR SIZE} records the tumor size in millimeters if known. %But if not known, \codewhite{CS TUMOR SIZE} is given as '999', to indicate that the tumor size %is "Unknown; size not stated; not stated in pateint record.'' In this study, we discard those %records, as indicated in Tables~(\ref{tab:breastfilter},~\ref{tab:colonfilter},~%%%\ref{tab:lungfilter}).
+In the SEER data, there is a record for each primary tumor. It multple records exist for a given patient, only the first chronologically was included. The full set of conditions defining the subsets of the SEER data used in this study is included in the appendix~\nameref{sec:supporting}.
+% section~\nameref{sec:subsets}.
 
 
 
 
 
 
-%\begin{table}[!ht]
-%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
-%\caption{\label{tab:colonfilter} {\bf Filters applied to the Colon Cancer data.}}
-%\rowcolors{1}{white}{light-gray}
-%\begin{tabular}{lr}
-%\toprule
-% Column &  Filter \\
-%\midrule
-%\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
-%\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
-%\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
-%\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
-%\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
-%\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ ""} \\
-%\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
-%\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
-%\codewhite{PRIMARY SITE} & \codewhite{ $=$ "LARGE INTESTINE, (EXCL. APPENDIX)"} \\
-%\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
-%\bottomrule
-%\end{tabular}
-%\end{adjustwidth}
-%\end{table}
 
 
 
 
-%\begin{table}[!ht]
-%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
-%\caption{\label{tab:lungfilter} {\bf Filters applied to the Lung Cancer data.}}
-%\rowcolors{1}{white}{light-gray}
-%\begin{tabular}{lr}
-%\toprule
-% Column &  Filter \\
-%\midrule
-%\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
-%\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
-%\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
-%\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
-%\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
-%\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ ""} \\
-%\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
-%\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
-%\codewhite{PRIMARY SITE} & \codewhite{ $=$ "LUNG \& BRONCHUS"} \\
-%\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
-%\bottomrule
-%\end{tabular}
-%\end{adjustwidth}
-%\end{table}
 
 
 
-%\begin{table}[!ht]
-%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
-%\caption{\label{tab:breastfilter} {\bf Filters applied to the Breast Cancer data.}}
-%\rowcolors{1}{white}{light-gray}
-%\begin{tabular}{lr}
-%\toprule
-% Column &  Filter \\
-%\midrule
-%\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
-%\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
-%\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
-%\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
-%\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
-%\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ " "} \\
-%\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
-%\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
-%\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
-%\bottomrule
-%\end{tabular}
-%\end{adjustwidth}
-%\end{table}
-
-
-
-%The following categorical features were one-hot encoded for each of the three datasets:
-%as described in 
-%section~(\ref{subsec:dataprep}):
-
-%\begin{itemize}[noitemsep]
-%\item \codewhite{SEX},
-%\item  \codewhite{MARITAL STATUS AT DX},
-%\item \codewhite{RACE/ETHNICITY},
-%\item \codewhite{SPANISH/HISPANIC ORIGIN},
-%\item \codewhite{GRADE},
-%\item \codewhite{PRIMARY SITE},
-%\item \codewhite{LATERALITY},
-%\item \codewhite{SEER HISTORIC STAGE A},
-%\item \codewhite{HISTOLOGY RECODE--BROAD GROUPINGS},
-%\item \codewhite{MONTH OF DIAGNOSIS},
-%\item  \codewhite{VITAL STATUS RECODE},
-%\end{itemize}
-%and the \codewhite{STATE-COUNTY RECODE} variable was dropped and replaced with the %\codewhite{elevation}, \codewhite{lat}, and \codewhite{lng} variables for all three datasets as %illustrated in Table~(\ref{tab:nmhead}).
-
-Before applying machine learning models trained with these datasets, we review below the sailent features of survival analysis and censored data. We then describe in detail a method that takes full advantage of all the data, including the right-censored data, and which involves a simple and intuitive transformation, culminating in the full set of features and target variable listed in the back of this report.
+Before applying machine learning models trained with these datasets, we describe in detail a method that takes full advantage of all the data, including the right-censored data, and which involves a simple and intuitive transformation, culminating in the full set of features and target variable listed in the appendix~\nameref{sec:supporting}. 
+%sections~(\nameref{Colon_Cancer_Feature_Selection},~%\nameref{Lung_Cancer_Feature_Selection},~\nameref{Breast_Cancer_Feature_Selection}).
 
 
 %\subsection*{Traditional Survival Analysis}
