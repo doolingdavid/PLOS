@@ -730,18 +730,22 @@ Then the predictions of 95\% of these 10,000 experts all fall within the band de
 \label{sec:performancemetrics}
 
 
+\paragraph{AUC scores}
+The AUC scores for each of the 18 different binary classifiers are listed in Table~(\ref{tab:AUC}). 
+The lowest AUC in Table~\ref{tab:AUC} is .765, corresponding to the lung neural network model predictions for 6 months survival, while the highest AUC in Table~\ref{tab:AUC} is .885, corresponding to the breast random forest model predictions for 12 months survival.
 
-The AUC scores for each of the 18 different binary classifiers are listed in Table~(\ref{tab:AUC}). We emphasize the above-mentioned discussion concerning the correct treatment of the censored test data when evaluating performance metrics.
-Namely, when computing the AUC for the 12 month survival curve classifiers, we restrict the test data subjects to those that in the untransformed data set that satisfy either of the following mutually exclusive conditions:
+%We emphasize the above-mentioned discussion concerning the correct treatment of the %censored test data when evaluating performance metrics.
+%Namely, when computing the AUC for the 12 month survival curve classifiers, we restrict the %test data subjects to those that in the untransformed data set that satisfy either of the %following mutually exclusive conditions:
 
 
 
-\begin{itemize}[noitemsep]
-\item \codewhite{survival\_months} $>=$ 12 AND \codewhite{vital\_status\_recode} == 0
-\item \codewhite{vivtal\_status\_recode} == 1
-\end{itemize}
+%\begin{itemize}[noitemsep]
+%\item \codewhite{survival\_months} $>=$ 12 AND \codewhite{vital\_status\_recode} == 0
+%\item \codewhite{vivtal\_status\_recode} == 1
+%\end{itemize}
 
-We limit evaluation data to subsets of the data where we know for certain whether or not the subject survived at least 12 months. Similar considerations apply to the 12 and 60 months AUC calculations. The lowest AUC in Table~\ref{tab:AUC} is .765, corresponding to the lung neural network model predictions for 6 months survival, while the highest AUC in Table~\ref{tab:AUC} is .885, corresponding to the breast random forest model predictions for 12 months survival.
+%We limit evaluation data to subsets of the data where we know for certain whether or not the %subject survived at least 12 months. Similar considerations apply to the 12 and 60 months AUC %calculations. 
+%The lowest AUC in Table~\ref{tab:AUC} is .765, corresponding to the lung neural network %model predictions for 6 months survival, while the highest AUC in Table~\ref{tab:AUC} is .885, %corresponding to the breast random forest model predictions for 12 months survival.
 
 
 \begin{table}[!ht]
@@ -769,11 +773,11 @@ Lung NN    &        .765  (5019)            &        .796  (4860)             & 
 
 
 
-\subsection*{Model Agreement}
-\label{subsec:agreement}
+%\subsection*{Model Agreement}
+%\label{subsec:agreement}
 
 
-
+\paragraph{Model Agreement}
 An additional means of validating the predictions of these models is by comparing their predictions to each other for the same set of input data. 
 Table~\ref{tab:agree} shows the strong agreement between the random forest and neural network classifiers for each cancer type. Python code showing how the values in Table~\ref{tab:agree} are computed is available in the files 
 \codewhite{NewPatientBreastCF.html}, \codewhite{NewPatientColonCF.html}, and \codewhite{NewPatientLung.html} in the GitHub repository containing supplemental matierial for this study~\cite{supp}. Table~\ref{tab:agree} is computed as follows. 
@@ -855,7 +859,7 @@ Lung & .861 & .883 & .900 \\
 \label{sec:apps}
 
 
-The six models described in section~\nameref{sec:predmodels}, namely the random forest and MLP neural network models for each of the three cancer types considered in this study, have their full hyperparameter and architecture presented in section~\nameref{sec:supporting}. Python code for all six model training and evaluation is available at the githib respository containing supplemental material for this study~\cite{supp}.
+The six models have their full hyperparameter and architecture presented in the appendix section~\nameref{sec:supporting}. Python code for all six model training and evaluation is available at the githib respository containing supplemental material for this study~\cite{supp}.
 
 
 
@@ -1034,7 +1038,8 @@ It it interesting to note that both the random forest and neural network lung ca
 
 
 The purpose of this study has been twofold; to develop a general methodology of data transformation to survival data with censored observations so that machine learning algorithms can be applied and to help further the cause of PPPM medicine by developing models of personalized suvival curve prognosis.
-To help further refine the methodology, we would like to apply it to different survival datasets~\cite{umass}, not necessarily within the healthcare domain. In particular, the methods presented in this paper do not take into account time varying features. For example, the \codewhite{cs\_tumor\_ size} variable that has been a part of this study is kept fixed at the value measured at diagnosis for all records corresponding to a given subject. Clearly, the actual tumor size varies along with time and a sophisitcated model can be developed to take this into account, given available datasets. Unfortunately, the SEER datasets considered in this study do not provide this kind of granularity over time.
+To help further refine the methodology, we would like to apply it to different survival datasets~\cite{umass}, not necessarily within the healthcare domain. In particular, the methods presented in this paper do not take into account time varying features. For example, the \codewhite{cs\_tumor\_ size} variable that has been a part of this study is kept fixed at the value measured at diagnosis for all records corresponding to a given subject. Clearly, the actual tumor size varies along with time and a sophisitcated model can be developed to take this into account, given available datasets.
+
 
 
 The SEER database has been linked with claims data in the SEER-Medicare Linked Database~\cite{seermed}. This linkage allows for the identification of additional clinical data for each record in the SEER database and allows for an enrichment of the models presented in this study, and is an avenue for further investigation.
@@ -1042,7 +1047,7 @@ The SEER database has been linked with claims data in the SEER-Medicare Linked D
 
 An additional avenue of research concerns the broad concept of causality. As demonstrated in section~\nameref{sec:apps}, there appears to be a correlation between marital status and survival prognosis. Does this mean that if a single person in Boston, Massachusetts is diagnosed with cancer, that they should immediately get married and move to Denver? Of course not. 
 But personal discussions with providers has confirmed for one of the authors (D.D.) that married males tend to be much more diligent in following instructions than their single counterparts. What appears to be in effect is that some of the SEER data is providing an identifiable signature of underlying causes not directly represented by the data. Latent variables not directly seen in the data are still providing echos of patterns in the data and the sheer volume allows us to see glimpses of these patterns. Marital status is in some instances a surrogate for the presence of a strong social structure and support group surrounding a patient, which presence presumably leads to more desirable survival prognosis. 
-The daunting and exciting task of teasing out actual causality relationships within machine learning contexts has been pioneeered by Judea Pearl of the University of California, Los Angeles~\footnote{Judea Pearl homepage at the University of California, Los Angeles, \url{http://bayes.cs.ucla.edu/jp_home.html}, accessed 11 Jan 2016.} and seems particulary relevant and applicable to censored survival data. Combining the methodlogy presented in this study for the marriage of machine learning and censored survival data with that of the pioneering work of Judea Pearl on causality will be a fruitful avenue for future research.
+The daunting and exciting task of teasing out actual causality relationships within machine learning contexts has been pioneeered by Judea Pearl of the University of California, Los Angeles~\footnote{Judea Pearl homepage at the University of California, Los Angeles, \url{http://bayes.cs.ucla.edu/jp_home.html}, accessed 11 Jan 2016.} and seems particulary relevant and applicable to censored survival data. Combining the methodlogy presented in this study with that of the pioneering work of Judea Pearl on causality will be a fruitful avenue for future research.
 
 
 %Nulla mi mi, venenatis sed ipsum varius, Table~\ref{table1} volutpat euismod diam. Proin %rutrum vel massa non gravida. Quisque tempor sem et dignissim rutrum. Lorem ipsum dolor sit %amet, consectetur adipiscing elit. Morbi at justo vitae nulla elementum commodo eu id massa. %In vitae diam ac augue semper tincidunt eu ut eros. Fusce fringilla erat porttitor lectus cursus, %vel sagittis arcu lobortis. Aliquam in enim semper, aliquam massa id, cursus neque. Praesent %faucibus semper libero.
