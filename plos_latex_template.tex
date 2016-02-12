@@ -136,8 +136,8 @@
 
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows}
-
-
+\usetikzlibrary{mindmap}
+\usetikzlibrary{positioning}
 
 % Use the PLoS provided BiBTeX style
 \bibliographystyle{plos2015}
@@ -446,6 +446,20 @@ Explicit examples will help make this transformation clear.
 The untransformed datapoint represented Table~(\ref{tab:originaldead}) is transformed to the multiple records shown in Table~(\ref{tab:transformeddead}). All uncensored data is transformed in this way. All censored data is similarly transformed. 
 The untransformed datapoint represented Table~(\ref{tab:originalalive}) is transformed to the multiple records shown in Table~(\ref{tab:transformedalive}).
 
+%\hspace{-7cm}
+%\begin{tikzpicture}[mindmap,grow cyclic, every node/.style=concept, concept color=teal!%40,text width=5cm, align=flush left,
+%  level 1/.append style={level distance=3cm,sibling angle=90},
+%  level 2/.append style={level distance=3cm,sibling angle=90}]
+
+%\node{Original Data}
+%	child [concept color=green!40] { node {Original Uncensored Data}
+%			child { node {Transformed Uncensored Data}}
+%            }
+%	child [concept color=blue!40] {node {Original Censored Record}
+%           child { node {Tranformed Censored Data}}
+%           }
+%;
+%\end{tikzpicture}
 
 
 \begin{table}[!ht]
