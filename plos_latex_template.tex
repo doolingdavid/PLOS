@@ -391,156 +391,23 @@ Before applying machine learning models trained with these datasets, we describe
 %sections~(\nameref{Colon_Cancer_Feature_Selection},~%\nameref{Lung_Cancer_Feature_Selection},~\nameref{Breast_Cancer_Feature_Selection}).
 
 
-%\subsection*{Traditional Survival Analysis}
-%\label{subsec:survprimer}
-
-%Survival analysis pertains to data containing survival times, which are \emph{intervals} %between certain kinds of events, e.g.; cancer diagnosis date and expiry date. These intervals %are often affected by a kind of "partial missingness" called \emph{censoring}. Censored data %must be analyzed in a special way to avoid biased estimates and bogus conclusions.
-%Special methods have been developed long ago to analyze censored data properly.
-
-%With survival data, including the SEER data considered in this study, you may not know the %exact time of death for some subjects. Some of the SEER subjects are still alive at the the time %of the latest SEER data release. When the \codewhite{VITAL STATUS RECODE} variable %indicates that the subject is still alive, the \codewhite{SURVIVAL MONTHS} variable is only a %lower bound on the true number of survival months; this is called the \textit{date of last %contact} mode of censoring. You know that each subject either died on a certain date or was %definitely alive up to some last-seen date (and you don't know how far beyond that date he or %she may ultimately have lived). The latter situation is called a \textit{censored} observation. 
-
-%Statisticians have developed some traditional techniques to utilize the partial information %contained in censored observations: the life-table method and the Kaplan-Meier method. 
-%Both of these methods make use of the partial information to provide unbiased estimates of %the two fundamental concepts: - \textit{hazard} and \textit{survival}, both of which are %functions of time:
-
-%\begin{itemize}[noitemsep]
-%\item \textbf{The hazard rate} $\lambda(t)$ is the probability of dying in the next small %interval of time, assuming that the subject is alive right now.
-%\item \textbf{The survival rate} $S(t)$  is the probability of living for a certain amount of time %after some starting point.
-%\end{itemize}
-
-
-%Incorrect treatment of survival data still seen in practice, and leading to biased results, %includes simply excluding all subjects with a censored survival time from any survival analysis, %and \emph{imputing} (replacing) the censored (last-seen) date with some reasonable value. %Both of these techniques destroy the partial information contained in the censored %observations and nullify the validity of the resulting estimates for the hazard rate and survival %rate~\cite{cam}.
-
-
-%In 1958, Edward L. Kaplan and Paul Meier collaborated to publish the seminal paper on how to %estimate the hazard and survival rates for data containing censored observations~%%%\cite{Kaplan1958457}.
-%The method is straightforward and for small datasets can be performed by hand. As an %example, consider the survival data shown  in Table~(\ref{tab:censoredexample}). In the %Kaplan-Meier calculation of the survival curve, the first step is to  
-%sort the subjects in Table~(\ref{tab:censoredexample}) labeled 0 through 9 by \emph{Survival %Time} in ascending order.  
-%This process results in the first two columns (\emph{Censored Status}, and \emph{Survival %Times}) in Table~(\ref{tab:kaplanexample}).
-%The \emph{At Risk} column decreases by one for each row; in every row a subject has either %been censored out of the study or has died. The hazard rate is then computed for each value %of \emph{Survival Time} (necessarily a discrete function because the number of subjects is %countable), by dividing the value in \emph{Censored Status} by the value in 
-%\emph{At Risk}. The hazard function is shown in the \emph{Hazard Function} column in %Table~(\ref{tab:kaplanexample}).
-%It is then straightforward to calculate the survival function; 1 - hazard function represents the %probability of not dying in the next interval of time, assuming that the subject has survived up %until now and is represented by column \emph{Prob of Surv}. 
-%The cumulative survival probability can then be obtained by sucessively multiplying all these %individual time-slice probabilities together. In order to survive 2.4 years, first the subject has to %survive .5 years, then survive .75 years, 2.3 years and 2.4 years. The probability of surviving 2.4 %years is then the product of these 3 probabilities and is given as .666 in %Table(\ref{tab:kaplanexample}) in the \emph{Survival Function} column.
-%The Kaplan-Meier survival estimate corresponding to the data given in %Table~(\ref{tab:censoredexample}) is shown in Table~(\ref{tab:kaplanexample}).
-
-%\begin{table}[!ht]
-%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
-%\caption{\label{tab:censoredexample} {\bf Example data to illustate traditional Survival %Analsyis.}}
-%\rowcolors{1}{white}{light-gray}
-%\begin{tabular}{lrr}
-%\toprule
-%{} &  Survival Time (Years) &  Censored Status \\
-%\midrule
-%0 &            0.75 &                1 \\
-%1 &            6.10 &                1 \\
-%2 &            7.00 &                0 \\
-%3 &            2.40 &                1 \\
-%4 &            0.50 &                0 \\
-%5 &            4.50 &                1 \\
-%6 &            3.50 &                0 \\
-%7 &            5.80 &                0 \\
-%8 &            2.30 &                1 \\
-%9 &            5.20 &                1 \\
-%\bottomrule
-%\end{tabular}
-%\end{adjustwidth}
-%\end{table}
-
-%\begin{table}[!ht]
-%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
-%\caption{\label{tab:kaplanexample} {\bf Kaplan-Meier table corresponding to the example data %in Table~(\ref{tab:censoredexample}).}}
-%\rowcolors{1}{white}{light-gray}
-%\begin{tabular}{lrrrrrr}
-%\toprule
-%{} &  Censored Status &  Survival Time &  At Risk &  Hazard Function &  Prob of Surv & %Survival Function \\
-%\midrule
-%4 &                0 &            0.50 &              10 &       0.000000 &      1.000000 &      1.000000 %\\
-%0 &                1 &            0.75 &               9 &       0.111111 &      0.888889 &      0.888889 \%\
-%8 &                1 &            2.30 &               8 &       0.125000 &      0.875000 &      0.777778 \%\
-%3 &                1 &            2.40 &               7 &       0.142857 &      0.857143 &      0.666667 \%\
-%6 &                0 &            3.50 &               6 &       0.000000 &      1.000000 &      0.666667 \%\
-%5 &                1 &            4.50 &               5 &       0.200000 &      0.800000 &      0.533333 \%\
-%9 &                1 &            5.20 &               4 &       0.250000 &      0.750000 &      0.400000 \%\
-%7 &                0 &            5.80 &               3 &       0.000000 &      1.000000 &      0.400000 \%\
-%1 &                1 &            6.10 &               2 &       0.500000 &      0.500000 &      0.200000 \%\
-%2 &                0 &            7.00 &               1 &       0.000000 &      1.000000 &      0.200000 \%\
-%\bottomrule
-%\end{tabular}
-%\end{adjustwidth}
-%\end{table}
-
-
-
-
-%After the above one-hot encoding procedure, the new variable
-%\codewhite{vital\_status\_recode\_Dead} indicates that the patient is deceased if this variable %= 1, or else that the patient's record is right-censored if this variable = 0.
-%\codewhite{SURVIVAL MONTHS} and \codewhite{vital\_status\_recode\_Dead} are all that is %needed to construct the Kaplan-Meier estimates for the SEER datasets.
-%The Kaplan-Meier estimates of the survival curves for colon (Figure~(\ref{fig:colonkaplan})), %lung 
-%(Figure~(\ref{fig:lungkaplan})), and breast cancer (Figure~(\ref{fig:breastkaplan})) are %constructed from the full population of cancer patients in the respective datasets.
-%An unsatisfactory feature of these curves is that these estimates are based on populations and %data with enough heterogeneity to make them not very meaningful to an indivual. Patients %with very disparate characteristics are given the same prognosis by these Kaplan-Meier survival %curve estimates. Therefore it is desirable to find robust predictors for survival curves of %individual subjects where the input is an individual record as opposed to a population. We %present below the data transformation that allows for machine learning to be applied to %censored data.
-
-
-
-%\begin{figure}[tbp]
-%\centering 
-%\begin{center}/\end{center} takes some additional vertical space
-%\includegraphics[width=.45\textwidth,trim=0 380 0 200,clip]{img1.pdf}
-%\hfill
-%\begin{center}
-%\includegraphics[width=.90\textwidth,origin=c]{colonkaplan.pdf}
-% "\includegraphics" is very powerful; the graphicx package is already loaded
-%\caption{\label{fig:colonkaplan} Traditional Kaplan-Meier estimate of the survival curve for all %colon cancer patients. Fitted with 113072 observations, 71804 censored.}
-%\end{center}
-%\end{figure}
-
-%\begin{figure}[tbp]
-%\centering 
-%\begin{center}/\end{center} takes some additional vertical space
-%\includegraphics[width=.45\textwidth,trim=0 380 0 200,clip]{img1.pdf}
-%\hfill
-%\begin{center}
-%\includegraphics[width=.90\textwidth,origin=c]{breastkaplan.pdf}
-% "\includegraphics" is very powerful; the graphicx package is already loaded
-%\caption{\label{fig:breastkaplan} Traditional Kaplan-Meier estimate of the survival curve for all %breast cancer patients. Fitted with 329949 observatins, 292279 censored.}
-%\end{center}
-%\end{figure}
-
-
-%\begin{figure}[tbp]
-%\centering 
-%\begin{center}/\end{center} takes some additional vertical space
-%\includegraphics[width=.45\textwidth,trim=0 380 0 200,clip]{img1.pdf}
-%\hfill
-%\begin{center}
-%\includegraphics[width=.90\textwidth,origin=c]{lungkaplan.pdf}
-% "\includegraphics" is very powerful; the graphicx package is already loaded
-%\caption{\label{fig:lungkaplan} Traditional Kaplan-Meier estimate of the survival curve for all %lung cancer patients. Fitted with 177089 observatins, 47409 censored.}
-%\end{center}
-%\end{figure}
-
 
 \subsection*{Transformation of Censored Data for Machine Learning}
 \label{subsec:transformation}
 
-In this section we describe an inuitive way to transform right-censored data appropriately so that it may be used as input to machine learning algorithms that learn the hazard fuction. The full details of this transformation, and a large inspiration for this study, can be flound in this blog post~\cite{kuhn}.
-
-
-
-%The overall philosophy of the Kaplan-Meier estimate of the survival curve for a population %differs fundamentally from the methods described below and used in this study. 
-%The Kaplan-Meier estimate of the survival curve is given by
-%\begin{equation}
-%\label{eq:kaplanmeier}
-%\hat{S}(t) = \prod_{t_i < t} \frac{n_i - d_i}{n_i}
-%\end{equation}
-%where $d_i$ are the number of death events at time $t$ and $n_t$ is the number of subjects %at risk of death just prior to time $t$. 
-%Equation~(\ref{eq:kaplanmeier}) uses the entire data set to arrive at an estimate of the entire %population survival curve. In contrast, the method described below uses the entire data set to %learn a model so as to predict hazard and survival curves from the data for as yet unseen %individuals.
+In this section we describe an inuitive way to transform right-censored data appropriately so that it may be used as input to machine learning algorithms that learn the hazard fuction. The full details of this transformation, and a large inspiration for this study, can be found in this blog post~\cite{kuhn}.
 
 
 The key observation is to note that the hazard function can be directly learned via standard machine learning methods. It can be rewritten as
 \begin{equation}
 \label{eq:hhazard}
-\lambda(\mathbf{X}, t_{i}) = P(Y = t_{i}|Y \geq t_{i}, \mathbf{X}),
+\lambda(\mathbf{X}_{i}, t_{j}) = P(Y = t_{j}|Y \geq t_{j}, \mathbf{X}_{i}),
 \end{equation}
-the probability that, if someone has survived up until month $t_{i}$, they will die in that month.
-where $\mathbf{X}$ represents all of the data for that particular record, and in our case $Y$ represents the true, uncensored number of survival months of the patient.
+the probability that, if someone has survived up until month $t_{j}$, they will die in that month.
+%where $\mathbf{X}_{i}$ represents all of the data for that particular record, and in our case %$Y$ represents the true, uncensored number of survival months of the patient.
+ $j$ runs from 0 to 107, and $\mathbf{X}_{i}$ corresponds to the single row corresponding to patient $i$ in the original untransformed dataset.
+107 months was the maximum value of survival months in all three of the cancer datasets, and is a consequence of the data subsets chosen for this study.
+$Y$ represents the true, uncensored number of survival months of the patient.
 What is actually provided in the SEER data is the related variable \codewhite{SURVIVAL MONTHS} $T$ (how long each subject was in the study), and whether they exited by dying or being censored ($D$), \codewhite{VITAL STATUS RECODE}. 
 $D$ is a Boolean variable, so $D = 1$ if $T = Y$, and $D = 0$ if $T < Y$.
 
@@ -549,41 +416,25 @@ $D$ is a Boolean variable, so $D = 1$ if $T = Y$, and $D = 0$ if $T < Y$.
 It follows directly from equation~\ref{eq:hhazard} that 
 \begin{equation}
 \label{eq:pmf}
-P(Y = t_{j} | \mathbf{X}) = \lambda(\mathbf{X}, t_{j}) \prod_{i=1}^{j-1} (1 - \lambda(\mathbf{X}, t_{i}))
+P(Y = t_{j} | \mathbf{X}_{i}) = \lambda(\mathbf{X}_{i}, t_{j}) \prod_{k=1}^{j-1} (1 - \lambda(\mathbf{X}_{i}, t_{k}))
 \end{equation}
-Knowing $P(Y = t_{j} | \mathbf{X}) $ for all $t_{j}$ gives the 
+Knowing $P(Y = t_{j} | \mathbf{X}_{i}) $ for all $t_{j}$ gives the 
 full probablity distribution of dying at time Y~\cite{kuhn}.
 The survival function is then readily derived from this distribution as
 \begin{equation}
 \label{eq:cdf}
-S(\mathbf{X},t_{k}) = 1 - CDF(\mathbf{X}, t_{k})
+S(\mathbf{X}_{i},t_{k}) = 1 - CDF(\mathbf{X}_{i}, t_{k})
 \end{equation}
-where $CDF(\mathbf{X}, t_{k}) = \sum_
-{i=1}^{k} P(Y = t_{i} | \mathbf{X}) $ is the cumulative density function correponding to the probability mass function in equation~\ref{eq:pmf}~\cite{downey}.
+where $CDF(\mathbf{X}_{i}, t_{k}) = \sum_
+{j=1}^{k} P(Y = t_{j} | \mathbf{X}_{i}) $ is the cumulative density function correponding to the probability mass function in equation~\cite{downey}.
 
-
-
-
-%In the discrete time variable case (which holds for the SEER data; \codewhite{SURVIVAL %MONTHS} takes on integer values), the relationship between the hazard function and the survival %function is given as follows~\cite{amstat}. Supppose that 
-%$a_{j} < t \leq a_{j+1}$ where $a_{j}$ represents $j$ months. Then
-
-
-%\begin{eqnarray}
-%P(Y = t | \mathbf{X} ) & = & 
-
-
-%\begin{eqnarray}
-%S(t) &  = & P(T \geq a_{1}, T \geq a_{2}, \cdots , T \geq a_{j+1}) \\
-%   & = & P(T \geq a_{1}) P(T \geq a_{2} | T \geq a_{1}) \cdots P(T \geq a_{j+1} | T \geq a_{j}) %\\
-% & = & (1 - \lambda_{1}) \times \cdots \times (1 - \lambda_{j}) \\
-% & = & \prod_{k: a_{k} < t}(1 - \lambda_{k}) \label{eq:hazardtosurvival}
-%\end{eqnarray}
 
 
 
 Treating $T$ as just another covariate is the key to the transformation. Each datapoint in the hidden classification problem is the combination of an $\mathbf{X}_{i}$ in the orginal dataset plus some month $t_{j}$, and the classification problem is "did point $\mathbf{X}_{i}$ die in month $t_{j}$.'' We will call this new variable $D_{ij}$ (\codewhite{newtarget}).
 We can transform our original data set into a new one, with one row for each month that each $\mathbf{X}_{i}$ is in the sample; train a standard classifier on this new dataset with $D_{ij}$ as the target, and derive a survival model from the orginal dataset.
-Psuedocode for this transformation is found in section~\nameref{subsec:pseudocode}.
+Psuedocode for this transformation is found in the appendix~\nameref{sec:supporting}.
+%section~\nameref{subsec:pseudocode}.
 
 Explicit examples will help make this transformation clear.
 The untransformed datapoint represented Table~(\ref{tab:originaldead}) is transformed to the multiple records shown in Table~(\ref{tab:transformeddead}). All uncensored data is transformed in this way. All censored data is similarly transformed. 
@@ -717,7 +568,7 @@ This prediction task should not be confused with the regression problem of tryin
 
 The hazard functions thus learned and predicted are intermediary products; what we are really pursuing are the survival functions for each patient that are derived from the predicted hazard functions.
 From the resulting hazard functions for each unique patient, we can construct the
-resulting survival functions as presented in section~(\ref{subsec:pseudocode}) and Equation~(\ref{eq:hazardtosurvival}) and explicitly given in python code in the notebooks at the github repository containing supplemental material for this study~\cite{supp}.
+resulting survival functions as in Equation~\ref{eq:cdf} and explicitly given in python code in the notebooks at the github repository containing supplemental material for this study~\cite{supp}.
 For each subject $i$, all input data minus \codewhite{months} and \codewhite{newtarget} is represented by $\mathbf{X}_{i}$. After the classfier models have trained with target \codewhite{newtarget} on the (very large) training set, each subject's survival function is computed in the corresponding (much smaller) test set.
 These functions are computed by using the model to predict $\lambda(\mathbf{X}_i, t_{j})$ for $j$ running from 0 to 107 months, and $\mathbf{X}_{i}$ corresponds to the single row corresponding to subject $i$ in the original untransformed dataset.
 107 months was the maximum value of survival months in all three of the cancer datasets, and is a consequence of the data subsets chosen for this study.
@@ -746,7 +597,8 @@ A big advantage of random forests is that honing in on suitable hyperparameter v
 IOBS has chosen to use the Python scikit-learn implemenation of the Random Forest machine 
 learning classifier~\cite{rf}.
 Random Forests are frequent winners of the Kaggle machine learning competitions~\cite{kagglerf}.
-The model parameters for each cancer type are given in sections~(\nameref{subsec:lungrf},~\nameref{subsec:colonrf},~\nameref{subsec:breastrf}).
+The model parameters for each cancer type are given in the appendix~\nameref{sec:supporting}.
+% sections~(\nameref{subsec:lungrf},~\nameref{subsec:colonrf},~\nameref{subsec:breastrf}).
 
 
 \paragraph{Multi-Layer Perceptron Neural Networks}
@@ -758,7 +610,8 @@ In addition, the pharmaceutical industry recently started to use deep learning t
 
 IOBS has chosen to use the Multi-Layer Perceptron Neural Network (MLP neural network) implementation Keras developed at MIT.
 Keras was initially developed as part of the research effort of project ONEIROS (Open-ended Neuro-Electronic Intelligent Robot Operating System)~\cite{keras}.
-Keras is a minimalist, highly modular neural networks library, written in Python and capable of running on top of either TensorFlow or Theano. The model architecture for each cancer type are given in sections~(\nameref{subsec:breastnn},~\nameref{subsec:colonnn},~\nameref{subsec:lungnn}). Training a neural network and choosing an appropriate architecture is as much art as science~\cite{deeplearning}, and the search for a good neural network architecture for the lung cancer case was more demanding than for the breast and colon cases. The presence of both non-small cell lung cancer (NSCLC) and small cell lung cancer (SCLC) in the SEER data may be the source of this need for more iterations and trials of different architectures when training the lung cancer neural network models.
+Keras is a minimalist, highly modular neural networks library, written in Python and capable of running on top of either TensorFlow or Theano. The model architecture for each cancer type are given in the appendix~\nameref{sec:supporting}.
+%sections~(\nameref{subsec:breastnn},~\nameref{subsec:colonnn},~\nameref{subsec:lungnn}). Training a neural network and choosing an appropriate architecture is as much art as science~\cite{deeplearning}, and the search for a good neural network architecture for the lung cancer case was more demanding than for the breast and colon cases. The presence of both non-small cell lung cancer (NSCLC) and small cell lung cancer (SCLC) in the SEER data may be the source of this need for more iterations and trials of different architectures when training the lung cancer neural network models.
 
 
 
