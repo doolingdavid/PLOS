@@ -539,13 +539,16 @@ For this study, the original, untransformed colon cancer DataFrame has shape $(1
 Similary, the original, untransformed lung cancer DataFrame has shape $(177089, 115)$, and the total transformed lung cancer DataFrame has shape $(3079931, 115)$.
 The biggest explosion in dataset size occured with the breast cancer data, which is a consequence of the relatively high survival rates in breast cancer. A subject who is censored with a recorded survival months of 48 will contribute an extra 48 rows to the transformed dataset.  
 The original, untransformed breast cancer DataFrame has shape $(329949, 67)$, and the total transformed breast cancer DataFrame has shape $(15085711, 67)$.
-Traning machine learning algorithms on such large datasets, even after splitting into training and testing sets described below, require large RAM. All computations for this study were performed on a Dell XPS 8700 Desktop with 32GB of RAM.
-
+Traning machine learning algorithms on such large datasets, even after splitting into training and testing sets described below, require large RAM. All computations for this study were performed on a Dell XPS 8700 Desktop with 32GB of RAM. The training times involved in the classification task of learning the hazard function $\lambda(\mathbf{X}_{i}, t_{j})$ for the chosen model parameters were on the order of a few hours or less, but the evaluation of the AUC performance metrics associated with the 6, 12, and 60 month binary survival classifiers
+% presented in section~\nameref{sec:performancemetrics}
+ took more than 24 hours for the random forest models. These AUC performance metrics provided the feedback mechanism to adjust the model hyperparameters.
 \subsection*{Training and Test Partitions}
 \label{subsec:traintest}
 
 
-After performing the data transformation adumbrated above, it is necessary to be mindful of how we partition the data into training and testing data. Each subject that was represented by a single row in the original untransformed dataset now potentially is represented by multiple rows in the transformed dataset, and care must be taken to ensure that all of the rows corresponding to a particular subject are either assigned exclusively to the training set or exclusive to the testing set. 
+The datasets were split into training and test sets at the patient level, with 97\% of patients assigned to the training set, and the remaining 3\% of patients assigned to the testing set.
+All records corresponding to a given patient were assigned exclusively to either the training or test set.
+%After performing the data transformation adumbrated above, it is necessary to be mindful of %how we partition the data into training and testing data. Each subject that was represented by %a single row in the original untransformed dataset now potentially is represented by multiple %rows in the transformed dataset, and care must be taken to ensure that all of the rows %corresponding to a particular subject are either assigned exclusively to the training set or %exclusive to the testing set. 
 An additional characteristic of this transformed data that requires careful treatment involves balancing. The transformation results in many new records with the target variable \codewhite{newtarget} == 0. The training and test sets must be chosen such that the ratio of the number of records with \codewhite{newtarget} == 0 to that of the number of records with \codewhite{newtarget} == 1 is the same in the training and test datasets.
 This ratio turns out to be $\approx 396$ for the breast cancer data, $\approx  99$ for the colon cancer data, and 
 $\approx 22.75$ for the lung cancer data. 
@@ -556,7 +559,8 @@ Finallly, for colon cancer the partition into training and test datasets of the 
 $(3958008, 103)$ and $(207243, 103)$. Multiple rows correspond to the same test patient in these datasets.
 The colon cancer test dataset represents 5654 distinct subjects; the breast cancer test dataset represents 3300 distinct subjects; and the lung test dataset contains data for 5313 distinct subjects.
 
-The models described below are trained to learn the values of \codewhite{newtarget}, which is a binary variable: a value of '0' indicating that the subject is still alive at the given month, while a value of '1' indicates that the patient died at that particular value of \codewhite{months}. The random forests and neural networks described below are binary classifiers with the target \codewhite{newtarget}. Fortunately, both the random forests and neural networks are capable of not only performing strict class prediction, i.e. predicting whether \codewhite{newtarget} is '0' or '1', but are also able to predict the \textit{probability} of \codewhite{newtarget} being '0' or '1'., and thus learning the hazard function.
+The models described below are trained to learn the values of \codewhite{newtarget}, which is a binary variable: a value of '0' indicating that the subject is still alive at the given month, while a value of '1' indicates that the patient died at that particular value of \codewhite{months}. The random forests and neural networks described below are binary classifiers with the target \codewhite{newtarget}. 
+Both the random forests and neural networks are capable of not only performing strict class prediction, i.e. predicting whether \codewhite{newtarget} is '0' or '1', but are also able to predict the \textit{probability} of \codewhite{newtarget} being '0' or '1'., and are thus able to learn the hazard function.
 
 
 Finally, we emphasize the crucial point that the features \codewhite{survival\_months} and \\
