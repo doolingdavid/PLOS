@@ -565,7 +565,7 @@ Both the random forests and neural networks are capable of not only performing s
 
 Finally, we emphasize the crucial point that the features \codewhite{survival\_months} and \\
 \codewhite{vital\_status\_recode\_Dead} are dropped from both the training and and testing data, and are replaced with the features \codewhite{months} and \codewhite{newtarget}, as illustrated in Tables~(\ref{tab:originaldead},~\ref{tab:originalalive},~\ref{tab:transformeddead},~\ref{tab:transformedalive}). The information of which subjects represent censored data (\codewhite{vital\_status\_recode\_Dead} == 0) and which died is retained and recoverable through the \codewhite{newindex} variable and is needed for proper evaluation of the performance metrics; when evaluating AUC curves for the 6, 12, and 60 month binary classifiers, we need to limit the test data to those subjects
-whose vital status is definitetively known at those time points.
+whose vital status is definitively known at those time points.
 % that we know definitively whether or not they survived 6, 12 or 60 months respectively. This %requirement will necessitate the elmination of some of the censored data when computing %some of the performance metrics. 
 We introduce the two machine learning algorithms used in this study below, chosen because of their high performance in machine learning competitions and their complementary methods, so that their mutual agreement shown below on the test datasets can be taken as indication that they are actually learning useful information.
 
@@ -635,11 +635,11 @@ The model parameters for each cancer type are given in the appendix~\nameref{sec
 \paragraph{Multi-Layer Perceptron Neural Networks}
 Neural networks are a biologically-inspired programming paradigm that enable computers to learn from observational data~\cite{deeplearning}.
 %As you may know, \textbf{deep learning} is getting a lot of press and is without any doubt the %hottest topic in the machine learning field.
-Deep learning can be understood as a set of algorithms that were developed to train artificial neural networks with many layers most efficiently.
- Neural networks are a hot topic not only in academic research, but also in big technology companies such as Facebook, Microsoft, and Google who invest heavily in artificial neural networks and deep learning research. As of today, complex neural networks powered by deep learning algorithms are considered as state-of-the-art when it comes to complex problem solving such as image and voice recognition.
+%Deep learning can be understood as a set of algorithms that were developed to train artificial %neural networks with many layers most efficiently.
+ Neural networks are a hot topic not only in academic research, but also in big technology companies such as Facebook, Microsoft, and Google who invest heavily in artificial neural networks and deep learning research. As of today, complex neural networks powered by deep learning algorithms are considered to be the state-of-the-art when it comes to complex problem solving such as image and voice recognition.
 In addition, the pharmaceutical industry recently started to use deep learning techniques for drug discovery and toxicity prediction, and research has shown that these novel techniques substantially exceed the performance of traditional methods for virtual screening~\cite{toxicity}.
 
-IOBS has chosen to use the Multi-Layer Perceptron Neural Network (MLP neural network) implementation Keras developed at MIT.
+We have used the Multi-Layer Perceptron Neural Network (MLP neural network) implementation Keras developed at MIT.
 Keras was initially developed as part of the research effort of project ONEIROS (Open-ended Neuro-Electronic Intelligent Robot Operating System)~\cite{keras}.
 Keras is a minimalist, highly modular neural networks library, written in Python and capable of running on top of either TensorFlow or Theano. The model architecture for each cancer type are given in the appendix~\nameref{sec:supporting}.
 %sections~(\nameref{subsec:breastnn},~\nameref{subsec:colonnn},~\nameref{subsec:lungnn}). Training a neural network and choosing an appropriate architecture is as much art as science~\cite{deeplearning}, and the search for a good neural network architecture for the lung cancer case was more demanding than for the breast and colon cases. The presence of both non-small cell lung cancer (NSCLC) and small cell lung cancer (SCLC) in the SEER data may be the source of this need for more iterations and trials of different architectures when training the lung cancer neural network models.
@@ -670,8 +670,8 @@ Keras is a minimalist, highly modular neural networks library, written in Python
 
 
 In order to evaluate the performance of the models, we first construct three binary classifiers corresponding to whether or not a subject survived 6, 12, or 60 months after diagnosis. 
-This is done by iterating over all distinct patient indices in the test set, prediciting the full survival function, and capturing the values corresonding to 6, 12, and 60 months.  
-If the survival function evaluted at 6 months is greater than or equal to .5 for a given subject, then the 6 months binary classifier predicts that that subject will be alive 6 months after diagnosis. Similarly, if the survival function evaluted at 60 months is less than .5, then the 12 months binary classifier predicts that that subject will be dead 12 months after diagnosis. Figure~(\ref{fig:survivalexample}) illustrates the method; in this case the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts expiry.
+We iterate over all distinct patient indices in the test set, compute the predicted survival function, and capture the values corresonding to 6, 12, and 60 months.  
+If the survival function evaluted at 6 months is greater than or equal to .5 for a given patient, then the 6 months binary classifier predicts that that patient will be alive 6 months after diagnosis. Similarly, if the survival function evaluted at 12 months is less than .5, then the 12 months binary classifier predicts that that subject will be dead 12 months after diagnosis. Figure~(\ref{fig:survivalexample}) illustrates the method; in this case the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts death.
 
 
 %\begin{figure}[tbp]
@@ -684,7 +684,7 @@ If the survival function evaluted at 6 months is greater than or equal to .5 for
 \includegraphics[width=.90\textwidth,origin=c]{survivalexamplewitherrors.pdf}
 % "\includegraphics" is very powerful; the graphicx package is already loaded
 \caption{\label{fig:survivalexample} Example of the construction of the binary classifiers for 6, 12, and 60 months survival.
-A subject's hazard curve $\lambda(\mathbf{X}, t)$ is predicted by the model for times out to 107 months. The survival curve is then readily computed as in Equation~(\ref{eq:cdf}). For this example, the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts expiry.}
+A patient's hazard curve $\lambda(\mathbf{X}_{i}, t_{j})$ is predicted by the model for times out to 107 months. The survival curve is then readily computed as in Equation~(\ref{eq:cdf}). For this example, the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts death.}
 \end{center}
 \end{figure}
 
@@ -705,9 +705,10 @@ subjects in the test data where either of the following mutually exlusive condit
 That is, we restrict ourselves to subsets of the data where we know for certain whether or not the subject survived at least 6 months. Similarly for the 12 and 60 months surivival classifiers. 
 
 \paragraph{Survival Curve Error Estimates}
-The standard calculation of confidence intervals used in the Kaplan-Meier estimates of survival curves does not apply for these personal predictions. The following bootstrap method was used to calculate the upper and lower bounds corresponding to 95\% confidence intervals.
+%The standard calculation of confidence intervals used in the Kaplan-Meier estimates of survival %curves does not apply for these personal predictions. 
+The following bootstrap method was used to calculate the upper and lower bounds corresponding to 95\% confidence intervals.
 From equation~\ref{eq:cdf}, we can obtain the cumulative distribution function (CDF) associated with each individual survival curve.
-We then sample from this CDF in a way that reflects the underlying data used to produce the model. The training data used to create the model has an underlying distribution of survival months. In the transformed training dataset, each subject contributes as many rows as the number of survival months plus one (patients with zero survival months still represent one row of the training data). A subject that survived 50 months contributes 51 "points" to the training of the model. If all patients lived out to 107 months, the model would contain less uncertainty. This observation leads to the following algorithm for determining the error estimates to the predicted survival curves:
+We then sample from this CDF in a way that reflects the underlying data used to produce the model. The training data used to create the model has an underlying distribution of survival months. In the transformed training dataset, each subject contributes as many rows as the number of survival months plus one (patients with zero survival months still contribute one row to the training data). A patient that survived 50 months contributes 51 "points" to the training of the model. If all patients lived out to 107 months, the model would contain less uncertainty. This observation leads to the following algorithm for determining the error estimates to the predicted survival curves:
 
 \begin{itemize}[noitemsep]
 \item compute the CDF associated with the survival curve
@@ -717,7 +718,8 @@ to draw from the survival curve CDF, and compute a new survival curve
 \item extract for each month from the list of curves the .975 and .025 percentiles to record the values for the upper and lower curves
 \end{itemize}
 
-The process is somewhat anologous to the following hypothetical situation. Imagine a patient going to an expert, and the expert after collecting data on the patient and keeping records predicts the central, single survival curve. The patient then seeks multiple "second opinions.'' These second opinions are generated not from independent examinations of the patient, but by outside experts sampling from the data already collected by the expert initially consulted. 
+The process is somewhat anologous to the following hypothetical situation. Imagine a patient going to an expert to get a survival prognosis.
+After collecting data on the patient and keeping records, the expert predicts the central, single survival curve. The patient then seeks multiple "second opinions.'' These second opinions are generated not from independent examinations of the patient, but by outside experts sampling from the data already collected by the first expert.
 Then the predictions of 95\% of these 10,000 experts all fall within the band determined by the upper and lower curves.
 
 
@@ -886,7 +888,8 @@ python is installed on your system, you can launch the application by running
 \begin{verbatim}
 >python hello.py
 \end{verbatim}
-and pointing the browser to the local server: \codewhite{http://127.0.0.1:5000}.
+and pointing the browser to the local server: \codewhite{http://127.0.0.1:5000}, or 
+\codewhite{http://localhost:5000}.
 
 
 These machine learning models are used to predict survival curves for a given set of input data. 
