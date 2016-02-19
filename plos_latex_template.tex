@@ -795,6 +795,7 @@ The high level of agreement between two models lends confidence to the notion th
 show box plots of the value of the random forest prediction subtracted from the neural network prediction.
 We emphasize that when evaluating the model agreement, we put no restrictions on the distinct subjects in the respective test datasets; we are confronting the models against each other, not some known ground truth as in the AUC performance metric calculations. The number of distinct subjects in all three of the colon cancer survival binary classifiers (6, 12, and 60 month survival) was 5654; for lung cancer the number of subjects entering into the calculation of Table~(\ref{tab:agree})
  was 5313; and for breast cancer it was 3300.
+Exploring the outlier cases, for example where the difference between the neural network and random forest predictions for 5 year survival in breast cancer exceed .4, can reveal patterns indicating where the models need careful intepretation. The distribution of year of birth for patients where the neural network model prediction for 5 year survival exceeded the random forest prediction by more than .4 has a mode around 1930, a good 20 years earlier than the distrubtion for the remaining patients. The outliers in Figs.~(\ref{fig:colonbox},~\ref{fig:breastbox},~\ref{fig:lungbox}) corresponding to patients whose distributions for certain features are also outliers compared to the rest of the population used in training.
 
 
 \begin{table}[!ht]
