@@ -429,7 +429,7 @@ For this study, the original, untransformed colon cancer DataFrame has shape $(1
 Similary, the original, untransformed lung cancer DataFrame has shape $(177089, 115)$, and the total transformed lung cancer DataFrame has shape $(3079931, 115)$.
 The biggest increase in dataset size occured with the breast cancer data, which is a consequence of the relatively high survival rates in breast cancer. A subject who is censored with a recorded survival months of 48 will contribute 49 rows to the transformed dataset.  
 The original, untransformed breast cancer DataFrame has shape $(329949, 67)$, and the total transformed breast cancer DataFrame has shape $(15085711, 67)$.
-Traning machine learning algorithms on such large datasets, even after splitting into training and testing sets described below, requires large RAM. All computations for this study were performed on a Dell XPS 8700 Desktop with 32GB of RAM. The training times involved in the classification task of learning the hazard function $\lambda(\mathbf{X}_{i}, t_{j})$ for the chosen model parameters were on the order of a few hours or less, but the evaluation of the AUC performance metrics associated with the 6, 12, and 60 month binary survival classifiers
+Training machine learning algorithms on such large datasets, even after splitting into training and testing sets described below, requires large RAM. All computations for this study were performed on a Dell XPS 8700 Desktop with 32GB of RAM. The training times involved in the classification task of learning the hazard function $\lambda(\mathbf{X}_{i}, t_{j})$ for the chosen model parameters were on the order of a few hours or less, but the evaluation of the AUC performance metrics associated with the 6, 12, and 60 month binary survival classifiers
 % presented in section~\nameref{sec:performancemetrics}
  took more than 24 hours for the random forest models. These AUC performance metrics provided the feedback mechanism to adjust the model hyperparameters.
 \subsection*{Training and Test Partitions}
@@ -454,21 +454,8 @@ The models described below are trained to learn the values of \codewhite{newtarg
 Both the random forests and neural networks are capable of not only performing strict class prediction, i.e. predicting whether \codewhite{newtarget} is '0' or '1', but are also able to predict the \textit{probability} of \codewhite{newtarget} being '0' or '1'., and are thus able to learn the hazard function.
 
 
-%Finally, we emphasize the crucial point that the features \codewhite{survival\_months} and \\
-%\codewhite{vital\_status\_recode\_Dead} are dropped from both the training and and testing %data, and are replaced with the features \codewhite{months} and \codewhite{newtarget}, as %illustrated in Tables~(\ref{tab:originaldead},~\ref{tab:transformeddead}). The information of %which subjects represent censored data (\codewhite{vital\_status\_recode\_Dead} == 0) and %which died is retained and recoverable through the \codewhite{newindex} variable and is %needed for proper evaluation of the performance metrics; when evaluating AUC curves for the %6, 12, and 60 month binary classifiers, we need to limit the test data to those subjects
-%whose vital status is definitively known at those time points.
-% that we know definitively whether or not they survived 6, 12 or 60 months respectively. This %requirement will necessitate the elmination of some of the censored data when computing %some of the performance metrics. 
-%We introduce the two machine learning algorithms used in this study below, chosen because %of their high performance in machine learning competitions and their complementary methods, %so that their mutual agreement shown below on the test datasets can be taken as indication %that they are actually learning useful information.
 
 
-%Random Forests are made up of an ensemble of independent Decision trees that are %purposefully exposed to only subsets of the data. The general philosophy is presented in the %popular science book "The Wisdom of Crowds''~\cite{wisdom}.
-%The idea is that a large number of independent non-expert opinions converge on the correct %answer when averaged. The success of this philosophy of prediction was startingly shown by %the success of the political and world event predictions made by the prediction market site %Intrade, before its forced closure by the Commodity Futures Trading Commission~%%\cite{cassidy}. %\footnote{``What killed Intrade?``, John Cassidy, \textit{The New Yorker}, 10 %Mar, 2013, %accessed 11 Jan 2016, \url{http://www.newyorker.com/news/john-cassidy/what-%killed-%intrade}.} 
-% The other class of methods used in this study are called neural networks, and are modelled on %how the human brain learns high level concepts from lower level ones. 
-%As opposed to the crowd-based wisdom of a random forest, a neural network is analgous to a %seasoned expert. 
-%The philosophy behind the training and achieved accuracies of neural network classifiers and %predictors is that of going to a seasoned expert. 
-%A Neural network learns from repeated exposure to the training data and improves its %predictions with each pass over the data.
-% The general philosophy is simlar to that represented by the well-known maxim that it takes %10,000 hours to become an expert in any given field~\cite{outliers}.
-%\footnote{``The 10,000 Hour Rule,` Malcolm Gladwell, accessed 11 Jan 2016, \url{http://%gladwell.com/outliers/the-10000-hour-rule/}.}
 
 
 \subsection*{Prediction Models}
@@ -933,7 +920,7 @@ For example, Table~(\ref{tab:nmhead}) shows how five entries of \codewhite{STATE
 \end{adjustwidth}
 \end{table}
 
-It is a simple exercise to construct the full lookup table from the SEER \\  \codewhite{STATE-COUNTY RECODE} variable to the corresponding three values \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}. We use the publically available dafafile from the United States Census Bureau~\cite{census} to map the state FIPS and county FIPS codes to query strings like those in the \codewhite{address} field in Table~(\ref{tab:nmhead}). 
+It is a simple exercise to construct the full lookup table from the SEER \\  \codewhite{STATE-COUNTY RECODE} variable to the corresponding three values \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}. We use the publically available datafile from the United States Census Bureau~\cite{census} to map the state FIPS and county FIPS codes to query strings like those in the \codewhite{address} field in Table~(\ref{tab:nmhead}). 
 It is then possible to programmatically query the Google Maps Geocoding API for the latitude and longitude~\cite{geocode}, and the Google Maps Elevation API for the corresponding elevation~\cite{elevation}.
 An added benefit of this shift from the single categorical variable \codewhite{STATE-COUNTY RECODE} to the three continuous numerical variables \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation} is that input into the web applications described later are not restricted to the states and counties coverered in the SEER registries; in fact, the input to the models can be any address you would enter into Google Maps and calls to the Google Maps Geocoding API and the Google Maps Elevation API provide the conversion from the address string to the input variables \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation}. The full lookup table analogous to Table~(\ref{tab:nmhead}) is available from a GitHub repository containing supplemental information for this study~\cite{supp}. 
 
