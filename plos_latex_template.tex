@@ -245,17 +245,11 @@ Institute (NCI) to make it suitable input to standard machine learning classifie
 
 
 
-% Please keep the Author Summary between 150 and 200 words
-% Use first person. PLOS ONE authors please skip this step. 
-% Author Summary not valid for PLOS ONE submissions.   
-%\section*{Author Summary}
-%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget porta erat. Morbi %consectetur est vel gravida pretium. Suspendisse ut dui eu ante cursus gravida non sed sem. %Nullam sapien tellus, commodo id velit id, eleifend volutpat quam. Phasellus mauris velit, %dapibus finibus elementum vel, pulvinar non tellus. Nunc pellentesque pretium diam, quis %maximus dolor faucibus id. Nunc convallis sodales ante, ut ullamcorper est egestas vitae. Nam %sit amet enim ultrices, ultrices elit pulvinar, volutpat risus.
-
 \linenumbers
 
 \section*{Introduction}
 \label{sec:introduction}
-%Lorem ipsum dolor sit~\cite{bib1} amet, consectetur adipiscing elit. Curabitur eget porta erat. %Morbi consectetur est vel gravida pretium. Suspendisse ut dui eu ante cursus gravida non sed %sem. Nullam Eq.~(\ref{eq:schemeP}) sapien tellus, commodo id velit id, eleifend volutpat %quam. Phasellus mauris velit, dapibus finibus elementum vel, pulvinar non tellus. Nunc %pellentesque pretium diam, quis maximus dolor faucibus id.~\cite{bib2} Nunc convallis sodales %ante, ut ullamcorper est egestas vitae. Nam sit amet enim ultrices, ultrices elit pulvinar, %volutpat risus.
+
 
 
 Opportunities are emerging in many industries today to develop and deploy services that cater to individual needs and preferences. Music afficianados can create their own radio stations from Pandora~\cite{pandora}, bibliophiles can receive 
@@ -284,12 +278,7 @@ Though these relationships evade capture by traditional methods, it is possible 
 
 
 
-%Quoting directly from the SEER
-%website \cite{seerwebsite}:
 
-%\begin{quote}
-%The SEER program registries routinely collect data on patient demographics, primary tumor %site, tumor morphology and stage at diagnosis, first course of treatment, and follow-up for vital %status. This program is the only comprehensive source of population-based information in the %United States that includes stage of cancer at the time of diagnosis and patient survival data. %The mortality data reported by SEER are provided by the National Center for Health Statistics. %The population data used in calculating cancer rates is obtained periodically from the Census %Bureau. Updated annually and provided as a public service in print and electronic formats, %SEER data are used by thousands of researchers, clinicians, public health officials, legislators, %policymakers, community groups, and the public.
-%\end{quote}
 
 
 One challenge of the SEER data that is shared by many survival datasets is the inclusion of censored data.
@@ -316,73 +305,28 @@ The survival function can then be derived from the hazard function.
 
 \section*{Materials and Methods}
 \label{sec:materialsandmethods}
-% \section{Data acquition}
-%For this study we use the publically available 1973-2012 SEER incidence data files %corresponding to colon, breast and lung cancer.
-%SEER requires that researchers submit a request for the data, which includes an agreement %form. Detailed documentation explaining the contents of both the incidence data files used in %this study as well as a data dictionary for the 1973-2012 SEER incidence data files are available %without the need to register or submit a data request \cite{seerdoc}. 
-%The raw data files in this study and the subsets defined by the appropriate filters are given in %detail in
-%subsection~\nameref{sec:raw}, in the appendix~\nameref{sec:supporting}. 
+
  
 
 
 \subsection*{Data preparation and preprocessing}
 \label{subsec:dataprep} 
 
-For this study we use the publically available 1973-2012 SEER incidence data files corresponding to colon, breast and lung cancer.
+For this study we use the publically available 1973-2012 SEER incidence data files corresponding to colon, breast and lung cancer. These files are listed in subsection~\nameref{sec:raw} in the Supporting Information Appendix.
 A great deal of data munging is necessary before using these SEER incidence files as input into machine learning algorithms. 
-A preprocessing step common to each of the three cancer types studied involves the SEER \codewhite{STATE-COUNTY RECODE} variable.
-The \codewhite{STATE-COUNTY RECODE} field is a state-county combination where the first two characters represent the state FIPS code and the last three digits represent the FIPS county code.  The FIPS code is a five-digit Federal Information Processing Standard (FIPS) code which uniquely identifies counties and county equivalents in the United States, certain U.S. possessions, and certain freely associated states.
-This particular field illustrates an important characteristic of machine learning, that is, the difference  between \textit{categorical features} and \textit{numeric features}. All input into a machine learning algorithm must be numeric, but real numbers carry with them the usually extremely useful property known as the well-ordering property. Machine learning algorithms use the well-ordering property of the real numbers to learn.
-But if one is tasked with encoding a categorical feature into suitable numeric format for machine learning, it is necessary to do so in a way that removes the well-ordering property. Categorical variables are commonly encoded using one-hot encoding, in which the explanatory variable is encoded using one binary feature for each of the variable's possible values~\cite{bowles}.
+The input data was recoded and reshaped to comply with the requirements of the analysis program. Details are included in subsection~\nameref{sec:munge} in the Supporting Infomation Appendix. Biefly, we transformed the location variables that are given as categorical State and County code pairs
+to (latitude, longitude, elevation) triples using the Google Maps API, as well as one-hot encoded all categorical variables.
 
 
-
-One-hot encoding needs to be applied to all of the nominal categorical variables in the SEER data that we wish to include in our predictive models.
-In particular, in order to include the geophgraphical information contained in the SEER categorical variable \codewhite{STATE-COUNTY RECODE}, it becomes necessary to create a new feature variable for each of the distinct (state,county) pairs in the data. In the United States, there are approximately 3,000 counties. Clearly, transforming the \codewhite{STATE-COUNTY RECODE} data representation into distinct (state$\_$county) columns will explode the dataset to become wider than is optimal for machine learning. Adding extra columns to your dataset, making it wider, requires more data rows (making it taller) in order for machine learning algorithms to effectively learn~\cite{bowles}. Because one-hot coding \codewhite{STATE-COUNTY RECODE} would cause such drastic shape changes in our data, we wish to avoid doing so. Fortunately, this variable, though given as a categorical variable, is actually a recode for three ordinal variables. There is an ordering among the (state$\_$county) columns, namely longitude, latitude, and elevation. We can transform the data in \codewhite{STATE-COUNTY RECODE} into three new numerical columns: \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation}.
-
-For example, Table~(\ref{tab:nmhead}) shows how five entries of \codewhite{STATE-COUNTY RECODE} corresponding to counties within New Mexico can be represented by the 
-\codewhite{elevation}, \codewhite{lat}, and \codewhite{lng} features.
-
-\begin{table}[!ht]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:nmhead} {\bf Example of the transformation of \codewhite{STATE-COUNTY RECODE} to \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}.}}
-\rowcolors{1}{white}{light-gray}
-\begin{tabular}{llrrr}
-\toprule
- STATE-COUNTY RECODE &               address &    elevation &        lat &         lng \\
-\midrule
-35001 &  Bernalillo+county+NM &  5207.579772 &  35.017785 & -106.629130 \\
-35003 &      Catron+county+NM &  8089.242628 &  34.151517 & -108.427605 \\
-35005 &      Chaves+county+NM &  3559.931671 &  33.475739 & -104.472330 \\
-35006 &      Cibola+county+NM &  6443.415570 &  35.094756 & -107.858387 \\
-35007 &      Colfax+county+NM &  6147.749089 &  36.579976 & -104.472330 \\
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
-
-It is a simple exercise to construct the full lookup table from the SEER \\  \codewhite{STATE-COUNTY RECODE} variable to the corresponding three values \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}. We use the publically available dafafile from the United States Census Bureau~\cite{census} to map the state FIPS and county FIPS codes to query strings like those in the \codewhite{address} field in Table~(\ref{tab:nmhead}). 
-It is then possible to programmatically query the Google Maps Geocoding API for the latitude and longitude~\cite{geocode}, and the Google Maps Elevation API for the corresponding elevation~\cite{elevation}.
-An added benefit of this shift from the single categorical variable \codewhite{STATE-COUNTY RECODE} to the three continuous numerical variables \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation} is that input into the web applications described later are not restricted to the states and counties coverered in the SEER registries; in fact, the input to the models can be any address you would enter into Google Maps and calls to the Google Maps Geocoding API and the Google Maps Elevation API provide the conversion from the address string to the input variables \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation}. The full lookup table analogous to Table~(\ref{tab:nmhead}) is available from a GitHub repository containing supplemental information for this study~\cite{supp}. 
-
-
-This study focused on three different cancer types, namely colorectal cancer, lung cancer, and breast cancer. 
+%This study focused on three different cancer types, namely colorectal cancer, lung cancer, and %breast cancer. 
 In the SEER data, there is a record for each primary tumor. It multple records exist for a given patient, only the first chronologically was included. The full set of conditions defining the subsets of the SEER data used in this study is included in the appendix~\nameref{sec:supporting}.
 % section~\nameref{sec:subsets}.
 
 
 
 
-
-
-
-
-
-
-
-
-
 Before applying machine learning models trained with these datasets, we describe in detail a method that takes full advantage of all the data, including the right-censored data, and which involves a simple and intuitive transformation, culminating in the full set of features and target variable listed in the appendix~\nameref{sec:supporting}. 
-%sections~(\nameref{Colon_Cancer_Feature_Selection},~%\nameref{Lung_Cancer_Feature_Selection},~\nameref{Breast_Cancer_Feature_Selection}).
+%sections~(\nameref{Colon_Cancer_Feature_Selection},~%%\nameref{Lung_Cancer_Feature_Selection},~\nameref{Breast_Cancer_Feature_Selection}).
 
 
 
@@ -957,16 +901,13 @@ But personal discussions with providers has confirmed for one of the authors (D.
 The daunting and exciting task of teasing out actual causality relationships within machine learning contexts has been pioneeered by Judea Pearl of the University of California, Los Angeles~\footnote{Judea Pearl homepage at the University of California, Los Angeles, \url{http://bayes.cs.ucla.edu/jp_home.html}, accessed 11 Jan 2016.} and seems particulary relevant and applicable to censored survival data. Combining the methodlogy presented in this study with that of the pioneering work of Judea Pearl on causality will be a fruitful avenue for future research.
 
 
-%Nulla mi mi, venenatis sed ipsum varius, Table~\ref{table1} volutpat euismod diam. Proin %rutrum vel massa non gravida. Quisque tempor sem et dignissim rutrum. Lorem ipsum dolor sit %amet, consectetur adipiscing elit. Morbi at justo vitae nulla elementum commodo eu id massa. %In vitae diam ac augue semper tincidunt eu ut eros. Fusce fringilla erat porttitor lectus cursus, %vel sagittis arcu lobortis. Aliquam in enim semper, aliquam massa id, cursus neque. Praesent %faucibus semper libero.
-
-%\subsection*{\lorem\ and \ipsum\ Nunc blandit a tortor.}
-
-%CO\textsubscript{2} Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien %nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla %pulvinar lectus consectetur pellentesque. Quisque augue sem, tincidunt sit amet feugiat eget, %ullamcorper sed velit. 
-
-%Sed non aliquet felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo %justo ac dui pretium imperdiet. Sed suscipit iaculis mi at feugiat. Ut neque ipsum, luctus id %lacus ut, laoreet scelerisque urna. Phasellus venenatis, tortor nec vestibulum mattis, massa %tortor interdum felis, nec pellentesque metus tortor nec nisl. Ut ornare mauris tellus, vel %dapibus arcu suscipit sed. Nam condimentum sem eget mollis euismod. Nullam dui urna, %gravida venenatis dui et, tincidunt sodales ex. Nunc est dui, sodales sed mauris nec, auctor %sagittis leo. Aliquam tincidunt, ex in facilisis elementum, libero lectus luctus est, non vulputate %nisl augue at dolor. For more information, see \nameref{S1_Text}.
 
 \section*{Supporting Information}
 \label{sec:supporting}
+
+
+
+
 
 \subsection*{Raw SEER datafiles}
 \label{sec:raw}
@@ -985,6 +926,45 @@ The daunting and exciting task of teasing out actual causality relationships wit
 \item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash BREAST.txt
 \item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash RESPIR.txt
 \end{itemize}
+
+\subsection*{Data Preparation Details}
+\label{sec:munge}
+
+A preprocessing step common to each of the three cancer types studied involves the SEER \codewhite{STATE-COUNTY RECODE} variable.
+The \codewhite{STATE-COUNTY RECODE} field is a state-county combination where the first two characters represent the state FIPS code and the last three digits represent the FIPS county code.  The FIPS code is a five-digit Federal Information Processing Standard (FIPS) code which uniquely identifies counties and county equivalents in the United States, certain U.S. possessions, and certain freely associated states.
+This particular field illustrates an important characteristic of machine learning, that is, the difference  between \textit{categorical features} and \textit{numeric features}. All input into a machine learning algorithm must be numeric, but real numbers carry with them the usually extremely useful property known as the well-ordering property. Machine learning algorithms use the well-ordering property of the real numbers to learn.
+But if one is tasked with encoding a categorical feature into suitable numeric format for machine learning, it is necessary to do so in a way that removes the well-ordering property. Categorical variables are commonly encoded using one-hot encoding, in which the explanatory variable is encoded using one binary feature for each of the variable's possible values~\cite{bowles}.
+
+
+
+One-hot encoding needs to be applied to all of the nominal categorical variables in the SEER data that we wish to include in our predictive models.
+In particular, in order to include the geophgraphical information contained in the SEER categorical variable \codewhite{STATE-COUNTY RECODE}, it becomes necessary to create a new feature variable for each of the distinct (state,county) pairs in the data. In the United States, there are approximately 3,000 counties. Clearly, transforming the \codewhite{STATE-COUNTY RECODE} data representation into distinct (state$\_$county) columns will explode the dataset to become wider than is optimal for machine learning. Adding extra columns to your dataset, making it wider, requires more data rows (making it taller) in order for machine learning algorithms to effectively learn~\cite{bowles}. Because one-hot coding \codewhite{STATE-COUNTY RECODE} would cause such drastic shape changes in our data, we wish to avoid doing so. Fortunately, this variable, though given as a categorical variable, is actually a recode for three ordinal variables. There is an ordering among the (state$\_$county) columns, namely longitude, latitude, and elevation. We can transform the data in \codewhite{STATE-COUNTY RECODE} into three new numerical columns: \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation}.
+
+For example, Table~(\ref{tab:nmhead}) shows how five entries of \codewhite{STATE-COUNTY RECODE} corresponding to counties within New Mexico can be represented by the 
+\codewhite{elevation}, \codewhite{lat}, and \codewhite{lng} features.
+
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\caption{\label{tab:nmhead} {\bf Example of the transformation of \codewhite{STATE-COUNTY RECODE} to \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}.}}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{llrrr}
+\toprule
+ STATE-COUNTY RECODE &               address &    elevation &        lat &         lng \\
+\midrule
+35001 &  Bernalillo+county+NM &  5207.579772 &  35.017785 & -106.629130 \\
+35003 &      Catron+county+NM &  8089.242628 &  34.151517 & -108.427605 \\
+35005 &      Chaves+county+NM &  3559.931671 &  33.475739 & -104.472330 \\
+35006 &      Cibola+county+NM &  6443.415570 &  35.094756 & -107.858387 \\
+35007 &      Colfax+county+NM &  6147.749089 &  36.579976 & -104.472330 \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+It is a simple exercise to construct the full lookup table from the SEER \\  \codewhite{STATE-COUNTY RECODE} variable to the corresponding three values \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}. We use the publically available dafafile from the United States Census Bureau~\cite{census} to map the state FIPS and county FIPS codes to query strings like those in the \codewhite{address} field in Table~(\ref{tab:nmhead}). 
+It is then possible to programmatically query the Google Maps Geocoding API for the latitude and longitude~\cite{geocode}, and the Google Maps Elevation API for the corresponding elevation~\cite{elevation}.
+An added benefit of this shift from the single categorical variable \codewhite{STATE-COUNTY RECODE} to the three continuous numerical variables \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation} is that input into the web applications described later are not restricted to the states and counties coverered in the SEER registries; in fact, the input to the models can be any address you would enter into Google Maps and calls to the Google Maps Geocoding API and the Google Maps Elevation API provide the conversion from the address string to the input variables \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation}. The full lookup table analogous to Table~(\ref{tab:nmhead}) is available from a GitHub repository containing supplemental information for this study~\cite{supp}. 
+
 
 
 \subsection*{Data Subsets}
