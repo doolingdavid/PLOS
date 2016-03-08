@@ -336,7 +336,7 @@ Before applying machine learning models trained with these datasets, we describe
 In this section we describe an inuitive way to transform right-censored data appropriately so that it may be used as input to machine learning algorithms that learn the hazard fuction. The full details of this transformation, and a large inspiration for this study, can be found in this blog post~\cite{kuhn}.
 
 
-The key observation is to note that the hazard function can be directly learned via standard machine learning methods. It can be rewritten as
+The key observation is to note that the hazard function at any given time point can be directly learned via standard machine learning methods. It can be rewritten as
 \begin{equation}
 \label{eq:hhazard}
 \lambda(\mathbf{X}_{i}, t_{j}) = P(Y = t_{j}|Y \geq t_{j}, \mathbf{X}_{i}),
@@ -375,15 +375,16 @@ Psuedocode for this transformation is found in the appendix~\nameref{sec:support
 %section~\nameref{subsec:pseudocode}.
 
 Explicit examples will help make this transformation clear.
-The untransformed datapoint represented Table~(\ref{tab:originaldead}) is transformed to the multiple records shown in Table~(\ref{tab:transformeddead}). All uncensored data is transformed in this way. All censored data is similarly transformed. 
-The untransformed datapoint represented Table~(\ref{tab:originalalive}) is transformed to the multiple records shown in Table~(\ref{tab:transformedalive}).
+The untransformed records represented in Table~(\ref{tab:originaldead}) are transformed to the multiple records shown in Table~(\ref{tab:transformeddead}).
+% All uncensored data is transformed in this way. All censored data is similarly transformed. 
+%The untransformed datapoint represented Table~(\ref{tab:originalalive}) is transformed to the %multiple records shown in Table~(\ref{tab:transformedalive}).
 
 
 
 
 \begin{table}[H]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:originaldead} {\bf Example of four columns in an uncensored record in the untransformed dataset.}}
+\caption{\label{tab:originaldead} {\bf Example of four columns in the untransformed dataset.}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrrr}
 \toprule
@@ -391,6 +392,7 @@ The untransformed datapoint represented Table~(\ref{tab:originalalive}) is trans
 \midrule
 newindex &                &                &        &            \\
 205      &             60 &           1951 &      3 &          1 \\
+306      &            40  &         1950  &      3    &     0    \\
 \bottomrule
 \end{tabular}
 \end{adjustwidth}
@@ -398,25 +400,25 @@ newindex &                &                &        &            \\
 
 
 
-\begin{table}[H]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:originalalive} {\bf Example of four columns in a censored record in the untransformed dataset.}}
-\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lrrrr}
-\toprule
-{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{survival\_months} &  \codewhite{vital\_status\_recode\_Dead} \\
-\midrule
-newindex &                &                &        &            \\
-205      &             40 &           1950 &      3 &          0 \\
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
+%\begin{table}[H]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
+%\caption{\label{tab:originalalive} {\bf Example of four columns in a censored record in the %untransformed dataset.}}
+%\rowcolors{1}{white}{light-gray}
+%\begin{tabular}{lrrrr}
+%\toprule
+%{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{survival%\_months} &  \codewhite{vital\_status\_recode\_Dead} \\
+%\midrule
+%newindex &                &                &        &            \\
+%205      &             40 &           1950 &      3 &          0 \\
+%\bottomrule
+%\end{tabular}
+%\end{adjustwidth}
+%\end{table}
 
 
 \begin{table}[H]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:transformeddead} {\bf Example of four columns in an uncensored record in the transformed dataset.}}
+\caption{\label{tab:transformeddead} {\bf Example of four columns in the transformed dataset.}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrrr}
 \toprule
@@ -427,29 +429,33 @@ newindex &                &                &        &            \\
 205      &             60 &           1951 &      1 &          0 \\
 205      &             60 &           1951 &      2 &          0 \\
 205      &             60 &           1951 &      3 &          1 \\
+306      &             40 &           1950 &      0 &          0 \\
+306      &             40 &           1950 &      1 &          0 \\
+306      &             40 &           1950 &      2 &          0  \\
+306      &             40 &           1950 &      3 &          0  \\
 \bottomrule
 \end{tabular}
 \end{adjustwidth}
 \end{table}
 
 
-\begin{table}[H]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:transformedalive} {\bf Example of four columns in a censored record in the transformed dataset.}}
-\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lrrrr}
-\toprule
-{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{month} &  \codewhite{newtarget} \\
-\midrule
-newindex &                &                &        &            \\
-205      &             40 &           1950 &      0 &          0 \\
-205      &             40 &           1950 &      1 &          0 \\
-205      &             40 &           1950 &      2 &          0 \\
-205      &             40 &           1950 &      3 &          0 \\
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
+%\begin{table}[H]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
+%\caption{\label{tab:transformedalive} {\bf Example of four columns in a censored record in the %transformed dataset.}}
+%\rowcolors{1}{white}{light-gray}
+%\begin{tabular}{lrrrr}
+%\toprule
+%{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{month} &  %%\codewhite{newtarget} \\
+%\midrule
+%newindex &                &                &        &            \\
+%205      &             40 &           1950 &      0 &          0 \\
+%205      &             40 &           1950 &      1 &          0 \\
+%205      &             40 &           1950 &      2 &          0 \\
+%205      &             40 &           1950 &      3 &          0 \\
+%\bottomrule
+%\end{tabular}
+%\end{adjustwidth}
+%\end{table}
 
 
 
