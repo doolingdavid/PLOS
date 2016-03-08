@@ -569,7 +569,7 @@ to draw from the survival curve CDF, and compute a new survival curve
 \item extract for each month from the list of curves the .975 and .025 percentiles to record the values for the upper and lower curves
 \end{itemize}
 
-The process is somewhat anologous to the following hypothetical situation. Imagine a patient going to an expert to get a survival prognosis.
+The process is analogous to the following hypothetical situation. Imagine a patient going to an expert to get a survival prognosis.
 After collecting data on the patient and keeping records, the expert predicts the central, single survival curve. The patient then seeks multiple "second opinions.'' These second opinions are generated not from independent examinations of the patient, but by outside experts sampling from the data already collected by the first expert.
 Then the predictions of 95\% of these 10,000 experts all fall within the band determined by the upper and lower curves.
 
@@ -663,7 +663,7 @@ Lung & .861 & .883 & .900 \\
 \begin{center}
 \includegraphics[width=.70\textwidth,origin=c]{breastbox.pdf}
 % "\includegraphics" is very powerful; the graphicx package is already loaded
-\caption{\label{fig:breastbox} Box plots showing the distributions of the signed difference between the MLP model's prediction for the probability of surviving 6 months and the Random Forest model's prediction of the same quantity for breast cancer. The plot shows the same quantity for the 12 and 60 months classifiers. It is apparent from the figures that the outliers are due to the neural network models predicting higher survival probablitlies than the random forest for some few cases. These differences were evaluated for the 3300 test patients in the breast cancer data.}
+\caption{\label{fig:breastbox} Box plots showing the distributions of the signed difference between the MLP model's prediction for the probability of surviving 6 months and the Random Forest model's prediction of the same quantity for breast cancer. The plot shows the same quantity for the 12 and 60 months classifiers. It is apparent from the figures that the outliers are due to the neural network models predicting higher survival probabilities than the random forest for some few cases. These differences were evaluated for the 3300 test patients in the breast cancer data.}
 \end{center}
 \end{figure}
 
@@ -676,7 +676,7 @@ Lung & .861 & .883 & .900 \\
 \begin{center}
 \includegraphics[width=.90\textwidth,origin=c]{colonbox.pdf}
 % "\includegraphics" is very powerful; the graphicx package is already loaded
-\caption{\label{fig:colonbox} Box plots showing the distributions of the signed difference between the MLP model's prediction for the probability of surviving 6 months and the Random Forest model's prediction of the same quantity for colon cancer. The plot shows the same quantity for the 12 and 60 months classifiers. It is apparent from the figures that the outliers are due to the neural network models predicting higher survival probablitlies than the random forest for some few cases. These differences were evaluated for the 5654 test patients in the colon cancer data.}
+\caption{\label{fig:colonbox} Box plots showing the distributions of the signed difference between the MLP model's prediction for the probability of surviving 6 months and the Random Forest model's prediction of the same quantity for colon cancer. The plot shows the same quantity for the 12 and 60 months classifiers. It is apparent from the figures that the outliers are due to the neural network models predicting higher survival probabilities than the random forest for some few cases. These differences were evaluated for the 5654 test patients in the colon cancer data.}
 \end{center}
 \end{figure}
 
@@ -737,7 +737,7 @@ and pointing the browser to the local server: \codewhite{http://127.0.0.1:5000},
 
 
 These machine learning models are used to predict survival curves for a given set of input data. 
-The resulting surival curves predict the probablitiy that a patient with the given input data will survive at least up to month $x$.
+The resulting surival curves predict the probability that a patient with the given input data will survive at least up to month $x$.
 
  For example, using the Colon Cancer neural network app, and 
 inputing the values listed in Table~(\ref{tab:boston1940}) results in the survival curve depicted in Figure~(\ref{fig:boston1940}); the predicted probablities of living 
@@ -847,7 +847,8 @@ It it interesting to note that both the random forest and neural network lung ca
 \label{sec:discussion}
 
 
-The purpose of this study has been twofold; to develop a general methodology of data transformation to survival data with censored observations so that machine learning algorithms can be applied and to help further the cause of PPPM medicine by developing models of personalized suvival curve prognosis.
+The purpose of this study has been twofold; to develop a general methodology of data transformation to survival data with censored observations so that machine learning algorithms can be applied and to apply the methodology to create models of personalized survival curve prognosis.
+%help further the cause of PPPM medicine by developing models of personalized suvival curve %prognosis.
 To help further refine the methodology, we would like to apply it to different survival datasets~\cite{umass}, not necessarily within the healthcare domain. In particular, the methods presented in this paper do not take into account time varying features. For example, the \codewhite{cs\_tumor\_ size} variable that has been a part of this study is kept fixed at the value measured at diagnosis for all records corresponding to a given subject. Clearly, the actual tumor size varies along with time and a sophisitcated model can be developed to take this into account, given available datasets.
 
 
