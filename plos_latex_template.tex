@@ -630,6 +630,8 @@ For each cancer type (breast,colon, and lung), do the following:
 \end{itemize}
 
 
+Fig.~(\ref{fig:totalscatter}) shows scatter plots of the neural network and random forest predictions for 6, 12, and 60 month survival prediction for each cancer type. The correlations of the neural network and random forest predictions are listed in Table~(\ref{tab:corr}). Event though breast cancer 6 month survival has the highest percentage agreement between the two classifiers (over 99$\%$), it also has the lowest correlation (.676). This seeming contradiction is a result of the high 6-month survival rate for breast cancer, and that the random forest and neural network models seem to treat this case differently. The neural network models in general appear to be less pessimistic in general than the random forest model predictions.
+
 The high level of agreement between two models lends confidence to the notion that they have both learned from the training data and are generalizing well. 
 %Figures~(\ref{fig:colonbox},~\ref{fig:breastbox},~\ref{fig:lungbox}) 
 %show box plots of the value of the random forest prediction subtracted from the neural network prediction.
@@ -654,6 +656,28 @@ Lung & .861 & .883 & .900 \\
 \end{tabular}
 \end{adjustwidth}
 \end{table}
+
+
+
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\caption{\label{tab:corr} {\bf Correlations between the Random Forest and Neural Network classifiers for 6, 12, and 60 month survival predictions on the test data for each cancer type. The corresponding scatter plots are shown in Fig.~(\ref{fig:totalscatter}).}}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lrrr}
+\toprule
+%\rowcolors{1}{white}{yellow}
+Cancer Type &  6 months &  12 months &   60 months \\ 
+\midrule
+Lung & .914 & .946 & .921 \\  
+Colon & .900 & .923 & .935 \\  
+Breast & .676 & .72 & .785 \\  
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
+
 
 %\begin{figure}[tbp]
 %\begin{figure}[H]
