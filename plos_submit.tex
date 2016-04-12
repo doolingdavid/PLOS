@@ -247,24 +247,24 @@ Institute (NCI) to make it suitable input to standard machine learning classifie
 
 \linenumbers
 
-\section*{Introduction}
+\section{Introduction}
 \label{sec:introduction}
 
 
 
 Opportunities are emerging in many industries today to develop and deploy services that cater to individual needs and preferences. Music afficianados can create their own radio stations from Pandora~\cite{pandora}, bibliophiles can receive 
-book recommendations from goodreads.com~\cite{goodreads}, and Google will provide directions between any two points with warnings of delays in real-time, as well as allowing users to choose mode of transportation~\cite{maps}.
+book recommendations from goodreads.com~\cite{goodreads}, and Google will provide directions between any two points with warnings of delays in real-time, as well as allowing users to choose the mode of transportation~\cite{maps}.
 %\footnote{Google Maps, \url{https://goo.gl/lD7Jwf} (accessed 27 Jan 2016)}
-These individualized services leverage large databases to learn and extract information relevant to individuals.  
+These services leverage large databases to learn and extract information relevant to individuals.  
 A class of techniques that transforms data into actionable information goes by the name of Machine Learning (ML)\cite{pythonmachinelearning}.
 ML has recently become a popular method to answer questions and solve problems that are too complex to solve via traditional methods. 
 
 
 
-The primary objective of this study is to show how ML models can be trained using publically available data to produce personalized survival prognosis curves. The methods presented below can be applied to any type of temporal outcome data, including survival, cost, complication and toxicity data. Traditionally, cancer survival curves have been estimated using Kaplan-Meier methods~\cite{cam}. Kaplan-Meier methodology also uses large datasets to make predictions, but the resulting curves are summaries for a population and not necessarily relevant or particularly accurate for any given individual. This propery of Kaplan-Meier methods is exacerbated when dealing with heterogeneous populations~\cite{Kumbasar2016140}.  
+The primary objective of this study is to show how ML models can be trained using publically available data to produce personalized survival prognosis curves. The methods presented below can be applied to any type of temporal outcome data, including survival, cost, complication and toxicity data. Traditionally, cancer survival curves have been estimated using Kaplan-Meier methods~\cite{cam}. Kaplan-Meier methodology also uses large datasets to make predictions, but the resulting curves are summaries for a population and not necessarily relevant or accurate for any given individual. This property of Kaplan-Meier methods is exacerbated when dealing with heterogeneous populations~\cite{Kumbasar2016140}.  
 %The methods presented in this report generate personalized survival curves relevant to individual patients. This objective is aligned with Predictive, Preventive and Personalized Medicine (PPPM), which aims to leverage increasing amounts of health data to maximize quality of care and to eliminate inefficient use of resources~\cite{VanPoucke2016}.
 %The situation is analgous to consulting the paper copy of the New York Time's bestseller list for your next book%\footnote{\url{http://www.nytimes.com/best-sellers-books/}} and throwing it in the trash because nothing is appealing, or %taking recommendations from your personalized Amazon "recommended for you'' service.
-This capability to provide individualized survival curve prognoses is a direct result of recent advances in computing power and ML algorithms. Similar methodology is becoming commonplace in many industries.
+The capability to provide individualized survival curve prognoses is a direct result of recent advances in computing power and ML algorithms. Similar methodology is becoming commonplace in many industries.
  These techniques are now infiltrating the healthcare industry.
  
 
@@ -303,40 +303,40 @@ The survival function can then be derived from the hazard function.
 
 
 
-\section*{Materials and Methods}
+\section{Materials and Methods}
 \label{sec:materialsandmethods}
 
  
 
 
-\subsection*{Data preparation and preprocessing}
+\subsection{Data preparation and preprocessing}
 \label{subsec:dataprep} 
 
-For this study we use the publically available 1973-2012 SEER incidence data files corresponding to colon, breast and lung cancer. These files are listed in subsection~\nameref{sec:raw} in the Supporting Information Appendix.
+For this study we use the publically available 1973-2012 SEER incidence data files corresponding to colon, breast and lung cancer. These files are listed in subsection~(\nameref{S1_Text}).
 A great deal of data munging is necessary before using these SEER incidence files as input into machine learning algorithms. 
-The input data was recoded and reshaped to comply with the requirements of the analysis program. Details are included in subsection~\nameref{sec:munge} in the Supporting Infomation Appendix. Biefly, we transformed the location variables that are given as categorical State and County code pairs
+The input data was recoded and reshaped to comply with the requirements of the analysis program. Details are included in subsection~(\nameref{S2_Text}). Biefly, we transformed the location variables that are given as categorical State and County code pairs
 to (latitude, longitude, elevation) triples using the Google Maps API, as well as one-hot encoded all categorical variables.
 
 
 %This study focused on three different cancer types, namely colorectal cancer, lung cancer, and %breast cancer. 
-In the SEER data, there is a record for each primary tumor. It multple records exist for a given patient, only the first chronologically was included. The full set of conditions defining the subsets of the SEER data used in this study is included in the appendix~\nameref{sec:supporting}.
-% section~\nameref{sec:subsets}.
+In the SEER data, there is a record for each primary tumor. If multple records exist for a given patient, only the first chronologically was included. The full set of conditions defining the subsets of the SEER data used in this study is included in section~(\nameref{S3_Text}).
 
 
 
 
-Before applying machine learning models trained with these datasets, we describe in detail a method that takes full advantage of all the data, including the right-censored data, and which involves a simple and intuitive transformation, culminating in the full set of features and target variable listed in the appendix~\nameref{sec:supporting}. 
+
+Before applying machine learning models trained with these datasets, we describe in detail a method that takes full advantage of all the data, including the right-censored data, and which involves a simple and intuitive transformation, culminating in the full set of features and target variable listed in sections~(\nameref{S4_Text},~\nameref{S5_Text},~\nameref{S6_Text}). 
 %sections~(\nameref{Colon_Cancer_Feature_Selection},~%%\nameref{Lung_Cancer_Feature_Selection},~\nameref{Breast_Cancer_Feature_Selection}).
 
 
 
-\subsection*{Transformation of Censored Data for Machine Learning}
+\subsection{Transformation of Censored Data for Machine Learning}
 \label{subsec:transformation}
 
-In this section we describe an inuitive way to transform right-censored data appropriately so that it may be used as input to machine learning algorithms that learn the hazard fuction. The full details of this transformation, and a large inspiration for this study, can be found in this blog post~\cite{kuhn}.
+In this section we describe a way to transform right-censored data appropriately so that it may be used as input to machine learning algorithms that learn the hazard fuction. The full details of this transformation, and a large inspiration for this study, can be found in this blog post~\cite{kuhn}.
 
 
-The key observation is to note that the hazard function at any given time point can be directly learned via standard machine learning methods. It can be rewritten as
+The key observation is to note that the hazard function at any given time point can be directly learned via standard machine learning methods. The hazard function can be written as
 \begin{equation}
 \label{eq:hhazard}
 \lambda(\mathbf{X}_{i}, t_{j}) = P(Y = t_{j}|Y \geq t_{j}, \mathbf{X}_{i}),
@@ -351,7 +351,7 @@ $D$ is a Boolean variable, so $D = 1$ if $T = Y$, and $D = 0$ if $T < Y$.
 
 
 
-It follows directly from equation~\ref{eq:hhazard} that 
+It follows directly from equation~(\ref{eq:hhazard}) that 
 \begin{equation}
 \label{eq:pmf}
 P(Y = t_{j} | \mathbf{X}_{i}) = \lambda(\mathbf{X}_{i}, t_{j}) \prod_{k=1}^{j-1} (1 - \lambda(\mathbf{X}_{i}, t_{k}))
@@ -364,7 +364,7 @@ The survival function is then readily derived from this distribution as
 S(\mathbf{X}_{i},t_{k}) = 1 - CDF(\mathbf{X}_{i}, t_{k})
 \end{equation}
 where $CDF(\mathbf{X}_{i}, t_{k}) = \sum_
-{j=1}^{k} P(Y = t_{j} | \mathbf{X}_{i}) $ is the cumulative density function correponding to the probability mass function in equation~\cite{downey}.
+{j=1}^{k} P(Y = t_{j} | \mathbf{X}_{i}) $ is the cumulative density function correponding to the probability mass function in equation~(\ref{eq:pmf})~\cite{downey}.
 
 
 
@@ -432,7 +432,7 @@ The original, untransformed breast cancer DataFrame has shape $(329949, 67)$, an
 Training machine learning algorithms on such large datasets, even after splitting into training and testing sets described below, requires large RAM. All computations for this study were performed on a Dell XPS 8700 Desktop with 32GB of RAM. The training times involved in the classification task of learning the hazard function $\lambda(\mathbf{X}_{i}, t_{j})$ for the chosen model parameters were on the order of a few hours or less, but the evaluation of the AUC performance metrics associated with the 6, 12, and 60 month binary survival classifiers
 % presented in section~\nameref{sec:performancemetrics}
  took more than 24 hours for the random forest models. These AUC performance metrics provided the feedback mechanism to adjust the model hyperparameters.
-\subsection*{Training and Test Partitions}
+\subsection{Training and Test Partitions}
 \label{subsec:traintest}
 
 
@@ -458,7 +458,7 @@ Both the random forests and neural networks are capable of not only performing s
 
 
 
-\subsection*{Prediction Models}
+\subsection{Prediction Models}
 \label{sec:predmodels}
 
 With the datasets transformed as described above, we are now able to use them to train and evaluate machine learning classifiers.
@@ -516,7 +516,7 @@ Keras is a minimalist, highly modular neural networks library, written in Python
 
 
 % Results and Discussion can be combined.
-\section*{Results}
+\section{Results}
 \label{sec:results}
 
 
@@ -577,7 +577,7 @@ Then the predictions of 95\% of these 10,000 experts all fall within the band de
 
 
 
-\subsection*{Performance Metrics}
+\subsection{Performance Metrics}
 \label{sec:performancemetrics}
 
 
@@ -732,7 +732,7 @@ Breast & .676 & .72 & .785 \\
 
 
 
-\subsection*{Survival Curve Prediction Apps}
+\subsection{Survival Curve Prediction Apps}
 \label{sec:apps}
 
 
@@ -880,7 +880,7 @@ It it interesting to note that both the random forest and neural network lung ca
 
 
 
-\section*{Discussion}
+\section{Discussion}
 \label{sec:discussion}
 
 
@@ -899,15 +899,17 @@ The daunting and exciting task of teasing out actual causality relationships wit
 
 
 
-\section*{Supporting Information}
+\section{Supporting Information}
 \label{sec:supporting}
 
 
 
 
 
-\subsection*{Raw SEER datafiles}
-\label{sec:raw}
+\subsection{S1 Text}
+\label{S1_Text}
+
+Raw SEER datafiles
 
 \begin{itemize}[noitemsep]
 \item incidence\textbackslash yr1973\_2012.seer9\textbackslash COLRECT.txt
@@ -924,8 +926,8 @@ The daunting and exciting task of teasing out actual causality relationships wit
 \item incidence\textbackslash yr2005.lo\_2nd\_half\textbackslash RESPIR.txt
 \end{itemize}
 
-\subsection*{Data Preparation Details}
-\label{sec:munge}
+\subsection{S2 Text}
+\label{S2_Text}
 
 A preprocessing step common to each of the three cancer types studied involves the SEER \codewhite{STATE-COUNTY RECODE} variable.
 The \codewhite{STATE-COUNTY RECODE} field is a state-county combination where the first two characters represent the state FIPS code and the last three digits represent the FIPS county code.  The FIPS code is a five-digit Federal Information Processing Standard (FIPS) code which uniquely identifies counties and county equivalents in the United States, certain U.S. possessions, and certain freely associated states.
@@ -964,8 +966,8 @@ An added benefit of this shift from the single categorical variable \codewhite{S
 
 
 
-\subsection*{Data Subsets}
-\label{sec:subsets}
+\subsection{S3 Text}
+\label{S3_Text}
 
  The four COLRECT.txt files were imported into a pandas DataFrame object.
 This data was then filtered according to the conditions in Table~(\ref{tab:colonfilter}).
@@ -1073,11 +1075,10 @@ The following categorical features were one-hot encoded for each of the three da
 and the \codewhite{STATE-COUNTY RECODE} variable was dropped and replaced with the \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng} variables for all three datasets as illustrated in Table~(\ref{tab:nmhead}).
 
 
-\subsection*{Colon Cancer Feature Selection}
-\label{Colon_Cancer_Feature_Selection}
+\subsection{S4 Text}
+\label{S4_Text}
 
-
-The feature set used as input into both the Random Forest and Neural Network models, after the transformation described in section~\nameref{subsec:transformation} is given below and also available in full detail in the file 
+{\bf Colon Cancer Feature Selection} The feature set used as input into both the Random Forest and Neural Network models, after the transformation described in section~(\nameref{subsec:transformation}) is given below and also available in full detail in the file 
 \codewhite{NewPatientColonML.html}.
 
 
@@ -1198,10 +1199,10 @@ and
 
 
 
-\subsection*{Lung Cancer Feature Selection}
-\label{Lung_Cancer_Feature_Selection}
+\subsection{S5 Text}
+\label{S5_Text}
 
-The feature set used as input into both the Random Forest and Neural Network models, after the transformation described in section~\nameref{subsec:transformation} is given below and also available in full detail in the file 
+{\bf Lung Cancer Feature Selection} The feature set used as input into both the Random Forest and Neural Network models, after the transformation described in section~(\nameref{subsec:transformation}) is given below and also available in full detail in the file 
 \codewhite{NewPatientLungML.html}.
 
 \begin{itemize}[noitemsep]
@@ -1325,10 +1326,11 @@ The feature set used as input into both the Random Forest and Neural Network mod
 and 
 \codewhite{newtarget} is the target variable, indicating whether or not the subject died in month given by the value of the \codewhite{month} variable.
 
-\subsection*{Breast Cancer Feature Selection}
-\label{Breast_Cancer_Feature_Selection}
+\subsection{S6 Text}
+\label{S6_Text}
 
-The feature set used as input into both the Random Forest and Neural Network models, after the transformation described in section~\nameref{subsec:transformation} is given below and also available in full detail in the file 
+
+{\bf Breast Cancer Feature Selection} The feature set used as input into both the Random Forest and Neural Network models, after the transformation described in section~\nameref{subsec:transformation} is given below and also available in full detail in the file 
 \codewhite{NewPatientBreastML.html}.
 
 \begin{itemize}[noitemsep]
@@ -1411,7 +1413,7 @@ and
 
 
 
-\subsection*{Pseudocode for the Data Transformation}
+\subsection{Pseudocode for the Data Transformation}
 \label{subsec:pseudocode}
 
 \begin{verbatim}
@@ -1443,7 +1445,7 @@ def pmf(h, X)
 
 \end{verbatim}
 
-\subsection*{Breast Random Forest Model Hyperparameters}
+\subsection{Breast Random Forest Model Hyperparameters}
 \label{subsec:breastrf}
 
 \begin{verbatim}
@@ -1456,7 +1458,7 @@ f = RandomForestClassifier(n_estimators=20,min_samples_split=3,
 
 
 
-\subsection*{Colon Random Forest Model Hyperparameters}
+\subsection{Colon Random Forest Model Hyperparameters}
 \label{subsec:colonrf}
 
 
@@ -1469,7 +1471,7 @@ rf = RandomForestClassifier(n_estimators=25,min_samples_split=3,
 
 
 
-\subsection*{Lung Random Forest Model Hyperparameters}
+\subsection{Lung Random Forest Model Hyperparameters}
 \label{subsec:lungrf}
 
 
@@ -1484,7 +1486,7 @@ rf = RandomForestClassifier(n_estimators=25,min_samples_split=3,
 
 
 
-\subsection*{Breast Neural Network Model Architecture}
+\subsection{Breast Neural Network Model Architecture}
 \label{subsec:breastnn}
 
 The archictecture of the Keras multilayer perceptron neural network model 
@@ -1515,7 +1517,7 @@ modelbreast.compile(loss='binary_crossentropy',
 
 and trained with a batch size of 1500 for 200 epochs.
 
-\subsection*{Colon Cancer Neural Network Model Architecture}
+\subsection{Colon Cancer Neural Network Model Architecture}
 \label{subsec:colonnn}
 
 The archictecture of the Keras multilayer perceptron neural network model 
@@ -1550,7 +1552,7 @@ modelcolon.compile(loss='binary_crossentropy',
 and trained with a batch size of 1500 for 200 epochs.
 
 
-\subsection*{Lung Cancer Neural Network Model Architecture}
+\subsection{Lung Cancer Neural Network Model Architecture}
 \label{subsec:lungnn}
 
 
