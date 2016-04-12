@@ -773,54 +773,52 @@ and pointing the browser to the local server: \codewhite{http://127.0.0.1:5000},
 \codewhite{http://localhost:5000}.
 
 
-These machine learning models are used to predict survival curves for a given set of input data. 
-The resulting surival curves predict the probability that a patient with the given input data will survive at least up to month $x$.
 
  For example, using the Colon Cancer neural network app, and 
-inputing the values listed in Table~(\ref{tab:boston1940}) results in the survival curve depicted in Figure~(\ref{fig:boston1940}); the predicted probablities of living 
+inputing the values listed in Table~(\nameref{S6_Table}) results in the survival curve depicted in Figure~(\nameref{S3_Fig}); the predicted probablities of living 
 at least 6, 12, and 60 months are .89, .83, and .50, respectively.
 
 
 
-\begin{table}[!ht]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
-\caption{\bf{Example input data to the Colon Cancer neural network app \url{https://github.com/doolingdavid/colon-cancer-nn-errors.git}.}}
-\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lr}
-\toprule
-  Variable  & Value \\ 
-\midrule
-  What is the tumor size (mm) & 300 \\  
-  What is the patient's address? & boston massachusetts \\ 
-  Grade & moderately differentiated \\  
-  Histology & adenomas and adenocarcinomas \\ 
-  Laterality & not a paired site \\  
- Martial Status at Dx & Single, never married \\  
- Month of Diagnosis & Jan \\  
- How many primaries & 1 \\  
-  Race$\_$ethnicity & White \\  
-  seer$\_$historic$\_$stage$\_$a  & Regional \\ 
-  Gender & Male \\  
-  spanish$\_$hispanic$\_$origin & Non-spanish/Non-hispanic \\ 
- Year of Birth & 1940 \\  
-  Year of Diagnosis & 2010 \\
-\bottomrule
-\end{tabular}
-\label{tab:boston1940}
-\end{adjustwidth}
-\end{table}
+%\begin{table}[!ht]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text %column.
+%\caption{\bf{Example input data to the Colon Cancer neural network app \url{https://github.com/doolingdavid/%colon-cancer-nn-errors.git}.}}
+%\rowcolors{1}{white}{light-gray}
+%\begin{tabular}{lr}
+%\toprule
+%  Variable  & Value \\ 
+%\midrule
+%  What is the tumor size (mm) & 300 \\  
+%  What is the patient's address? & boston massachusetts \\ 
+%  Grade & moderately differentiated \\  
+%  Histology & adenomas and adenocarcinomas \\ 
+% Laterality & not a paired site \\  
+% Martial Status at Dx & Single, never married \\  
+% Month of Diagnosis & Jan \\  
+% How many primaries & 1 \\  
+%  Race$\_$ethnicity & White \\  
+%  seer$\_$historic$\_$stage$\_$a  & Regional \\ 
+%  Gender & Male \\  
+%  spanish$\_$hispanic$\_$origin & Non-spanish/Non-hispanic \\ 
+% Year of Birth & 1940 \\  
+%  Year of Diagnosis & 2010 \\
+%\bottomrule
+%\end{tabular}
+%\label{tab:boston1940}
+%\end{adjustwidth}
+%\end{table}
 
 
-\begin{figure}[!ht]
+%\begin{figure}[!ht]
 %\caption{Colon Cancer Survival Curve.}
 %  \label{fig:boston1940}
-  \centering
-    \includegraphics[scale=.8]{boston1940}
-\caption{\label{fig:boston1940} Colon Cancer Survival Curve predicted from the data in 
-Table~(\ref{tab:boston1940}) using the neural network web app \url{https://github.com/doolingdavid/colon-cancer-nn-errors.git}.}
-\end{figure}
+%  \centering
+%    \includegraphics[scale=.8]{boston1940}
+%\caption{\label{fig:boston1940} Colon Cancer Survival Curve predicted from the data in 
+%Table~(\nameref{S6_Table}) using the neural network web app \url{https://github.com/doolingdavid/colon-%cancer-nn-errors.git}.}
+%\end{figure}
 
-Changing the data in Table~\ref{tab:boston1940} so that the address field is changed from Boston, Massachusetts to Denver, Colorado but keeping all other variables are unchanged results in the predicted probabilities of living at least 6, 12, and 60 months: .945, .902, .665. 
+Changing the data in Table~(\nameref{S6_Table}) so that the address field is changed from Boston, Massachusetts to Denver, Colorado but keeping all other variables unchanged results in the predicted probabilities of living at least 6, 12, and 60 months: .945, .902, .665. 
 Behind the scenes, the apps use the input to the address field to make a call to the Google Maps API to convert the address into a latitude, longitude and elevation.
 These probablities are noticeably higher and reflect the documented effects of both longitude and elevation on cancer treatment and prognosis in the United States~\cite{kob4}.
 
@@ -1705,6 +1703,38 @@ Breast & .676 & .72 & .785 \\
 \end{table}
 
 
+\subsection*{S6 Table}
+\label{S6_Table}
+{\bf Example input data to the Colon Cancer neural network app \url{https://github.com/doolingdavid/colon-cancer-nn-errors.git}.}
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
+%\caption{\bf{Example input data to the Colon Cancer neural network app \url{https://github.com/doolingdavid/%colon-cancer-nn-errors.git}.}}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lr}
+\toprule
+  Variable  & Value \\ 
+\midrule
+  What is the tumor size (mm) & 300 \\  
+  What is the patient's address? & boston massachusetts \\ 
+  Grade & moderately differentiated \\  
+  Histology & adenomas and adenocarcinomas \\ 
+  Laterality & not a paired site \\  
+ Martial Status at Dx & Single, never married \\  
+ Month of Diagnosis & Jan \\  
+ How many primaries & 1 \\  
+  Race$\_$ethnicity & White \\  
+  seer$\_$historic$\_$stage$\_$a  & Regional \\ 
+  Gender & Male \\  
+  spanish$\_$hispanic$\_$origin & Non-spanish/Non-hispanic \\ 
+ Year of Birth & 1940 \\  
+  Year of Diagnosis & 2010 \\
+\bottomrule
+\end{tabular}
+%\label{tab:boston1940}
+\end{adjustwidth}
+\end{table}
+
+
 \subsection*{S1 Fig}
 \label{S1_Fig}
 {\bf Example of the construction of the binary classifiers for 6, 12, and 60 months survival.
@@ -1739,6 +1769,19 @@ A patient's hazard curve $\lambda(\mathbf{X}_{i}, t_{j})$ is predicted by the mo
 \end{adjustwidth}
 \end{figure}
 
+
+\subsection*{S3 Fig}
+\label{S3_Fig}
+{\bf Colon Cancer Survival Curve predicted from the data in 
+Table~(\nameref{S6_Table}) using the neural network web app \url{https://github.com/doolingdavid/colon-cancer-nn-errors.git}.}
+\begin{figure}[!ht]
+%\caption{Colon Cancer Survival Curve.}
+%  \label{fig:boston1940}
+  \centering
+    \includegraphics[scale=.8]{boston1940}
+%\caption{\label{fig:boston1940} Colon Cancer Survival Curve predicted from the data in 
+%Table~(\nameref{S6_Table}) using the neural network web app \url{https://github.com/doolingdavid/colon-%cancer-nn-errors.git}.}
+\end{figure}
 
 % Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
 %\subsection*{S1 Video}
