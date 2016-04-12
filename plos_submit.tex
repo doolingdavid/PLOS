@@ -522,7 +522,7 @@ Keras is a minimalist, highly modular neural networks library, written in Python
 
 In order to evaluate the performance of the models, we first construct three binary classifiers corresponding to whether or not a subject survived 6, 12, or 60 months after diagnosis. 
 We iterate over all distinct patient indices in the test set, compute the predicted survival function, and capture the values corresonding to 6, 12, and 60 months.  
-If the survival function evaluted at 6 months is greater than or equal to .5 for a given patient, then the 6 months binary classifier predicts that that patient will be alive 6 months after diagnosis. Similarly, if the survival function evaluted at 12 months is less than .5, then the 12 months binary classifier predicts that that subject will be dead 12 months after diagnosis. Fig~(\nameref{S1_Fig}) illustrates the method; in this case the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts death.
+If the survival function evaluted at 6 months is greater than or equal to .5 for a given patient, then the 6 months binary classifier predicts that that patient will be alive 6 months after diagnosis. Similarly, if the survival function evaluted at 12 months is less than .5, then the 12 months binary classifier predicts that that subject will be dead 12 months after diagnosis. Fig.~(\nameref{S1_Fig}) illustrates the method; in this case the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts death.
 
 
 %\begin{figure}[tbp]
@@ -943,7 +943,7 @@ For example, Table~(\ref{tab:nmhead}) shows how five entries of \codewhite{STATE
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 \caption{\label{tab:nmhead} {\bf Example of the transformation of \codewhite{STATE-COUNTY RECODE} to \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}.}}
-\rowcolors{1}{white}{light-gray}
+%\rowcolors{1}{white}{light-gray}
 \begin{tabular}{llrrr}
 \toprule
  STATE-COUNTY RECODE &               address &    elevation &        lat &         lng \\
@@ -981,7 +981,7 @@ The SEER variable \codewhite{CS TUMOR SIZE} records the tumor size in millimeter
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 \caption{\label{tab:colonfilter} {\bf Filters applied to the Colon Cancer data.}}
-\rowcolors{1}{white}{light-gray}
+%\rowcolors{1}{white}{light-gray}
 \begin{tabular}{lr}
 \toprule
  Column &  Filter \\
@@ -1007,7 +1007,7 @@ The SEER variable \codewhite{CS TUMOR SIZE} records the tumor size in millimeter
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 \caption{\label{tab:lungfilter} {\bf Filters applied to the Lung Cancer data.}}
-\rowcolors{1}{white}{light-gray}
+%\rowcolors{1}{white}{light-gray}
 \begin{tabular}{lr}
 \toprule
  Column &  Filter \\
@@ -1032,7 +1032,7 @@ The SEER variable \codewhite{CS TUMOR SIZE} records the tumor size in millimeter
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 \caption{\label{tab:breastfilter} {\bf Filters applied to the Breast Cancer data.}}
-\rowcolors{1}{white}{light-gray}
+%\rowcolors{1}{white}{light-gray}
 \begin{tabular}{lr}
 \toprule
  Column &  Filter \\
@@ -1594,7 +1594,7 @@ and trained with a batch size of 2000 for 50 epochs.
 \begin{table}[H]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 %\caption{\label{tab:s1table} {\bf Example of four columns in the untransformed dataset.}}
-\rowcolors{1}{white}{light-gray}
+%\rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrrr}
 \toprule
 {} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{survival\_months} &  \codewhite{vital\_status\_recode\_Dead} \\
@@ -1613,7 +1613,7 @@ newindex &                &                &        &            \\
 \begin{table}[H]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 %\caption{\label{tab:s2table} {\bf Example of four columns in the transformed dataset.}}
-\rowcolors{1}{white}{light-gray}
+%\rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrrr}
 \toprule
 {} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{month} &  \codewhite{newtarget} \\
@@ -1642,7 +1642,7 @@ binary classifiers derived from the full survival curve predictions; see text fo
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 %\caption{{\bf AUC values for the Random Forest and Neural Networks model
 %binary classifiers derived from the full survival curve predictions; see text for details. The number of subjects %that were used in the calculation of a given AUC score are given in parenthesis after the score. }}
-\rowcolors{1}{white}{light-gray}
+%\rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrr}
 \toprule
 %\rowcolors{1}{white}{yellow}
@@ -1667,7 +1667,7 @@ Lung NN    &        .765  (5019)            &        .796  (4860)             & 
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 %\caption{{\bf Percentage agreement for the Random Forest and Neural Network classifiers for 6, 12, and 60 %month survival predictions on the test data for each cancer type.}}
-\rowcolors{1}{white}{light-gray}
+%\rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrr}
 \toprule
 %\rowcolors{1}{white}{yellow}
@@ -1688,7 +1688,7 @@ Lung & .861 & .883 & .900 \\
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 %\caption{\label{tab:corr} {\bf Correlations between the Random Forest and Neural Network classifiers for 6, 12, %and 60 month survival predictions on the test data for each cancer type. The corresponding scatter plots are %shown in Fig.~(\nameref{S2_Fig}).}}
-\rowcolors{1}{white}{light-gray}
+%\rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrr}
 \toprule
 %\rowcolors{1}{white}{yellow}
@@ -1709,7 +1709,7 @@ Breast & .676 & .72 & .785 \\
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
 %\caption{\bf{Example input data to the Colon Cancer neural network app \url{https://github.com/doolingdavid/%colon-cancer-nn-errors.git}.}}
-\rowcolors{1}{white}{light-gray}
+%\rowcolors{1}{white}{light-gray}
 \begin{tabular}{lr}
 \toprule
   Variable  & Value \\ 
@@ -1742,7 +1742,7 @@ Breast & .676 & .72 & .785 \\
 \begin{table}[!ht]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
 %\caption{{\bf Example input data to the Lung Cancer random forest app \url{https://github.com/doolingdavid/%lung-cancer-rf-errors.git}.}}
-\rowcolors{1}{white}{light-gray}
+%\rowcolors{1}{white}{light-gray}
 \begin{tabular}{lr}
 \toprule
   Variable  & Value \\ 
@@ -1774,48 +1774,48 @@ Breast & .676 & .72 & .785 \\
 {\bf Example of the construction of the binary classifiers for 6, 12, and 60 months survival.
 A patient's hazard curve $\lambda(\mathbf{X}_{i}, t_{j})$ is predicted by the model for times out to 107 months. The survival curve is then readily computed as in Equation~(\ref{eq:cdf}). For this example, the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts death.}
 %\begin{figure}[tbp]
-\begin{figure}[h]
-\centering 
+%\begin{figure}[h]
+%\centering 
 %\begin{center}/\end{center} takes some additional vertical space
 %\includegraphics[width=.45\textwidth,trim=0 380 0 200,clip]{img1.pdf}
 %\hfill
-\begin{center}
-\includegraphics[width=.90\textwidth,origin=c]{survivalexamplewitherrors.pdf}
+%\begin{center}
+%%%%\includegraphics[width=.90\textwidth,origin=c]{survivalexamplewitherrors.pdf}
 % "\includegraphics" is very powerful; the graphicx package is already loaded
 %\caption{Example of the construction of the binary classifiers for 6, 12, and 60 months survival.
 %A patient's hazard curve $\lambda(\mathbf{X}_{i}, t_{j})$ is predicted by the model for times out to 107 %months. The survival curve is then readily computed as in Equation~(\ref{eq:cdf}). For this example, the 6-%month and 12-month classifiers predict survival, while the 60-month classifier predicts death.}
-\end{center}
-\end{figure}
+%\end{center}
+%\end{figure}
 
 
 \subsection*{S2 Fig}
 \label{S2_Fig}
 {\bf Scatter plots showing the correlations between the MLP model's prediction and RF model's prediction for the probablity of surviving at least 6, 12, and 60 months for the lung, colon and breast cancer test data.}
 %\begin{figure}[tbp]
-\begin{figure}[h]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\begin{figure}[h]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 %\centering
 %\begin{center}
 %\includegraphics[width=1.2\textwidth,origin=c]{totalscatter.pdf}
-\includegraphics[height=17cm,origin=l]{totalscatter.pdf}
-\caption{\label{fig:totalscatter} Scatter plots showing the correlations between the MLP model's prediction and RF model's prediction for the probablity of surviving at least 6, 12, and 60 months for the lung, colon and breast cancer test data.}
+%\includegraphics[height=17cm,origin=l]{totalscatter.pdf}
+%\caption{\label{fig:totalscatter} Scatter plots showing the correlations between the MLP model's prediction and %RF model's prediction for the probablity of surviving at least 6, 12, and 60 months for the lung, colon and breast %cancer test data.}
 %\end{center}
-\end{adjustwidth}
-\end{figure}
+%\end{adjustwidth}
+%\end{figure}
 
 
 \subsection*{S3 Fig}
 \label{S3_Fig}
 {\bf Colon Cancer Survival Curve predicted from the data in 
 Table~(\nameref{S6_Table}) using the neural network web app \url{https://github.com/doolingdavid/colon-cancer-nn-errors.git}.}
-\begin{figure}[!ht]
+%\begin{figure}[!ht]
 %\caption{Colon Cancer Survival Curve.}
 %  \label{fig:boston1940}
-  \centering
-    \includegraphics[scale=.8]{boston1940}
+%  \centering
+%    \includegraphics[scale=.8]{boston1940}
 %\caption{\label{fig:boston1940} Colon Cancer Survival Curve predicted from the data in 
 %Table~(\nameref{S6_Table}) using the neural network web app \url{https://github.com/doolingdavid/colon-%cancer-nn-errors.git}.}
-\end{figure}
+%\end{figure}
 
 % Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
 %\subsection*{S1 Video}
@@ -1839,7 +1839,8 @@ Table~(\nameref{S6_Table}) using the neural network web app \url{https://github.
 %{\bf Lorem Ipsum.} Maecenas convallis mauris sit amet sem ultrices gravida. Etiam eget sapien nibh. Sed ac ipsum eget enim egestas ullamcorper nec euismod ligula. Curabitur fringilla pulvinar lectus consectetur pellentesque.
 
 \section*{Acknowledgments}
-Cras egestas velit mauris, eu mollis turpis pellentesque sit amet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam id pretium nisi. Sed ac quam id nisi malesuada congue. Sed interdum aliquet augue, at pellentesque quam rhoncus vitae.
+We would like to thank the Surveillance, Epidemiology, and End Results Program for providing the publically available datasets used in this study, as well as the Python open-source community.
+
 
 \nolinenumbers
 
