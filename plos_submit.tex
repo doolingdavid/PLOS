@@ -375,59 +375,59 @@ Psuedocode for this transformation is found in section~(\nameref{S7_Text}).
 %section~\nameref{subsec:pseudocode}.
 
 Explicit examples will help make this transformation clear.
-The untransformed records represented in Table~(\ref{tab:originaldead}) are transformed to the multiple records shown in Table~(\ref{tab:transformeddead}).
+The untransformed records represented in section~(\nameref{S1_Table}) are transformed to the multiple records shown in section~(\nameref{S2_Table}).
 % All uncensored data is transformed in this way. All censored data is similarly transformed. 
 %The untransformed datapoint represented Table~(\ref{tab:originalalive}) is transformed to the %multiple records shown in Table~(\ref{tab:transformedalive}).
 
 
 
 
-\begin{table}[H]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:originaldead} {\bf Example of four columns in the untransformed dataset.}}
-\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lrrrr}
-\toprule
-{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{survival\_months} &  \codewhite{vital\_status\_recode\_Dead} \\
-\midrule
-newindex &                &                &        &            \\
-205      &             60 &           1951 &      3 &          1 \\
-306      &            40  &         1950  &      3    &     0    \\
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
+%\begin{table}[H]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:originaldead} {\bf Example of four columns in the untransformed dataset.}}
+%\rowcolors{1}{white}{light-gray}
+%\begin{tabular}{lrrrr}
+%\toprule
+%{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{survival\_months} &  %%\codewhite{vital\_status\_recode\_Dead} \\
+%\midrule
+%newindex &                &                &        &            \\
+%205      &             60 &           1951 &      3 &          1 \\
+%306      &            40  &         1950  &      3    &     0    \\
+%\bottomrule
+%\end{tabular}
+%\end{adjustwidth}
+%\end{table}
 
 
 
-\begin{table}[H]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:transformeddead} {\bf Example of four columns in the transformed dataset.}}
-\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lrrrr}
-\toprule
-{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{month} &  \codewhite{newtarget} \\
-\midrule
-newindex &                &                &        &            \\
-205      &             60 &           1951 &      0 &          0 \\
-205      &             60 &           1951 &      1 &          0 \\
-205      &             60 &           1951 &      2 &          0 \\
-205      &             60 &           1951 &      3 &          1 \\
-306      &             40 &           1950 &      0 &          0 \\
-306      &             40 &           1950 &      1 &          0 \\
-306      &             40 &           1950 &      2 &          0  \\
-306      &             40 &           1950 &      3 &          0  \\
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
+%\begin{table}[H]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:transformeddead} {\bf Example of four columns in the transformed dataset.}}
+%\rowcolors{1}{white}{light-gray}
+%\begin{tabular}{lrrrr}
+%\toprule
+%{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{month} &  %\codewhite{newtarget} \\
+%\midrule
+%newindex &                &                &        &            \\
+%205      &             60 &           1951 &      0 &          0 \\
+%205      &             60 &           1951 &      1 &          0 \\
+%205      &             60 &           1951 &      2 &          0 \\
+%205      &             60 &           1951 &      3 &          1 \\
+%306      &             40 &           1950 &      0 &          0 \\
+%306      &             40 &           1950 &      1 &          0 \\
+%306      &             40 &           1950 &      2 &          0  \\
+%306      &             40 &           1950 &      3 &          0  \\
+%\bottomrule
+%\end{tabular}
+%\end{adjustwidth}
+%\end{table}
 
 
 
 One obvious side effect of this transformation is that it increases the length of the dataset.
 For this study, the original, untransformed colon cancer DataFrame has shape $(113072, 103)$, and the total transformed colon cancer DataFrame has shape $(4165251, 103)$.
 Similary, the original, untransformed lung cancer DataFrame has shape $(177089, 115)$, and the total transformed lung cancer DataFrame has shape $(3079931, 115)$.
-The biggest increase in dataset size occured with the breast cancer data, which is a consequence of the relatively high survival rates in breast cancer. A subject who is censored with a recorded survival months of 48 will contribute 49 rows to the transformed dataset.  
+The biggest increase in dataset size occured with the breast cancer data, which is a consequence of the relatively high survival rates in breast cancer. A patient who is censored with a recorded survival months of 48 will contribute 49 rows to the transformed dataset.  
 The original, untransformed breast cancer DataFrame has shape $(329949, 67)$, and the total transformed breast cancer DataFrame has shape $(15085711, 67)$.
 Training machine learning algorithms on such large datasets, even after splitting into training and testing sets described below, requires large RAM. All computations for this study were performed on a Dell XPS 8700 Desktop with 32GB of RAM. The training times involved in the classification task of learning the hazard function $\lambda(\mathbf{X}_{i}, t_{j})$ for the chosen model parameters were on the order of a few hours or less, but the evaluation of the AUC performance metrics associated with the 6, 12, and 60 month binary survival classifiers
 % presented in section~\nameref{sec:performancemetrics}
@@ -438,7 +438,7 @@ Training machine learning algorithms on such large datasets, even after splittin
 
 The datasets were split into training and test sets at the patient level, with 97\% of patients assigned to the training set, and the remaining 3\% of patients assigned to the test set.
 All records corresponding to a given patient were assigned exclusively to either the training or test set.
-This choice of an unusually low percentage of data in the test set was made for two reasons. The performance metrics described in sec~\nameref{sec:performancemetrics} for the given choice of training and test partition of the data took well over 24 hours for the random forest models; choosing the convention 80/20 split would have resulted in a prohibitively long times for the traning-performance metric feedback loop. Because of the large size of the data set, this choice of training and test partition still leads to an acceptably large test set for the purposes of model evaluation.
+This choice of an unusually low percentage of data in the test set was made for two reasons. The performance metrics described in section~(\ref{sec:performancemetrics}) for the given choice of training and test partition of the data took well over 24 hours for the random forest models; choosing the conventional 80/20 split would have resulted in prohibitively long times for the traning-performance metric feedback loop. Because of the large size of the data set, this choice of training and test partition still leads to an acceptably large test set for the purposes of model evaluation.
 %After performing the data transformation adumbrated above, it is necessary to be mindful of %how we partition the data into training and testing data. Each subject that was represented by %a single row in the original untransformed dataset now potentially is represented by multiple %rows in the transformed dataset, and care must be taken to ensure that all of the rows %corresponding to a particular subject are either assigned exclusively to the training set or %exclusive to the testing set. 
 An additional characteristic of this transformed data that requires careful treatment involves balancing. The transformation results in many new records with the target variable \codewhite{newtarget} == 0. The training and test sets must be chosen such that the ratio of the number of records with \codewhite{newtarget} == 0 to that of the number of records with \codewhite{newtarget} == 1 is the same in the training and test datasets.
 This ratio turns out to be $\approx 396$ for the breast cancer data, $\approx  99$ for the colon cancer data, and 
@@ -448,10 +448,10 @@ $(148849, 67)$, respectively.
 For lung cancer, the corresponding datasets have shapes $(2988768, 115)$ and $(91163, 115)$.
 Finallly, for colon cancer the partition into training and test datasets of the transformed data have the shapes 
 $(3958008, 103)$ and $(207243, 103)$. Multiple rows correspond to the same test patient in these datasets.
-The colon cancer test dataset represents 5654 distinct subjects; the breast cancer test dataset represents 3300 distinct subjects; and the lung test dataset contains data for 5313 distinct subjects.
+The colon cancer test dataset represents 5654 distinct patients; the breast cancer test dataset represents 3300 distinct patients; and the lung test dataset contains data for 5313 distinct patients.
 
-The models described below are trained to learn the values of \codewhite{newtarget}, which is a binary variable: a value of '0' indicating that the subject is still alive at the given month, while a value of '1' indicates that the patient died at that particular value of \codewhite{months}. The random forests and neural networks described below are binary classifiers with the target \codewhite{newtarget}. 
-Both the random forests and neural networks are capable of not only performing strict class prediction, i.e. predicting whether \codewhite{newtarget} is '0' or '1', but are also able to predict the \textit{probability} of \codewhite{newtarget} being '0' or '1'., and are thus able to learn the hazard function.
+The models described below are trained to learn the values of \codewhite{newtarget}, which is a binary variable: a value of 0 indicates that the subject is still alive at the given month, while a value of 1 indicates that the patient died at that particular value of \codewhite{months}. The random forests and neural networks described below are binary classifiers with the target \codewhite{newtarget}. 
+Both the random forests and neural networks are capable of not only performing strict class prediction, i.e. predicting whether \codewhite{newtarget} is 0 or 1, but are also able to predict the probability of \codewhite{newtarget} being 0 or 1, and are thus able to learn the hazard function.
 
 
 
@@ -462,13 +462,13 @@ Both the random forests and neural networks are capable of not only performing s
 \label{sec:predmodels}
 
 With the datasets transformed as described above, we are now able to use them to train and evaluate machine learning classifiers.
-The classifier models described in this section are learning the hazard function: given all of the data given in the appendix~\nameref{sec:supporting} for each cancer type, which includes the field \codewhite{months} (the months after diagnosis), the models predict the target variable \codewhite{newtarget}, which is a binary class label equal to 1 if the subject died in that month and 0 otherwise.
+The classifier models described in this section are learning the hazard function: given all of the data given in sections~(\nameref{S4_Text},~\nameref{S5_Text},~\nameref{S6_Text}) for each cancer type, which includes the field \codewhite{months} (the months after diagnosis), the models predict the target variable \codewhite{newtarget}, which is a binary class label equal to 1 if the subject died in that month and 0 otherwise.
 
 
 
 
 From the hazard function for each unique patient, we can construct the
-survival function as in Equation~\ref{eq:cdf}.
+survival function as in Equation~(\ref{eq:cdf}).
 The relevant python code is available at the github repository containing supplemental material for this study~\cite{supp}.
 For each subject $i$, all input data minus \codewhite{months} and \codewhite{newtarget} is represented by $\mathbf{X}_{i}$. After the classfier models have trained with target \codewhite{newtarget} on the (very large) training set, each subject's survival function is computed in the corresponding (much smaller) test set.
 These functions are computed by using the model to predict $\lambda(\mathbf{X}_i, t_{j})$ for $j$ running from 0 to 107 months, and $\mathbf{X}_{i}$ corresponds to the single row corresponding to subject $i$ in the original untransformed dataset.
@@ -1587,6 +1587,53 @@ modellung.compile(loss='binary_crossentropy',
 \end{verbatim}
 
 and trained with a batch size of 2000 for 50 epochs.
+
+
+\subsection{S1 Table}
+\label{S1_Table}
+{\bf Examples of four columns in the untransformed dataset.}
+\begin{table}[H]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\caption{\label{tab:s1table} {\bf Example of four columns in the untransformed dataset.}}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lrrrr}
+\toprule
+{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{survival\_months} &  \codewhite{vital\_status\_recode\_Dead} \\
+\midrule
+newindex &                &                &        &            \\
+205      &             60 &           1951 &      3 &          1 \\
+306      &            40  &         1950  &      3    &     0    \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+\subsection{S2 Table}
+\label{S2_Table}
+{\bf Example of four columns in the transformed dataset.}
+\begin{table}[H]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+\caption{\label{tab:s2table} {\bf Example of four columns in the transformed dataset.}}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lrrrr}
+\toprule
+{} &  \codewhite{cs\_tumor\_size} &  \codewhite{year\_of\_birth} &  \codewhite{month} &  \codewhite{newtarget} \\
+\midrule
+newindex &                &                &        &            \\
+205      &             60 &           1951 &      0 &          0 \\
+205      &             60 &           1951 &      1 &          0 \\
+205      &             60 &           1951 &      2 &          0 \\
+205      &             60 &           1951 &      3 &          1 \\
+306      &             40 &           1950 &      0 &          0 \\
+306      &             40 &           1950 &      1 &          0 \\
+306      &             40 &           1950 &      2 &          0  \\
+306      &             40 &           1950 &      3 &          0  \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
 
 % Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
 %\subsection*{S1 Video}
