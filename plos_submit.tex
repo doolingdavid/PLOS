@@ -333,7 +333,7 @@ Before applying machine learning models trained with these datasets, we describe
 \subsection{Transformation of Censored Data for Machine Learning}
 \label{subsec:transformation}
 
-In this section we describe a way to transform right-censored data appropriately so that it may be used as input to machine learning algorithms that learn the hazard fuction. The full details of this transformation, and a large inspiration for this study, can be found in this blog post~\cite{kuhn}.
+In this section we describe a transformation of right-censored data. The tramsformed data can be used as input to machine learning algorithms which learn the hazard fuction. The full details of this transformation, and a large inspiration for this study, can be found in this blog post~\cite{kuhn}.
 
 
 The key observation is to note that the hazard function at any given time point can be directly learned via standard machine learning methods. The hazard function can be written as
@@ -370,8 +370,8 @@ where $CDF(\mathbf{X}_{i}, t_{k}) = \sum_
 
 
 Treating $T$ as just another covariate is the key to the transformation. Each datapoint in the hidden classification problem is the combination of an $\mathbf{X}_{i}$ in the orginal dataset plus some month $t_{j}$, and the classification problem is "did point $\mathbf{X}_{i}$ die in month $t_{j}$.'' We will call this new variable $D_{ij}$ (\codewhite{newtarget}).
-We can transform our original data set into a new one, with one row for each month that each $\mathbf{X}_{i}$ is in the sample; train a standard classifier on this new dataset with $D_{ij}$ as the target, and derive a survival model from the orginal dataset.
-Psuedocode for this transformation is found in the appendix~\nameref{sec:supporting}.
+We can transform our original dataset into a new one, with one row for each month that each $\mathbf{X}_{i}$ is in the sample; train a standard classifier on this new dataset with $D_{ij}$ as the target, and derive a survival model from the orginal dataset.
+Psuedocode for this transformation is found in section~(\nameref{S7_Text}).
 %section~\nameref{subsec:pseudocode}.
 
 Explicit examples will help make this transformation clear.
@@ -1413,8 +1413,10 @@ and
 
 
 
-\subsection{Pseudocode for the Data Transformation}
-\label{subsec:pseudocode}
+\subsection{S7 Text}
+\label{S7_Text}
+
+{\bf Pseudocode for the Data Transformation}
 
 \begin{verbatim}
 def train(X, T, D)
