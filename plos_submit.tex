@@ -822,7 +822,7 @@ Changing the data in Table~(\nameref{S6_Table}) so that the address field is cha
 Behind the scenes, the apps use the input to the address field to make a call to the Google Maps API to convert the address into a latitude, longitude and elevation.
 These probablities are noticeably higher and reflect the documented effects of both longitude and elevation on cancer treatment and prognosis in the United States~\cite{kob4}.
 
-A similar example of how changing the inputs to the models affects the predicted survival curves in interesting ways can be seen with the random forest model for lung cancer. Changing the data in Table~\ref{tab:lungmaritalstatus} by toggling between the male/female, and married/single four possible permutations results in the following prediction probabilites for 6, 12, and 60 month survival:
+A similar example of how changing the inputs to the models affects the predicted survival curves in interesting ways can be seen with the random forest model for lung cancer. Changing the data in Table~(\nameref{S7_Table} by toggling between the male/female, and married/single four possible permutations results in the following prediction probabilites for 6, 12, and 60 month survival:
 
 \begin{itemize}[noitemsep]
 \item male/married:  .53, .27, .01
@@ -832,33 +832,33 @@ A similar example of how changing the inputs to the models affects the predicted
 \end{itemize}
 
 
-\begin{table}[!ht]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
-\caption{{\bf Example input data to the Lung Cancer random forest app \url{https://github.com/doolingdavid/lung-cancer-rf-errors.git}.}}
-\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lr}
-\toprule
-  Variable  & Value \\ 
-\midrule
-  What is the tumor size (mm) & 500 \\  
-  What is the patient's address? & newark new jersey \\ 
-  Grade & well differentiated \\  
-  Histology & acinar cell neoplasms \\ 
-  Laterality & \makecell{bilateral involvement, lateral origin unknown; \\ stated to be single primary} \\  
- Martial Status at Dx & Married including common law \\  
- Month of Diagnosis & Jan \\  
- How many primaries & 1 \\  
-  Race$\_$ethnicity & White \\  
-  seer$\_$historic$\_$stage$\_$a  & Distant \\ 
-  Gender & Female \\  
-  spanish$\_$hispanic$\_$origin & Non-spanish/Non-hispanic \\ 
- Year of Birth & 1970 \\  
-  Year of Diagnosis & 2011 \\
-\bottomrule
-\end{tabular}
-\label{tab:lungmaritalstatus}
-\end{adjustwidth}
-\end{table}
+%\begin{table}[!ht]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text %column.
+%\caption{{\bf Example input data to the Lung Cancer random forest app \url{https://github.com/doolingdavid/%lung-cancer-rf-errors.git}.}}
+%\rowcolors{1}{white}{light-gray}
+%\begin{tabular}{lr}
+%\toprule
+%  Variable  & Value \\ 
+%\midrule
+%  What is the tumor size (mm) & 500 \\  
+%  What is the patient's address? & newark new jersey \\ 
+%  Grade & well differentiated \\  
+%  Histology & acinar cell neoplasms \\ 
+%  Laterality & \makecell{bilateral involvement, lateral origin unknown; \\ stated to be single primary} \\  
+% Martial Status at Dx & Married including common law \\  
+% Month of Diagnosis & Jan \\  
+% How many primaries & 1 \\  
+%  Race$\_$ethnicity & White \\  
+%  seer$\_$historic$\_$stage$\_$a  & Distant \\ 
+%  Gender & Female \\  
+%  spanish$\_$hispanic$\_$origin & Non-spanish/Non-hispanic \\ 
+% Year of Birth & 1970 \\  
+%  Year of Diagnosis & 2011 \\
+%\bottomrule
+%\end{tabular}
+%\label{tab:lungmaritalstatus}
+%\end{adjustwidth}
+%\end{table}
 
 
 
@@ -1733,6 +1733,40 @@ Breast & .676 & .72 & .785 \\
 %\label{tab:boston1940}
 \end{adjustwidth}
 \end{table}
+
+
+
+\subsection*{S7 Table}
+\label{S7_Table}
+{\bf Example input data to the Lung Cancer random forest app \url{https://github.com/doolingdavid/lung-cancer-rf-errors.git}.}
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
+%\caption{{\bf Example input data to the Lung Cancer random forest app \url{https://github.com/doolingdavid/%lung-cancer-rf-errors.git}.}}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lr}
+\toprule
+  Variable  & Value \\ 
+\midrule
+  What is the tumor size (mm) & 500 \\  
+  What is the patient's address? & newark new jersey \\ 
+  Grade & well differentiated \\  
+  Histology & acinar cell neoplasms \\ 
+  Laterality & \makecell{bilateral involvement, lateral origin unknown; \\ stated to be single primary} \\  
+ Martial Status at Dx & Married including common law \\  
+ Month of Diagnosis & Jan \\  
+ How many primaries & 1 \\  
+  Race$\_$ethnicity & White \\  
+  seer$\_$historic$\_$stage$\_$a  & Distant \\ 
+  Gender & Female \\  
+  spanish$\_$hispanic$\_$origin & Non-spanish/Non-hispanic \\ 
+ Year of Birth & 1970 \\  
+  Year of Diagnosis & 2011 \\
+\bottomrule
+\end{tabular}
+\label{tab:lungmaritalstatus}
+\end{adjustwidth}
+\end{table}
+
 
 
 \subsection*{S1 Fig}
