@@ -522,28 +522,28 @@ Keras is a minimalist, highly modular neural networks library, written in Python
 
 In order to evaluate the performance of the models, we first construct three binary classifiers corresponding to whether or not a subject survived 6, 12, or 60 months after diagnosis. 
 We iterate over all distinct patient indices in the test set, compute the predicted survival function, and capture the values corresonding to 6, 12, and 60 months.  
-If the survival function evaluted at 6 months is greater than or equal to .5 for a given patient, then the 6 months binary classifier predicts that that patient will be alive 6 months after diagnosis. Similarly, if the survival function evaluted at 12 months is less than .5, then the 12 months binary classifier predicts that that subject will be dead 12 months after diagnosis. Figure~(\ref{fig:survivalexample}) illustrates the method; in this case the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts death.
+If the survival function evaluted at 6 months is greater than or equal to .5 for a given patient, then the 6 months binary classifier predicts that that patient will be alive 6 months after diagnosis. Similarly, if the survival function evaluted at 12 months is less than .5, then the 12 months binary classifier predicts that that subject will be dead 12 months after diagnosis. Fig~(\nameref{S1_Fig}) illustrates the method; in this case the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts death.
 
 
 %\begin{figure}[tbp]
-\begin{figure}[h]
-\centering 
+%\begin{figure}[h]
+%\centering 
 %\begin{center}/\end{center} takes some additional vertical space
 %\includegraphics[width=.45\textwidth,trim=0 380 0 200,clip]{img1.pdf}
 %\hfill
-\begin{center}
-\includegraphics[width=.90\textwidth,origin=c]{survivalexamplewitherrors.pdf}
+%\begin{center}
+%\includegraphics[width=.90\textwidth,origin=c]{survivalexamplewitherrors.pdf}
 % "\includegraphics" is very powerful; the graphicx package is already loaded
-\caption{\label{fig:survivalexample} Example of the construction of the binary classifiers for 6, 12, and 60 months survival.
-A patient's hazard curve $\lambda(\mathbf{X}_{i}, t_{j})$ is predicted by the model for times out to 107 months. The survival curve is then readily computed as in Equation~(\ref{eq:cdf}). For this example, the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts death.}
-\end{center}
-\end{figure}
+%\caption{\label{fig:survivalexample} Example of the construction of the binary classifiers for 6, 12, and 60 %months survival.
+%A patient's hazard curve $\lambda(\mathbf{X}_{i}, t_{j})$ is predicted by the model for times out to 107 %months. The survival curve is then readily computed as in Equation~(\ref{eq:cdf}). For this example, the 6-%month and 12-month classifiers predict survival, while the 60-month classifier predicts death.}
+%\end{center}
+%\end{figure}
 
 
 
 Because of censoring it is necessary to apply some Boolean filters to the data in order to correctly assess the resulting classifiers.
-To construct AUC curves for the 6 month classifier, we restrict ourselves to considering
-subjects in the test data where either of the following mutually exlusive conditions holds:
+To construct AUC curves for the 6 month classifier, we restrict ourselves to 
+patients in the test data where either of the following mutually exlusive conditions holds:
 
 \begin{itemize}[noitemsep]
 \item \codewhite{survival\_months} $>=$ 6 AND \codewhite{vital\_status\_recode} == 0
@@ -558,8 +558,8 @@ That is, we restrict ourselves to subsets of the data where we know for certain 
 \paragraph{Survival Curve Error Estimates}
 %The standard calculation of confidence intervals used in the Kaplan-Meier estimates of survival %curves does not apply for these personal predictions. 
 The following bootstrap method was used to calculate the upper and lower bounds corresponding to 95\% confidence intervals.
-From equation~\ref{eq:cdf}, we can obtain the cumulative distribution function (CDF) associated with each individual survival curve.
-We then sample from this CDF in a way that reflects the underlying data used to produce the model. The training data used to create the model has an underlying distribution of survival months. In the transformed training dataset, each subject contributes as many rows as the number of survival months plus one (patients with zero survival months still contribute one row to the training data). A patient that survived 50 months contributes 51 "points" to the training of the model. If all patients lived out to 107 months, the model would contain less uncertainty. This observation leads to the following algorithm for determining the error estimates to the predicted survival curves:
+From equation~(\ref{eq:cdf}), we can obtain the cumulative distribution function (CDF) associated with each individual survival curve.
+We then sample from this CDF in a way that reflects the underlying data used to produce the model. The training data used to create the model has an underlying distribution of survival months. In the transformed training dataset, each subject contributes as many rows as the number of survival months plus one (patients with zero survival months still contribute one row to the training data). A patient that survived 50 months contributes 51 ``points" to the training of the model. If all patients lived out to 107 months, the model would contain less uncertainty. This observation leads to the following algorithm for determining the error estimates to the predicted survival curves:
 
 \begin{itemize}[noitemsep]
 \item compute the CDF associated with the survival curve
@@ -570,7 +570,7 @@ to draw from the survival curve CDF, and compute a new survival curve
 \end{itemize}
 
 The process is analogous to the following hypothetical situation. Imagine a patient going to an expert to get a survival prognosis.
-After collecting data on the patient and keeping records, the expert predicts the central, single survival curve. The patient then seeks multiple "second opinions.'' These second opinions are generated not from independent examinations of the patient, but by outside experts sampling from the data already collected by the first expert.
+After collecting data on the patient and keeping records, the expert predicts the central, single survival curve. The patient then seeks multiple ``second opinions.'' These second opinions are generated not from independent examinations of the patient, but by outside experts sampling from the data already collected by the first expert.
 Then the predictions of 95\% of these 10,000 experts all fall within the band determined by the upper and lower curves.
 
 
@@ -582,8 +582,8 @@ Then the predictions of 95\% of these 10,000 experts all fall within the band de
 
 
 \paragraph{AUC scores}
-The AUC scores for each of the 18 different binary classifiers are listed in Table~(\ref{tab:AUC}). 
-The lowest AUC in Table~\ref{tab:AUC} is .765, corresponding to the lung neural network model predictions for 6 months survival, while the highest AUC in Table~\ref{tab:AUC} is .885, corresponding to the breast random forest model predictions for 12 months survival.
+The AUC scores for each of the 18 different binary classifiers are listed in Table~(\nameref{S3_Table}). 
+The lowest AUC in Table~(\nameref{S3_Table}) is .765, corresponding to the lung neural network model predictions for 6 months survival, while the highest AUC in Table~(\nameref{S3_Table}) is .885, corresponding to the breast random forest model predictions for 12 months survival.
 
 
 
@@ -591,35 +591,35 @@ The lowest AUC in Table~\ref{tab:AUC} is .765, corresponding to the lung neural 
 
 
 
-\begin{table}[!ht]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:AUC} {\bf AUC values for the Random Forest and Neural Networks model
-binary classifiers derived from the full survival curve predictions; see text for details. The number of subjects that were used in the calculation of a given AUC score are given in parenthesis after the score. }}
-\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lrrr}
-\toprule
+%\begin{table}[!ht]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:AUC} {\bf AUC values for the Random Forest and Neural Networks model
+%binary classifiers derived from the full survival curve predictions; see text for details. The number of subjects %that were used in the calculation of a given AUC score are given in parenthesis after the score. }}
+%\rowcolors{1}{white}{light-gray}
+%\begin{tabular}{lrrr}
+%\toprule
 %\rowcolors{1}{white}{yellow}
 %\hline
-Model & 6 Months AUC & 12 Months AUC & 60 Months AUC \\ 
-\midrule
-Breast RF &  .846  (3035)     &     .885  (2797)         &  .844 (1392) \\ 
-Breast NN &   .855 (3035)    &     .867  (2797)    &    .836  (1392) \\ 
-Colon RF  &     .804 (5281)         &      .806 (5003)          &      .828   (3232)        \\ 
-Colon NN   &     .797 (5281)         &          .804 (5003)        &   .841 (3232) \\ 
-Lung RF    &      .772  (5019)             &        .796 (4860)              &   .874 (4143)  \\ 
-Lung NN    &        .765  (5019)            &        .796  (4860)             &  .875 (4143)  \\
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
+%Model & 6 Months AUC & 12 Months AUC & 60 Months AUC \\ 
+%\midrule
+%Breast RF &  .846  (3035)     &     .885  (2797)         &  .844 (1392) \\ 
+%Breast NN &   .855 (3035)    &     .867  (2797)    &    .836  (1392) \\ 
+%Colon RF  &     .804 (5281)         &      .806 (5003)          &      .828   (3232)        \\ 
+%Colon NN   &     .797 (5281)         &          .804 (5003)        &   .841 (3232) \\ 
+%Lung RF    &      .772  (5019)             &        .796 (4860)              &   .874 (4143)  \\ 
+%Lung NN    &        .765  (5019)            &        .796  (4860)             &  .875 (4143)  \\
+%\bottomrule
+%\end{tabular}
+%\end{adjustwidth}
+%\end{table}
 
 
 
 
 \paragraph{Model Agreement}
 An additional means of validating the predictions of these models is by comparing their predictions to each other for the same set of input data. 
-Table~\ref{tab:agree} shows the strong agreement between the random forest and neural network classifiers for each cancer type. Python code showing how the values in Table~\ref{tab:agree} are computed is available in the files 
-\codewhite{NewPatientBreastCF.html}, \codewhite{NewPatientColonCF.html}, and \codewhite{NewPatientLung.html} in the GitHub repository containing supplemental matierial for this study~\cite{supp}. Table~\ref{tab:agree} is computed as follows. 
+Table~(\nameref{S4_Table}) shows the strong agreement between the random forest and neural network classifiers for each cancer type. Python code showing how the values in Table~(\nameref{S4_Table}) are computed is available in the files 
+\codewhite{NewPatientBreastCF.html}, \codewhite{NewPatientColonCF.html}, and \codewhite{NewPatientLung.html} in the GitHub repository containing supplemental matierial for this study~\cite{supp}. Table~(\nameref{S4_Table}) is computed as follows. 
 For each cancer type (breast,colon, and lung), do the following:
 
 \begin{itemize}[noitemsep]
@@ -630,7 +630,7 @@ For each cancer type (breast,colon, and lung), do the following:
 \end{itemize}
 
 
-Fig.~(\ref{fig:totalscatter}) shows scatter plots of the neural network and random forest predictions for 6, 12, and 60 month survival prediction for each cancer type. The correlations of the neural network and random forest predictions are listed in Table~(\ref{tab:corr}). Event though breast cancer 6 month survival has the highest percentage agreement between the two classifiers (over 99$\%$), it also has the lowest correlation (.676). This seeming contradiction is a result of the high 6-month survival rate for breast cancer, and that the random forest and neural network models seem to treat this case differently. The neural network models in general appear to be less pessimistic in general than the random forest model predictions.
+Fig.~(\nameref{S2_Fig}) shows scatter plots of the neural network and random forest predictions for 6, 12, and 60 month survival prediction for each cancer type. The correlations of the neural network and random forest predictions are listed in Table~(\nameref{S5_Table}). Event though breast cancer 6 month survival has the highest percentage agreement between the two classifiers (over 99$\%$), it also has the lowest correlation (.676). This seeming contradiction is a result of the high 6-month survival rate for breast cancer, and that the random forest and neural network models seem to treat this case differently. The neural network models in general appear to be less pessimistic in general than the random forest model predictions.
 
 The high level of agreement between two models lends confidence to the notion that they have both learned from the training data and are generalizing well. 
 %Figures~(\ref{fig:colonbox},~\ref{fig:breastbox},~\ref{fig:lungbox}) 
@@ -640,41 +640,41 @@ The high level of agreement between two models lends confidence to the notion th
 %Exploring the outlier cases, for example where the difference between the neural network and random forest %predictions for 5 year survival in breast cancer exceed .4, can reveal patterns indicating where the models need %careful intepretation. The distribution of year of birth for patients where the neural network model prediction for 5 %year survival exceeded the random forest prediction by more than .4 has a mode around 1930, a good 20 years %earlier than the distrubtion for the remaining patients. The outliers in Figs.~(\ref{fig:colonbox},~%\ref{fig:breastbox},~\ref{fig:lungbox}) corresponding to patients whose distributions for certain features are also %outliers compared to the rest of the population used in training.
 
 
-\begin{table}[!ht]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:agree} {\bf Percentage agreement for the Random Forest and Neural Network classifiers for 6, 12, and 60 month survival predictions on the test data for each cancer type.}}
-\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lrrr}
-\toprule
+%\begin{table}[!ht]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:agree} {\bf Percentage agreement for the Random Forest and Neural Network classifiers for %6, 12, and 60 month survival predictions on the test data for each cancer type.}}
+%\rowcolors{1}{white}{light-gray}
+%\begin{tabular}{lrrr}
+%\toprule
 %\rowcolors{1}{white}{yellow}
-Cancer Type & $\%$ agreement 6 months & $\%$ agreement 12 months & $\%$ agreement 60 months \\ 
-\midrule
-Colon & .981 & .971 & .915 \\  
-Breast & .994 & .984 & .938 \\  
-Lung & .861 & .883 & .900 \\  
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
+%Cancer Type & $\%$ agreement 6 months & $\%$ agreement 12 months & $\%$ agreement 60 months \\ 
+%\midrule
+%Colon & .981 & .971 & .915 \\  
+%Breast & .994 & .984 & .938 \\  
+%Lung & .861 & .883 & .900 \\  
+%\bottomrule
+%\end{tabular}
+%\end{adjustwidth}
+%\end{table}
 
 
 
-\begin{table}[!ht]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:corr} {\bf Correlations between the Random Forest and Neural Network classifiers for 6, 12, and 60 month survival predictions on the test data for each cancer type. The corresponding scatter plots are shown in Fig.~(\ref{fig:totalscatter}).}}
-\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lrrr}
-\toprule
+%\begin{table}[!ht]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:corr} {\bf Correlations between the Random Forest and Neural Network classifiers for 6, 12, %and 60 month survival predictions on the test data for each cancer type. The corresponding scatter plots are %shown in Fig.~(\nameref{S2_Fig}).}}
+%\rowcolors{1}{white}{light-gray}
+%\begin{tabular}{lrrr}
+%\toprule
 %\rowcolors{1}{white}{yellow}
-Cancer Type &  6 months &  12 months &   60 months \\ 
-\midrule
-Lung & .914 & .946 & .921 \\  
-Colon & .900 & .923 & .935 \\  
-Breast & .676 & .72 & .785 \\  
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
+%Cancer Type &  6 months &  12 months &   60 months \\ 
+%\midrule
+%Lung & .914 & .946 & .921 \\  
+%Colon & .900 & .923 & .935 \\  
+%Breast & .676 & .72 & .785 \\  
+%\bottomrule
+%\end{tabular}
+%\end{adjustwidth}
+%\end{table}
 
 
 
@@ -693,16 +693,16 @@ Breast & .676 & .72 & .785 \\
 %\end{figure}
 
 
-\begin{figure}[tbp]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\begin{figure}[tbp]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
 %\centering
 %\begin{center}
 %\includegraphics[width=1.2\textwidth,origin=c]{totalscatter.pdf}
-\includegraphics[height=17cm,origin=l]{totalscatter.pdf}
-\caption{\label{fig:totalscatter} Scatter plots showing the correlations between the MLP model's prediction and RF model's prediction for the probablity of surviving at least 6, 12, and 60 months for the lung, colon and breast cancer test data.}
+%\includegraphics[height=17cm,origin=l]{totalscatter.pdf}
+%\caption{\label{fig:totalscatter} Scatter plots showing the correlations between the MLP model's prediction and %RF model's prediction for the probablity of surviving at least 6, 12, and 60 months for the lung, colon and breast %cancer test data.}
 %\end{center}
-\end{adjustwidth}
-\end{figure}
+%\end{adjustwidth}
+%\end{figure}
 
 
 %\begin{figure}[tbp]
@@ -736,7 +736,7 @@ Breast & .676 & .72 & .785 \\
 \label{sec:apps}
 
 
-The six models have their full hyperparameter and architecture presented in the appendix section~\nameref{sec:supporting}. Python code for all six model training and evaluation is available at the githib respository containing supplemental material for this study~\cite{supp}.
+The six models have their full hyperparameter and architecture presented in sections~(\nameref{S8_Text},~\nameref{S9_Text},~\nameref{S10_Text},~\nameref{S11_Text},~\nameref{S12_Text},~\nameref{S13_Text}). Python code for all six model training and evaluation is available at the githib respository containing supplemental material for this study~\cite{supp}.
 
 
 
@@ -1590,12 +1590,12 @@ modellung.compile(loss='binary_crossentropy',
 and trained with a batch size of 2000 for 50 epochs.
 
 
-\subsection{S1 Table}
+\subsection*{S1 Table}
 \label{S1_Table}
 {\bf Examples of four columns in the untransformed dataset.}
 \begin{table}[H]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:s1table} {\bf Example of four columns in the untransformed dataset.}}
+%\caption{\label{tab:s1table} {\bf Example of four columns in the untransformed dataset.}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrrr}
 \toprule
@@ -1609,12 +1609,12 @@ newindex &                &                &        &            \\
 \end{adjustwidth}
 \end{table}
 
-\subsection{S2 Table}
+\subsection*{S2 Table}
 \label{S2_Table}
 {\bf Example of four columns in the transformed dataset.}
 \begin{table}[H]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:s2table} {\bf Example of four columns in the transformed dataset.}}
+%\caption{\label{tab:s2table} {\bf Example of four columns in the transformed dataset.}}
 \rowcolors{1}{white}{light-gray}
 \begin{tabular}{lrrrr}
 \toprule
@@ -1634,6 +1634,110 @@ newindex &                &                &        &            \\
 \end{adjustwidth}
 \end{table}
 
+
+
+\subsection*{S3 Table}
+\label{S3_Table}
+{\bf AUC values for the Random Forest and Neural Networks model
+binary classifiers derived from the full survival curve predictions; see text for details. The number of subjects that were used in the calculation of a given AUC score are given in parenthesis after the score.}
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{{\bf AUC values for the Random Forest and Neural Networks model
+%binary classifiers derived from the full survival curve predictions; see text for details. The number of subjects %that were used in the calculation of a given AUC score are given in parenthesis after the score. }}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lrrr}
+\toprule
+%\rowcolors{1}{white}{yellow}
+%\hline
+Model & 6 Months AUC & 12 Months AUC & 60 Months AUC \\ 
+\midrule
+Breast RF &  .846  (3035)     &     .885  (2797)         &  .844 (1392) \\ 
+Breast NN &   .855 (3035)    &     .867  (2797)    &    .836  (1392) \\ 
+Colon RF  &     .804 (5281)         &      .806 (5003)          &      .828   (3232)        \\ 
+Colon NN   &     .797 (5281)         &          .804 (5003)        &   .841 (3232) \\ 
+Lung RF    &      .772  (5019)             &        .796 (4860)              &   .874 (4143)  \\ 
+Lung NN    &        .765  (5019)            &        .796  (4860)             &  .875 (4143)  \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
+\subsection*{S4 Table}
+\label{S4_Table}
+{\bf Percentage agreement for the Random Forest and Neural Network classifiers for 6, 12, and 60 month survival predictions on the test data for each cancer type.}
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{{\bf Percentage agreement for the Random Forest and Neural Network classifiers for 6, 12, and 60 %month survival predictions on the test data for each cancer type.}}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lrrr}
+\toprule
+%\rowcolors{1}{white}{yellow}
+Cancer Type & $\%$ agreement 6 months & $\%$ agreement 12 months & $\%$ agreement 60 months \\ 
+\midrule
+Colon & .981 & .971 & .915 \\  
+Breast & .994 & .984 & .938 \\  
+Lung & .861 & .883 & .900 \\  
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
+\subsection*{S5 Table}
+\label{S5_Table}
+{\bf Correlations between the Random Forest and Neural Network classifiers for 6, 12, and 60 month survival predictions on the test data for each cancer type. The corresponding scatter plots are shown in Fig.~(\nameref{S2_Fig}).}
+\begin{table}[!ht]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:corr} {\bf Correlations between the Random Forest and Neural Network classifiers for 6, 12, %and 60 month survival predictions on the test data for each cancer type. The corresponding scatter plots are %shown in Fig.~(\nameref{S2_Fig}).}}
+\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lrrr}
+\toprule
+%\rowcolors{1}{white}{yellow}
+Cancer Type &  6 months &  12 months &   60 months \\ 
+\midrule
+Lung & .914 & .946 & .921 \\  
+Colon & .900 & .923 & .935 \\  
+Breast & .676 & .72 & .785 \\  
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
+\subsection*{S1 Fig}
+\label{S1_Fig}
+{\bf Example of the construction of the binary classifiers for 6, 12, and 60 months survival.
+A patient's hazard curve $\lambda(\mathbf{X}_{i}, t_{j})$ is predicted by the model for times out to 107 months. The survival curve is then readily computed as in Equation~(\ref{eq:cdf}). For this example, the 6-month and 12-month classifiers predict survival, while the 60-month classifier predicts death.}
+%\begin{figure}[tbp]
+\begin{figure}[h]
+\centering 
+%\begin{center}/\end{center} takes some additional vertical space
+%\includegraphics[width=.45\textwidth,trim=0 380 0 200,clip]{img1.pdf}
+%\hfill
+\begin{center}
+\includegraphics[width=.90\textwidth,origin=c]{survivalexamplewitherrors.pdf}
+% "\includegraphics" is very powerful; the graphicx package is already loaded
+%\caption{Example of the construction of the binary classifiers for 6, 12, and 60 months survival.
+%A patient's hazard curve $\lambda(\mathbf{X}_{i}, t_{j})$ is predicted by the model for times out to 107 %months. The survival curve is then readily computed as in Equation~(\ref{eq:cdf}). For this example, the 6-%month and 12-month classifiers predict survival, while the 60-month classifier predicts death.}
+\end{center}
+\end{figure}
+
+
+\subsection*{S2 Fig}
+\label{S2_Fig}
+{\bf Scatter plots showing the correlations between the MLP model's prediction and RF model's prediction for the probablity of surviving at least 6, 12, and 60 months for the lung, colon and breast cancer test data.}
+%\begin{figure}[tbp]
+\begin{figure}[h]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\centering
+%\begin{center}
+%\includegraphics[width=1.2\textwidth,origin=c]{totalscatter.pdf}
+\includegraphics[height=17cm,origin=l]{totalscatter.pdf}
+\caption{\label{fig:totalscatter} Scatter plots showing the correlations between the MLP model's prediction and RF model's prediction for the probablity of surviving at least 6, 12, and 60 months for the lung, colon and breast cancer test data.}
+%\end{center}
+\end{adjustwidth}
+\end{figure}
 
 
 % Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
