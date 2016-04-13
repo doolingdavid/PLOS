@@ -968,88 +968,88 @@ An added benefit of this shift from the single categorical variable \codewhite{S
 \label{S3_Text}
 
  The four COLRECT.txt files were imported into a pandas DataFrame object.
-This data was then filtered according to the conditions in Table~(\ref{tab:colonfilter}).
+This data was then filtered according to the conditions in Table~(\nameref{S9_Table}).
 The RESPIR.txt and BREAST.txt files were imported into separate dataframes in similar fashion and filtered according
-to the conditions in Table~(\ref{tab:lungfilter}) and Table~(\ref{tab:breastfilter}), respectively.
-The SEER variable \codewhite{CS TUMOR SIZE} records the tumor size in millimeters if known. But if not known, \codewhite{CS TUMOR SIZE} is given as '999', to indicate that the tumor size is "Unknown; size not stated; not stated in pateint record.'' In this study, we discard those records, as indicated in Tables~(\ref{tab:breastfilter},~\ref{tab:colonfilter},~\ref{tab:lungfilter}).
+to the conditions in Table~(\nameref{S10_Table}) and Table~(\nameref{S11_Table}), respectively.
+The SEER variable \codewhite{CS TUMOR SIZE} records the tumor size in millimeters if known. But if not known, \codewhite{CS TUMOR SIZE} is given as '999', to indicate that the tumor size is "Unknown; size not stated; not stated in pateint record.'' In this study, we discard those records, as indicated in Tables~(\nameref{S11_Table},~\nameref{S9_Table},~\nameref{S10_Table}).
 
 
 
 
 
 
-\begin{table}[!ht]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:colonfilter} {\bf Filters applied to the Colon Cancer data.}}
+%\begin{table}[!ht]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:colonfilter} {\bf Filters applied to the Colon Cancer data.}}
 %\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lr}
-\toprule
- Column &  Filter \\
-\midrule
-\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
-\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
-\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
-\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
-\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
-\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ ""} \\
-\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
-\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
-\codewhite{PRIMARY SITE} & \codewhite{ $=$ "LARGE INTESTINE, (EXCL. APPENDIX)"} \\
-\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
+%\begin{tabular}{lr}
+%\toprule
+% Column &  Filter \\
+%\midrule
+%\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
+%\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
+%\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
+%\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
+%\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
+%\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ ""} \\
+%\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
+%\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
+%\codewhite{PRIMARY SITE} & \codewhite{ $=$ "LARGE INTESTINE, (EXCL. APPENDIX)"} \\
+%\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
+%\bottomrule
+%\end{tabular}
+%\end{adjustwidth}
+%\end{table}
 
 
 
 
-\begin{table}[!ht]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:lungfilter} {\bf Filters applied to the Lung Cancer data.}}
+%\begin{table}[!ht]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:lungfilter} {\bf Filters applied to the Lung Cancer data.}}
 %\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lr}
-\toprule
- Column &  Filter \\
-\midrule
-\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
-\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
-\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
-\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
-\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
-\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ ""} \\
-\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
-\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
-\codewhite{PRIMARY SITE} & \codewhite{ $=$ "LUNG \& BRONCHUS"} \\
-\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
+%\begin{tabular}{lr}
+%\toprule
+% Column &  Filter \\
+%\midrule
+%\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
+%\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
+%\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
+%\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
+%\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
+%\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ ""} \\
+%\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
+%\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
+%\codewhite{PRIMARY SITE} & \codewhite{ $=$ "LUNG \& BRONCHUS"} \\
+%\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
+%\bottomrule
+%\end{tabular}
+%\end{adjustwidth}
+%\end{table}
 
 
 
-\begin{table}[!ht]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:breastfilter} {\bf Filters applied to the Breast Cancer data.}}
+%\begin{table}[!ht]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:breastfilter} {\bf Filters applied to the Breast Cancer data.}}
 %\rowcolors{1}{white}{light-gray}
-\begin{tabular}{lr}
-\toprule
- Column &  Filter \\
-\midrule
-\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
-\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
-\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
-\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
-\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
-\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ " "} \\
-\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
-\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
-\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
+%\begin{tabular}{lr}
+%\toprule
+% Column &  Filter \\
+%\midrule
+%\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
+%\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
+%\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
+%\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
+%\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
+%\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ " "} \\
+%\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
+%\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
+%\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
+%\bottomrule
+%\end{tabular}
+%\end{adjustwidth}
+%\end{table}
 
 
 
@@ -1076,7 +1076,7 @@ and the \codewhite{STATE-COUNTY RECODE} variable was dropped and replaced with t
 \subsection*{S4 Text}
 \label{S4_Text}
 
-{\bf Colon Cancer Feature Selection} The feature set used as input into both the Random Forest and Neural Network models, after the transformation described in section~(\nameref{subsec:transformation}) is given below and also available in full detail in the file 
+{\bf Colon Cancer Feature Selection} The feature set used as input into both the Random Forest and Neural Network models, after the transformation described in section~(\ref{subsec:transformation}) is given below and also available in full detail in the file 
 \codewhite{NewPatientColonML.html}.
 
 
@@ -1200,7 +1200,7 @@ and
 \subsection*{S5 Text}
 \label{S5_Text}
 
-{\bf Lung Cancer Feature Selection} The feature set used as input into both the Random Forest and Neural Network models, after the transformation described in section~(\nameref{subsec:transformation}) is given below and also available in full detail in the file 
+{\bf Lung Cancer Feature Selection} The feature set used as input into both the Random Forest and Neural Network models, after the transformation described in section~(\ref{subsec:transformation}) is given below and also available in full detail in the file 
 \codewhite{NewPatientLungML.html}.
 
 \begin{itemize}[noitemsep]
@@ -1328,7 +1328,7 @@ and
 \label{S6_Text}
 
 
-{\bf Breast Cancer Feature Selection} The feature set used as input into both the Random Forest and Neural Network models, after the transformation described in section~\nameref{subsec:transformation} is given below and also available in full detail in the file 
+{\bf Breast Cancer Feature Selection} The feature set used as input into both the Random Forest and Neural Network models, after the transformation described in section~(\ref{subsec:transformation}) is given below and also available in full detail in the file 
 \codewhite{NewPatientBreastML.html}.
 
 \begin{itemize}[noitemsep]
@@ -1792,18 +1792,83 @@ Breast & .676 & .72 & .785 \\
 
 \subsection*{S9 Table}
 \label{S9_Table}
-
+{\bf Filters applied to the Colon Cancer data.}
+\begin{table}[H]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:colonfilter} {\bf Filters applied to the Colon Cancer data.}}
+%\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lr}
+\toprule
+ Column &  Filter \\
+\midrule
+\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
+\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
+\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
+\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
+\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
+\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ ""} \\
+\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
+\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
+\codewhite{PRIMARY SITE} & \codewhite{ $=$ "LARGE INTESTINE, (EXCL. APPENDIX)"} \\
+\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
 
 
 
 \subsection*{S10 Table}
 \label{S10_Table}
-
+{\bf Filters applied to the Lung Cancer data.}
+\begin{table}[H]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:lungfilter} {\bf Filters applied to the Lung Cancer data.}}
+%\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lr}
+\toprule
+ Column &  Filter \\
+\midrule
+\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
+\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
+\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
+\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
+\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
+\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ ""} \\
+\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
+\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
+\codewhite{PRIMARY SITE} & \codewhite{ $=$ "LUNG \& BRONCHUS"} \\
+\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
 
 
 \subsection*{S11 Table}
 \label{S11_Table}
-
+{\bf Filters applied to the Breast Cancer data.}
+\begin{table}[H]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:breastfilter} {\bf Filters applied to the Breast Cancer data.}}
+%\rowcolors{1}{white}{light-gray}
+\begin{tabular}{lr}
+\toprule
+ Column &  Filter \\
+\midrule
+\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$\neq$ "Unspecified"} \\
+\codewhite{AGE AT DIAGNOSIS} & \codewhite{$\neq$ "Unknown age"} \\
+\codewhite{BIRTHDATE-YEAR} & \codewhite{$\neq$ "Unknown year of birth"} \\
+\codewhite{YEAR OF DIAGNOSIS} & \codewhite{$\geq 2004$} \\
+\codewhite{SURVIVAL MONTHS FLAG} & \codewhite{= "1"}\\
+\codewhite{CS TUMOR SIZE EXT/EVAL} & \codewhite{$\neq$ " "} \\
+\codewhite{CS TUMOR SIZE} & \codewhite{$\neq 999$} \\
+\codewhite{SEER RECORD NUMBER} & \codewhite{$= 1$} \\
+\codewhite{SEQUENCE NUMBER-CENTRAL} & \codewhite{$=0$} \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
 
 
 
