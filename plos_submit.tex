@@ -937,30 +937,30 @@ But if one is tasked with encoding a categorical feature into suitable numeric f
 One-hot encoding needs to be applied to all of the nominal categorical variables in the SEER data that we wish to include in our predictive models.
 In particular, in order to include the geophgraphical information contained in the SEER categorical variable \codewhite{STATE-COUNTY RECODE}, it becomes necessary to create a new feature variable for each of the distinct (state,county) pairs in the data. In the United States, there are approximately 3,000 counties. Clearly, transforming the \codewhite{STATE-COUNTY RECODE} data representation into distinct (state$\_$county) columns will explode the dataset to become wider than is optimal for machine learning. Adding extra columns to your dataset, making it wider, requires more data rows (making it taller) in order for machine learning algorithms to effectively learn~\cite{bowles}. Because one-hot coding \codewhite{STATE-COUNTY RECODE} would cause such drastic shape changes in our data, we wish to avoid doing so. Fortunately, this variable, though given as a categorical variable, is actually a recode for three ordinal variables. There is an ordering among the (state$\_$county) columns, namely longitude, latitude, and elevation. We can transform the data in \codewhite{STATE-COUNTY RECODE} into three new numerical columns: \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation}.
 
-For example, Table~(\ref{tab:nmhead}) shows how five entries of \codewhite{STATE-COUNTY RECODE} corresponding to counties within New Mexico can be represented by the 
+For example, Table~(\nameref{S8_Table}) shows how five entries of \codewhite{STATE-COUNTY RECODE} corresponding to counties within New Mexico can be represented by the 
 \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng} features.
 
-\begin{table}[!ht]
-\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
-\caption{\label{tab:nmhead} {\bf Example of the transformation of \codewhite{STATE-COUNTY RECODE} to \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}.}}
+%\begin{table}[!ht]
+%\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:nmhead} {\bf Example of the transformation of \codewhite{STATE-COUNTY RECODE} to %%\codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}.}}
 %\rowcolors{1}{white}{light-gray}
-\begin{tabular}{llrrr}
-\toprule
- STATE-COUNTY RECODE &               address &    elevation &        lat &         lng \\
-\midrule
-35001 &  Bernalillo+county+NM &  5207.579772 &  35.017785 & -106.629130 \\
-35003 &      Catron+county+NM &  8089.242628 &  34.151517 & -108.427605 \\
-35005 &      Chaves+county+NM &  3559.931671 &  33.475739 & -104.472330 \\
-35006 &      Cibola+county+NM &  6443.415570 &  35.094756 & -107.858387 \\
-35007 &      Colfax+county+NM &  6147.749089 &  36.579976 & -104.472330 \\
-\bottomrule
-\end{tabular}
-\end{adjustwidth}
-\end{table}
+%\begin{tabular}{llrrr}
+%\toprule
+% STATE-COUNTY RECODE &               address &    elevation &        lat &         lng \\
+%\midrule
+%35001 &  Bernalillo+county+NM &  5207.579772 &  35.017785 & -106.629130 \\
+%35003 &      Catron+county+NM &  8089.242628 &  34.151517 & -108.427605 \\
+%35005 &      Chaves+county+NM &  3559.931671 &  33.475739 & -104.472330 \\
+%35006 &      Cibola+county+NM &  6443.415570 &  35.094756 & -107.858387 \\
+%35007 &      Colfax+county+NM &  6147.749089 &  36.579976 & -104.472330 \\
+%\bottomrule
+%\end{tabular}
+%\end{adjustwidth}
+%\end{table}
 
-It is a simple exercise to construct the full lookup table from the SEER \\  \codewhite{STATE-COUNTY RECODE} variable to the corresponding three values \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}. We use the publically available datafile from the United States Census Bureau~\cite{census} to map the state FIPS and county FIPS codes to query strings like those in the \codewhite{address} field in Table~(\ref{tab:nmhead}). 
+It is a simple exercise to construct the full lookup table from the SEER \\  \codewhite{STATE-COUNTY RECODE} variable to the corresponding three values \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}. We use the publically available datafile from the United States Census Bureau~\cite{census} to map the state FIPS and county FIPS codes to query strings like those in the \codewhite{address} field in Table~(\nameref{S8_Table}). 
 It is then possible to programmatically query the Google Maps Geocoding API for the latitude and longitude~\cite{geocode}, and the Google Maps Elevation API for the corresponding elevation~\cite{elevation}.
-An added benefit of this shift from the single categorical variable \codewhite{STATE-COUNTY RECODE} to the three continuous numerical variables \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation} is that input into the web applications described later are not restricted to the states and counties coverered in the SEER registries; in fact, the input to the models can be any address you would enter into Google Maps and calls to the Google Maps Geocoding API and the Google Maps Elevation API provide the conversion from the address string to the input variables \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation}. The full lookup table analogous to Table~(\ref{tab:nmhead}) is available from a GitHub repository containing supplemental information for this study~\cite{supp}. 
+An added benefit of this shift from the single categorical variable \codewhite{STATE-COUNTY RECODE} to the three continuous numerical variables \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation} is that input into the web applications described later are not restricted to the states and counties coverered in the SEER registries; in fact, the input to the models can be any address you would enter into Google Maps and calls to the Google Maps Geocoding API and the Google Maps Elevation API provide the conversion from the address string to the input variables \codewhite{lat}, \codewhite{lng}, and \codewhite{elevation}. The full lookup table analogous to Table~(\nameref{S8_Table}) is available from a GitHub repository containing supplemental information for this study~\cite{supp}. 
 
 
 
@@ -1739,7 +1739,7 @@ Breast & .676 & .72 & .785 \\
 \subsection*{S7 Table}
 \label{S7_Table}
 {\bf Example input data to the Lung Cancer random forest app \url{https://github.com/doolingdavid/lung-cancer-rf-errors.git}.}
-\begin{table}[!ht]
+\begin{table}[H]
 \begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table %fits in text column.
 %\caption{{\bf Example input data to the Lung Cancer random forest app \url{https://github.com/doolingdavid/%lung-cancer-rf-errors.git}.}}
 %\rowcolors{1}{white}{light-gray}
@@ -1766,6 +1766,44 @@ Breast & .676 & .72 & .785 \\
 \label{tab:lungmaritalstatus}
 \end{adjustwidth}
 \end{table}
+
+\subsection*{S8 Table}
+\label{S8_Table}
+{\bf Example of the transformation of \codewhite{STATE-COUNTY RECODE} to \codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}.}
+\begin{table}[H]
+\begin{adjustwidth}{-2.25in}{0in} % Comment out/remove adjustwidth environment if table fits in text column.
+%\caption{\label{tab:nmhead} {\bf Example of the transformation of \codewhite{STATE-COUNTY RECODE} to %\codewhite{elevation}, \codewhite{lat}, and \codewhite{lng}.}}
+%\rowcolors{1}{white}{light-gray}
+\begin{tabular}{llrrr}
+\toprule
+ STATE-COUNTY RECODE &               address &    elevation &        lat &         lng \\
+\midrule
+35001 &  Bernalillo+county+NM &  5207.579772 &  35.017785 & -106.629130 \\
+35003 &      Catron+county+NM &  8089.242628 &  34.151517 & -108.427605 \\
+35005 &      Chaves+county+NM &  3559.931671 &  33.475739 & -104.472330 \\
+35006 &      Cibola+county+NM &  6443.415570 &  35.094756 & -107.858387 \\
+35007 &      Colfax+county+NM &  6147.749089 &  36.579976 & -104.472330 \\
+\bottomrule
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
+
+\subsection*{S9 Table}
+\label{S9_Table}
+
+
+
+
+\subsection*{S10 Table}
+\label{S10_Table}
+
+
+
+\subsection*{S11 Table}
+\label{S11_Table}
+
 
 
 
